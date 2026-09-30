@@ -24,46 +24,55 @@
             color: #333333;
         }
 
+        /* Search button */
         .search-launcher {
             margin-top: 30px;
             padding: 12px 20px;
             border: none;
             border-radius: 6px;
-            background-color: #333333;
+            background: #333333;
             color: #ffffff;
             font-size: 16px;
             cursor: pointer;
         }
 
         .search-launcher:hover {
-            background-color: #555555;
+            background: #555555;
         }
 
         /* Search window */
         .search-window {
             position: fixed;
-            top: 10%;
+            top: 8%;
             left: 50%;
             transform: translateX(-50%);
-            width: min(800px, 90%);
-            height: 600px;
+            width: min(850px, 92%);
+            height: 650px;
+
             background: #ffffff;
-            border: 1px solid #999999;
+            border: 1px solid #888888;
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+
             display: none;
             flex-direction: column;
+
             z-index: 1000;
             overflow: hidden;
         }
 
+        /* Window title bar */
         .window-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 10px 14px;
+
             background: #222222;
             color: #ffffff;
+
             cursor: move;
             user-select: none;
         }
@@ -72,6 +81,7 @@
             font-weight: bold;
         }
 
+        /* Window buttons */
         .window-controls {
             display: flex;
             gap: 6px;
@@ -80,54 +90,37 @@
         .window-controls button {
             width: 32px;
             height: 28px;
+
             border: none;
             border-radius: 4px;
+
             background: #444444;
             color: #ffffff;
-            cursor: pointer;
+
             font-size: 18px;
+            cursor: pointer;
         }
 
         .window-controls button:hover {
             background: #666666;
         }
 
+        /* Search area */
         .search-content {
-            padding: 15px;
+            flex: 1;
             overflow: auto;
-            flex: 1;
+            padding: 15px;
         }
 
-        .search-form {
-            display: flex;
-            gap: 8px;
-        }
+        /*
+         * Google Programmable Search Element
+         *
+         * Replace YOUR_SEARCH_ENGINE_ID below
+         * with your Google Search Engine ID.
+         */
 
-        .search-form input {
-            flex: 1;
-            min-width: 0;
-            padding: 11px;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .search-form button {
-            padding: 11px 18px;
-            border: none;
-            border-radius: 5px;
-            background: #333333;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        .search-form button:hover {
-            background: #555555;
-        }
-
-        .search-info {
-            color: #666666;
-            font-size: 14px;
+        .gcse-search {
+            width: 100%;
         }
 
         /* Minimized window */
@@ -139,22 +132,24 @@
             display: none;
         }
 
+        /* Mobile */
         @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
             .search-window {
                 width: 95%;
                 height: 80%;
                 top: 5%;
             }
-
-            .search-form {
-                flex-direction: column;
-            }
-
-            .search-form button {
-                width: 100%;
-            }
         }
     </style>
+
+    <!-- Google Programmable Search Engine -->
+    <script async
+        src="https://cse.google.com/cse.js?cx=YOUR_SEARCH_ENGINE_ID">
+    </script>
 </head>
 
 <body>
@@ -179,110 +174,169 @@
         environments that existed long before human civilization.
     </p>
 
-    <button class="search-launcher" id="openSearch" type="button">
-        Open DuckDuckGo Search
+    <!-- Open Search -->
+    <button
+        class="search-launcher"
+        id="openSearch"
+        type="button">
+        🔍 Open Search
     </button>
 
-    <div class="search-window" id="searchWindow">
 
-        <div class="window-header" id="windowHeader">
-            <span class="window-title">DuckDuckGo Search</span>
+    <!-- Google Search Window -->
+    <div
+        class="search-window"
+        id="searchWindow">
+
+        <!-- Title bar -->
+        <div
+            class="window-header"
+            id="windowHeader">
+
+            <span class="window-title">
+                Google Search
+            </span>
 
             <div class="window-controls">
-                <button id="minimizeSearch" type="button" aria-label="Minimize">
+
+                <button
+                    id="minimizeSearch"
+                    type="button"
+                    aria-label="Minimize">
                     −
                 </button>
 
-                <button id="closeSearch" type="button" aria-label="Close">
+                <button
+                    id="closeSearch"
+                    type="button"
+                    aria-label="Close">
                     ×
                 </button>
+
             </div>
         </div>
 
+
+        <!-- Search contents -->
         <div class="search-content">
 
-            <form
-                class="search-form"
-                action="https://duckduckgo.com/"
-                method="get">
-
-                <input
-                    type="search"
-                    name="q"
-                    placeholder="Search DuckDuckGo..."
-                    aria-label="Search DuckDuckGo"
-                    required>
-
-                <button type="submit">
-                    Search
-                </button>
-
-            </form>
-
-            <p class="search-info">
-                Search results will open in this browser tab.
-            </p>
+            <!--
+                Google renders the search box AND results here.
+            -->
+            <div class="gcse-search"></div>
 
         </div>
     </div>
 
+
     <script>
-        const openSearch = document.getElementById("openSearch");
-        const closeSearch = document.getElementById("closeSearch");
-        const minimizeSearch = document.getElementById("minimizeSearch");
-        const searchWindow = document.getElementById("searchWindow");
-        const windowHeader = document.getElementById("windowHeader");
 
+        const openSearch =
+            document.getElementById("openSearch");
+
+        const closeSearch =
+            document.getElementById("closeSearch");
+
+        const minimizeSearch =
+            document.getElementById("minimizeSearch");
+
+        const searchWindow =
+            document.getElementById("searchWindow");
+
+        const windowHeader =
+            document.getElementById("windowHeader");
+
+
+        /* Open search window */
         openSearch.addEventListener("click", function () {
+
             searchWindow.style.display = "flex";
+
             searchWindow.classList.remove("minimized");
+
         });
 
+
+        /* Close search window */
         closeSearch.addEventListener("click", function () {
+
             searchWindow.style.display = "none";
+
         });
 
+
+        /* Minimize search window */
         minimizeSearch.addEventListener("click", function () {
+
             searchWindow.classList.toggle("minimized");
+
         });
+
 
         /* Make the window draggable */
+
         let dragging = false;
+
         let offsetX = 0;
         let offsetY = 0;
 
+
         windowHeader.addEventListener("mousedown", function (event) {
+
+            /* Don't drag when clicking window buttons */
             if (event.target.closest("button")) {
                 return;
             }
 
             dragging = true;
 
-            const rect = searchWindow.getBoundingClientRect();
+            const rect =
+                searchWindow.getBoundingClientRect();
 
-            offsetX = event.clientX - rect.left;
-            offsetY = event.clientY - rect.top;
+            offsetX =
+                event.clientX - rect.left;
+
+            offsetY =
+                event.clientY - rect.top;
 
             searchWindow.style.transform = "none";
-            searchWindow.style.left = rect.left + "px";
-            searchWindow.style.top = rect.top + "px";
+
+            searchWindow.style.left =
+                rect.left + "px";
+
+            searchWindow.style.top =
+                rect.top + "px";
+
         });
 
+
         document.addEventListener("mousemove", function (event) {
+
             if (!dragging) {
                 return;
             }
 
             searchWindow.style.left =
-                Math.max(0, event.clientX - offsetX) + "px";
+                Math.max(
+                    0,
+                    event.clientX - offsetX
+                ) + "px";
 
             searchWindow.style.top =
-                Math.max(0, event.clientY - offsetY) + "px";
+                Math.max(
+                    0,
+                    event.clientY - offsetY
+                ) + "px";
+
         });
 
+
         document.addEventListener("mouseup", function () {
+
             dragging = false;
+
         });
+
     </script>
 
 </body>
