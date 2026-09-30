@@ -24,7 +24,6 @@
             color: #333333;
         }
 
-        /* Search launcher */
         .search-launcher {
             margin-top: 30px;
             padding: 12px 20px;
@@ -46,7 +45,7 @@
             top: 10%;
             left: 50%;
             transform: translateX(-50%);
-            width: min(700px, 90%);
+            width: min(800px, 90%);
             height: 600px;
             background: #ffffff;
             border: 1px solid #999999;
@@ -66,6 +65,7 @@
             background: #222222;
             color: #ffffff;
             cursor: move;
+            user-select: none;
         }
 
         .window-title {
@@ -85,6 +85,7 @@
             background: #444444;
             color: #ffffff;
             cursor: pointer;
+            font-size: 18px;
         }
 
         .window-controls button:hover {
@@ -100,7 +101,6 @@
         .search-form {
             display: flex;
             gap: 8px;
-            margin-bottom: 15px;
         }
 
         .search-form input {
@@ -128,10 +128,6 @@
         .search-info {
             color: #666666;
             font-size: 14px;
-        }
-
-        .search-info a {
-            color: #333333;
         }
 
         /* Minimized window */
@@ -188,6 +184,7 @@
     </button>
 
     <div class="search-window" id="searchWindow">
+
         <div class="window-header" id="windowHeader">
             <span class="window-title">DuckDuckGo Search</span>
 
@@ -203,11 +200,11 @@
         </div>
 
         <div class="search-content">
+
             <form
                 class="search-form"
                 action="https://duckduckgo.com/"
-                method="get"
-                target="_blank">
+                method="get">
 
                 <input
                     type="search"
@@ -219,11 +216,13 @@
                 <button type="submit">
                     Search
                 </button>
+
             </form>
 
             <p class="search-info">
-                Search results will open in a new browser tab.
+                Search results will open in this browser tab.
             </p>
+
         </div>
     </div>
 
@@ -247,7 +246,7 @@
             searchWindow.classList.toggle("minimized");
         });
 
-        /* Drag the window */
+        /* Make the window draggable */
         let dragging = false;
         let offsetX = 0;
         let offsetY = 0;
