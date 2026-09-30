@@ -21,7 +21,7 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             padding: 20px;
-            background-color: #ffffff;
+            background: #ffffff;
             color: #333333;
         }
 
@@ -29,14 +29,31 @@
             color: #333333;
         }
 
-        /* Search button */
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #4285f4;
+            outline-offset: 2px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        /* =========================
+           OPEN SEARCH BUTTON
+           ========================= */
+
         .search-launcher {
             margin-top: 30px;
             padding: 12px 20px;
+
             border: none;
             border-radius: 6px;
+
             background: #333333;
             color: #ffffff;
+
             font-size: 16px;
             cursor: pointer;
         }
@@ -45,47 +62,71 @@
             background: #555555;
         }
 
-        /* Floating search window */
+        /* =========================
+           MINI BROWSER WINDOW
+           ========================= */
+
         .search-window {
             position: fixed;
+
             top: 8%;
             left: 50%;
 
-            width: min(900px, 92vw);
-            height: min(700px, 82vh);
+            width: min(950px, 94vw);
+            height: min(720px, 84vh);
 
             background: #ffffff;
-            border: 1px solid #888888;
-            border-radius: 8px;
 
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid #777777;
+            border-radius: 9px;
+
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, 0.45);
 
             display: none;
             flex-direction: column;
 
             overflow: hidden;
+
             z-index: 1000;
         }
 
-        /* Title bar */
+        .search-window.open {
+            display: flex;
+        }
+
+        /* =========================
+           TITLE BAR
+           ========================= */
+
         .window-header {
-            height: 46px;
+            min-height: 46px;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 12px;
+            padding: 0 10px 0 14px;
 
             background: #222222;
             color: #ffffff;
 
-            cursor: move;
             user-select: none;
+
+            cursor: grab;
+
+            touch-action: none;
+        }
+
+        .window-header:active {
+            cursor: grabbing;
         }
 
         .window-title {
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .window-controls {
@@ -104,6 +145,8 @@
             color: #ffffff;
 
             font-size: 18px;
+            line-height: 1;
+
             cursor: pointer;
         }
 
@@ -111,50 +154,99 @@
             background: #666666;
         }
 
-        /* Search bar */
-        .search-bar {
+        /* =========================
+           BROWSER TOOLBAR
+           ========================= */
+
+        .browser-toolbar {
             display: flex;
-            gap: 8px;
+            align-items: center;
 
-            padding: 12px;
+            gap: 6px;
 
-            background: #f2f2f2;
-            border-bottom: 1px solid #dddddd;
+            padding: 8px;
+
+            background: #eeeeee;
+
+            border-bottom: 1px solid #cccccc;
         }
 
-        .search-bar input {
-            flex: 1;
-
-            min-width: 0;
-
-            padding: 10px;
+        .browser-button {
+            width: 36px;
+            height: 34px;
 
             border: 1px solid #bbbbbb;
             border-radius: 5px;
 
-            font-size: 16px;
+            background: #ffffff;
+            color: #333333;
+
+            font-size: 17px;
+
+            cursor: pointer;
         }
 
-        .search-bar button {
-            padding: 10px 18px;
+        .browser-button:hover:not(:disabled) {
+            background: #dddddd;
+        }
+
+        .browser-button:disabled {
+            color: #aaaaaa;
+            cursor: not-allowed;
+        }
+
+        .browser-form {
+            flex: 1;
+
+            display: flex;
+
+            gap: 6px;
+
+            min-width: 0;
+        }
+
+        .browser-address {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 8px 10px;
+
+            border: 1px solid #bbbbbb;
+            border-radius: 5px;
+
+            background: #ffffff;
+
+            font-size: 15px;
+        }
+
+        .go-button {
+            padding: 8px 14px;
 
             border: none;
             border-radius: 5px;
 
             background: #4285f4;
-            color: white;
+            color: #ffffff;
 
-            font-size: 15px;
             cursor: pointer;
         }
 
-        .search-bar button:hover {
+        .go-button:hover {
             background: #3367d6;
         }
 
-        /* Embedded browser area */
+        /* =========================
+           PAGE AREA
+           ========================= */
+
         .browser-area {
+            position: relative;
+
             flex: 1;
+
+            min-height: 0;
+
             background: #ffffff;
         }
 
@@ -163,37 +255,121 @@
             height: 100%;
 
             border: none;
+
             display: block;
+
+            background: #ffffff;
         }
 
-        /* Minimized state */
+        /* =========================
+           LOADING MESSAGE
+           ========================= */
+
+        .loading {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            padding: 10px 15px;
+
+            background: rgba(0, 0, 0, 0.75);
+
+            color: #ffffff;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            z-index: 5;
+
+            pointer-events: none;
+        }
+
+        .loading.hidden {
+            display: none;
+        }
+
+        /* =========================
+           HOME MESSAGE
+           ========================= */
+
+        .home-message {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: min(500px, 85%);
+
+            text-align: center;
+
+            color: #666666;
+
+            pointer-events: none;
+        }
+
+        .home-message.hidden {
+            display: none;
+        }
+
+        /* =========================
+           MINIMIZED WINDOW
+           ========================= */
+
         .search-window.minimized {
             height: 46px;
         }
 
-        .search-window.minimized .search-bar,
+        .search-window.minimized .browser-toolbar,
         .search-window.minimized .browser-area {
             display: none;
         }
 
-        /* Mobile */
+        /* =========================
+           MOBILE
+           ========================= */
+
         @media (max-width: 600px) {
+
             body {
                 padding: 15px;
             }
 
             .search-window {
                 width: 96vw;
-                height: 85vh;
+                height: 86vh;
+
                 top: 5%;
+                left: 2vw;
             }
 
-            .search-bar {
-                flex-direction: column;
+            .browser-toolbar {
+                flex-wrap: wrap;
             }
 
-            .search-bar button {
-                width: 100%;
+            .browser-form {
+                order: 2;
+                flex-basis: 100%;
+            }
+
+            .go-button {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .browser-button {
+                width: 34px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto !important;
             }
         }
     </style>
@@ -201,48 +377,60 @@
 
 <body>
 
-    <h1>Geological History of Earth</h1>
+    <main>
 
-    <p>
-        Earth's early geological history was shaped by major changes in its
-        crust, including tectonic processes that contributed to the formation
-        and breakup of supercontinents such as
-        <a
-            href="https://bull.ultradec.com/"
-            target="_blank"
-            rel="noopener noreferrer">
-            Pangaea
-        </a>.
-    </p>
+        <h1>Geological History of Earth</h1>
 
-    <p>
-        Sedimentary rock layers provide evidence of volcanic activity,
-        environmental changes, and past climates. By analyzing fossil records
-        found within these strata, researchers can reconstruct ancient
-        environments that existed long before human civilization.
-    </p>
+        <p>
+            Earth's early geological history was shaped by major changes in its
+            crust, including tectonic processes that contributed to the formation
+            and breakup of supercontinents such as
+            <a
+                href="https://bull.ultradec.com/"
+                target="_blank"
+                rel="noopener noreferrer">
+                Pangaea
+            </a>.
+        </p>
 
-    <!-- Open search window -->
-    <button
-        class="search-launcher"
-        id="openSearch"
-        type="button">
-        🔍 Open Search
-    </button>
+        <p>
+            Sedimentary rock layers provide evidence of volcanic activity,
+            environmental changes, and past climates. By analyzing fossil records
+            found within these strata, researchers can reconstruct ancient
+            environments that existed long before human civilization.
+        </p>
+
+        <button
+            class="search-launcher"
+            id="openSearch"
+            type="button">
+            🔍 Open Search
+        </button>
+
+    </main>
 
 
-    <!-- Floating search window -->
-    <div
+    <!-- =========================================
+         MINI BROWSER
+         ========================================= -->
+
+    <section
         class="search-window"
-        id="searchWindow">
+        id="searchWindow"
+        role="dialog"
+        aria-modal="false"
+        aria-labelledby="windowTitle">
 
-        <!-- Window header -->
+        <!-- TITLE BAR -->
+
         <div
             class="window-header"
             id="windowHeader">
 
-            <span class="window-title">
-                Web Search
+            <span
+                class="window-title"
+                id="windowTitle">
+                Atlas Web Search
             </span>
 
             <div class="window-controls">
@@ -250,54 +438,131 @@
                 <button
                     id="minimizeSearch"
                     type="button"
-                    aria-label="Minimize">
+                    aria-label="Minimize"
+                    title="Minimize">
                     −
                 </button>
 
                 <button
                     id="closeSearch"
                     type="button"
-                    aria-label="Close">
+                    aria-label="Close"
+                    title="Close">
                     ×
                 </button>
 
             </div>
+
         </div>
 
 
-        <!-- Search bar -->
-        <form
-            class="search-bar"
-            id="searchForm">
+        <!-- BROWSER TOOLBAR -->
 
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="Search the web..."
-                autocomplete="off"
-                required>
+        <div class="browser-toolbar">
 
-            <button type="submit">
-                Search
+            <button
+                class="browser-button"
+                id="backButton"
+                type="button"
+                title="Back"
+                aria-label="Back"
+                disabled>
+                ←
             </button>
 
-        </form>
+            <button
+                class="browser-button"
+                id="forwardButton"
+                type="button"
+                title="Forward"
+                aria-label="Forward"
+                disabled>
+                →
+            </button>
+
+            <button
+                class="browser-button"
+                id="refreshButton"
+                type="button"
+                title="Refresh"
+                aria-label="Refresh">
+                ↻
+            </button>
+
+            <button
+                class="browser-button"
+                id="homeButton"
+                type="button"
+                title="Home"
+                aria-label="Home">
+                ⌂
+            </button>
 
 
-        <!-- Results window -->
+            <form
+                class="browser-form"
+                id="browserForm">
+
+                <input
+                    class="browser-address"
+                    id="browserAddress"
+                    type="text"
+                    placeholder="Search the web..."
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-label="Search or enter web address">
+
+                <button
+                    class="go-button"
+                    type="submit">
+                    Go
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- PAGE AREA -->
+
         <div class="browser-area">
+
+            <div
+                class="home-message"
+                id="homeMessage">
+
+                <h2>Atlas Web Search</h2>
+
+                <p>
+                    Search the web using the address bar above.
+                </p>
+
+            </div>
+
+            <div
+                class="loading hidden"
+                id="loading">
+                Loading...
+            </div>
 
             <iframe
                 id="searchFrame"
-                title="Search results">
+                title="Web browser"
+                loading="lazy">
             </iframe>
 
         </div>
 
-    </div>
+    </section>
 
 
     <script>
+        "use strict";
+
+
+        /* =========================================
+           ELEMENTS
+           ========================================= */
 
         const openSearch =
             document.getElementById("openSearch");
@@ -314,119 +579,509 @@
         const windowHeader =
             document.getElementById("windowHeader");
 
-        const searchForm =
-            document.getElementById("searchForm");
+        const browserForm =
+            document.getElementById("browserForm");
 
-        const searchInput =
-            document.getElementById("searchInput");
+        const browserAddress =
+            document.getElementById("browserAddress");
 
         const searchFrame =
             document.getElementById("searchFrame");
 
+        const loading =
+            document.getElementById("loading");
 
-        /* Open the window */
-        openSearch.addEventListener("click", function () {
+        const homeMessage =
+            document.getElementById("homeMessage");
 
-            searchWindow.style.display = "flex";
+        const backButton =
+            document.getElementById("backButton");
 
-            searchWindow.classList.remove("minimized");
+        const forwardButton =
+            document.getElementById("forwardButton");
 
-            searchInput.focus();
+        const refreshButton =
+            document.getElementById("refreshButton");
 
-        });
-
-
-        /* Close the window */
-        closeSearch.addEventListener("click", function () {
-
-            searchWindow.style.display = "none";
-
-        });
+        const homeButton =
+            document.getElementById("homeButton");
 
 
-        /* Minimize the window */
-        minimizeSearch.addEventListener("click", function () {
+        /* =========================================
+           BROWSER HISTORY
+           ========================================= */
 
-            searchWindow.classList.toggle("minimized");
+        let history = [];
+        let historyIndex = -1;
 
-        });
+        const HOME_PAGE = "";
 
 
-        /* Search inside the window */
-        searchForm.addEventListener("submit", function (event) {
+        function updateHistoryButtons() {
 
-            event.preventDefault();
+            backButton.disabled =
+                historyIndex <= 0;
 
-            const query =
-                searchInput.value.trim();
+            forwardButton.disabled =
+                historyIndex >= history.length - 1;
 
-            if (!query) {
+        }
+
+
+        function showPage(url, addToHistory = true) {
+
+            if (!url) {
+                searchFrame.removeAttribute("src");
+
+                homeMessage.classList.remove("hidden");
+
+                browserAddress.value = "";
+
+                loading.classList.add("hidden");
+
                 return;
             }
 
-            const searchURL =
-                "https://www.bing.com/search?q=" +
-                encodeURIComponent(query);
 
-            searchFrame.src = searchURL;
+            homeMessage.classList.add("hidden");
+
+            loading.classList.remove("hidden");
+
+
+            if (addToHistory) {
+
+                /*
+                 * Remove anything after the current
+                 * history position.
+                 */
+                history =
+                    history.slice(0, historyIndex + 1);
+
+                history.push(url);
+
+                historyIndex =
+                    history.length - 1;
+            }
+
+
+            searchFrame.src = url;
+
+            browserAddress.value = url;
+
+            updateHistoryButtons();
+
+        }
+
+
+        /* =========================================
+           OPEN WINDOW
+           ========================================= */
+
+        openSearch.addEventListener("click", () => {
+
+            searchWindow.classList.add("open");
+
+            searchWindow.classList.remove("minimized");
+
+            browserAddress.focus();
 
         });
 
 
-        /* Make the window draggable */
+        /* =========================================
+           CLOSE WINDOW
+           ========================================= */
+
+        closeSearch.addEventListener("click", () => {
+
+            searchWindow.classList.remove("open");
+
+        });
+
+
+        /* =========================================
+           MINIMIZE
+           ========================================= */
+
+        minimizeSearch.addEventListener("click", () => {
+
+            searchWindow.classList.toggle("minimized");
+
+            if (
+                !searchWindow.classList.contains("minimized")
+            ) {
+                browserAddress.focus();
+            }
+
+        });
+
+
+        /* =========================================
+           SEARCH / ADDRESS BAR
+           ========================================= */
+
+        browserForm.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            const value =
+                browserAddress.value.trim();
+
+            if (!value) {
+                return;
+            }
+
+
+            let url;
+
+
+            /*
+             * If it looks like a URL,
+             * navigate directly.
+             */
+            if (
+                value.startsWith("https://") ||
+                value.startsWith("http://")
+            ) {
+
+                url = value;
+
+            }
+
+            /*
+             * Otherwise search Bing.
+             */
+            else {
+
+                url =
+                    "https://www.bing.com/search?q=" +
+                    encodeURIComponent(value);
+
+            }
+
+
+            showPage(url, true);
+
+        });
+
+
+        /* =========================================
+           BACK
+           ========================================= */
+
+        backButton.addEventListener("click", () => {
+
+            if (historyIndex <= 0) {
+                return;
+            }
+
+            historyIndex--;
+
+            const url =
+                history[historyIndex];
+
+            searchFrame.src = url;
+
+            browserAddress.value = url;
+
+            loading.classList.remove("hidden");
+
+            updateHistoryButtons();
+
+        });
+
+
+        /* =========================================
+           FORWARD
+           ========================================= */
+
+        forwardButton.addEventListener("click", () => {
+
+            if (
+                historyIndex >=
+                history.length - 1
+            ) {
+                return;
+            }
+
+            historyIndex++;
+
+            const url =
+                history[historyIndex];
+
+            searchFrame.src = url;
+
+            browserAddress.value = url;
+
+            loading.classList.remove("hidden");
+
+            updateHistoryButtons();
+
+        });
+
+
+        /* =========================================
+           REFRESH
+           ========================================= */
+
+        refreshButton.addEventListener("click", () => {
+
+            if (!searchFrame.src) {
+                return;
+            }
+
+            loading.classList.remove("hidden");
+
+            searchFrame.src =
+                searchFrame.src;
+
+        });
+
+
+        /* =========================================
+           HOME
+           ========================================= */
+
+        homeButton.addEventListener("click", () => {
+
+            searchFrame.removeAttribute("src");
+
+            browserAddress.value = "";
+
+            homeMessage.classList.remove("hidden");
+
+            loading.classList.add("hidden");
+
+        });
+
+
+        /* =========================================
+           IFRAME LOADING
+           ========================================= */
+
+        searchFrame.addEventListener("load", () => {
+
+            loading.classList.add("hidden");
+
+        });
+
+
+        /* =========================================
+           ESCAPE KEY
+           ========================================= */
+
+        document.addEventListener("keydown", (event) => {
+
+            if (event.key !== "Escape") {
+                return;
+            }
+
+            if (
+                searchWindow.classList.contains("open")
+            ) {
+
+                searchWindow.classList.remove("open");
+
+            }
+
+        });
+
+
+        /* =========================================
+           DRAGGING
+           ========================================= */
 
         let dragging = false;
+
+        let pointerId = null;
 
         let offsetX = 0;
         let offsetY = 0;
 
 
-        windowHeader.addEventListener("mousedown", function (event) {
+        windowHeader.addEventListener(
+            "pointerdown",
+            (event) => {
 
-            if (event.target.closest("button")) {
+                /*
+                 * Don't drag when clicking
+                 * the minimize/close buttons.
+                 */
+                if (
+                    event.target.closest("button")
+                ) {
+                    return;
+                }
+
+
+                if (
+                    searchWindow.classList.contains(
+                        "minimized"
+                    )
+                ) {
+                    return;
+                }
+
+
+                dragging = true;
+
+                pointerId =
+                    event.pointerId;
+
+
+                windowHeader.setPointerCapture(
+                    pointerId
+                );
+
+
+                const rect =
+                    searchWindow.getBoundingClientRect();
+
+
+                offsetX =
+                    event.clientX -
+                    rect.left;
+
+                offsetY =
+                    event.clientY -
+                    rect.top;
+
+
+                /*
+                 * Convert the initial percentage
+                 * position into pixel positioning.
+                 */
+                searchWindow.style.left =
+                    rect.left + "px";
+
+                searchWindow.style.top =
+                    rect.top + "px";
+
+            }
+        );
+
+
+        windowHeader.addEventListener(
+            "pointermove",
+            (event) => {
+
+                if (
+                    !dragging ||
+                    event.pointerId !== pointerId
+                ) {
+                    return;
+                }
+
+
+                let newLeft =
+                    event.clientX -
+                    offsetX;
+
+                let newTop =
+                    event.clientY -
+                    offsetY;
+
+
+                const windowWidth =
+                    searchWindow.offsetWidth;
+
+
+                /*
+                 * Keep at least 30px of the
+                 * window visible horizontally.
+                 */
+                const minimumVisible =
+                    30;
+
+
+                const maxLeft =
+                    window.innerWidth -
+                    minimumVisible;
+
+
+                const maxTop =
+                    window.innerHeight -
+                    46;
+
+
+                newLeft =
+                    Math.min(
+                        Math.max(
+                            newLeft,
+                            -windowWidth +
+                            minimumVisible
+                        ),
+                        maxLeft
+                    );
+
+
+                newTop =
+                    Math.min(
+                        Math.max(
+                            newTop,
+                            0
+                        ),
+                        maxTop
+                    );
+
+
+                searchWindow.style.left =
+                    newLeft + "px";
+
+                searchWindow.style.top =
+                    newTop + "px";
+
+            }
+        );
+
+
+        function stopDragging(event) {
+
+            if (
+                event.pointerId !== pointerId
+            ) {
                 return;
             }
 
-            dragging = true;
-
-            const rect =
-                searchWindow.getBoundingClientRect();
-
-            offsetX =
-                event.clientX - rect.left;
-
-            offsetY =
-                event.clientY - rect.top;
-
-        });
-
-
-        document.addEventListener("mousemove", function (event) {
-
-            if (!dragging) {
-                return;
-            }
-
-            const newLeft =
-                event.clientX - offsetX;
-
-            const newTop =
-                event.clientY - offsetY;
-
-            searchWindow.style.left =
-                Math.max(0, newLeft) + "px";
-
-            searchWindow.style.top =
-                Math.max(0, newTop) + "px";
-
-        });
-
-
-        document.addEventListener("mouseup", function () {
 
             dragging = false;
 
-        });
+            pointerId = null;
+
+
+            try {
+
+                windowHeader.releasePointerCapture(
+                    event.pointerId
+                );
+
+            } catch {
+                /*
+                 * Pointer capture may already
+                 * have been released.
+                 */
+            }
+
+        }
+
+
+        windowHeader.addEventListener(
+            "pointerup",
+            stopDragging
+        );
+
+
+        windowHeader.addEventListener(
+            "pointercancel",
+            stopDragging
+        );
+
+
+        /* =========================================
+           INITIAL STATE
+           ========================================= */
+
+        updateHistoryButtons();
 
     </script>
 
