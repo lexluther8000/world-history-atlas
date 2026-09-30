@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>World History Atlas</title>
 
@@ -38,17 +35,9 @@
             font: inherit;
         }
 
-        button:focus-visible,
-        input:focus-visible,
-        a:focus-visible {
-            outline: 3px solid #4285f4;
-            outline-offset: 2px;
-        }
-
-
-        /* =====================================
+        /* ==============================
            MAIN PAGE
-           ===================================== */
+           ============================== */
 
         h1 {
             margin-top: 0;
@@ -75,15 +64,17 @@
         }
 
 
-        /* =====================================
+        /* ==============================
            BROWSER WINDOW
-           ===================================== */
+           ============================== */
 
         .browser-window {
             position: fixed;
 
             top: 7%;
             left: 50%;
+
+            transform: translateX(-50%);
 
             width: min(1000px, 94vw);
             height: min(750px, 86vh);
@@ -109,9 +100,9 @@
         }
 
 
-        /* =====================================
+        /* ==============================
            TITLE BAR
-           ===================================== */
+           ============================== */
 
         .window-header {
             height: 46px;
@@ -170,93 +161,45 @@
         }
 
 
-        /* =====================================
-           TABS
-           ===================================== */
+        /* ==============================
+           SINGLE TAB
+           ============================== */
 
         .tabs {
-            display: flex;
-            align-items: center;
-
+            height: 38px;
             min-height: 38px;
 
-            padding: 4px 6px 0;
+            display: flex;
+            align-items: flex-end;
 
-            gap: 4px;
+            padding: 0 6px;
 
             background: #2c2c2c;
-
-            overflow-x: auto;
         }
 
         .tab {
+            height: 34px;
+
             display: flex;
             align-items: center;
 
-            gap: 8px;
-
-            max-width: 220px;
-
-            padding: 7px 10px;
+            padding: 0 14px;
 
             border: none;
             border-radius: 6px 6px 0 0;
 
-            background: #444444;
-            color: #dddddd;
-
-            cursor: pointer;
-
-            white-space: nowrap;
-        }
-
-        .tab:hover {
-            background: #555555;
-        }
-
-        .tab.active {
             background: #ffffff;
             color: #222222;
-        }
 
-        .tab.active:hover {
-            background: #f5f5f5;
-        }
+            font-size: 14px;
 
-        .tab-title {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .tab-close {
-            font-weight: bold;
-        }
-
-        .new-tab {
-            width: 30px;
-            height: 30px;
-
-            flex-shrink: 0;
-
-            border: none;
-            border-radius: 5px;
-
-            background: #444444;
-            color: #ffffff;
-
-            cursor: pointer;
-
-            font-size: 20px;
-        }
-
-        .new-tab:hover {
-            background: #555555;
+            cursor: default;
         }
 
 
-        /* =====================================
+        /* ==============================
            TOOLBAR
-           ===================================== */
+           ============================== */
 
         .toolbar {
             display: flex;
@@ -284,13 +227,8 @@
             cursor: pointer;
         }
 
-        .toolbar-button:hover:not(:disabled) {
+        .toolbar-button:hover {
             background: #dddddd;
-        }
-
-        .toolbar-button:disabled {
-            color: #aaaaaa;
-            cursor: not-allowed;
         }
 
         .address-form {
@@ -333,9 +271,9 @@
         }
 
 
-        /* =====================================
+        /* ==============================
            CONTENT
-           ===================================== */
+           ============================== */
 
         .content {
             position: relative;
@@ -347,9 +285,9 @@
         }
 
 
-        /* =====================================
-           HOME PAGE
-           ===================================== */
+        /* ==============================
+           HOME / SEARCH
+           ============================== */
 
         .home-page {
             height: 100%;
@@ -401,13 +339,12 @@
         }
 
 
-        /* =====================================
+        /* ==============================
            SEARCH RESULTS
-           ===================================== */
+           ============================== */
 
         .results {
             max-width: 800px;
-
             margin-top: 25px;
         }
 
@@ -454,17 +391,17 @@
         }
 
 
-        /* =====================================
-           IFRAME
-           ===================================== */
+        /* ==============================
+           WEBSITE FRAME
+           ============================== */
 
         .page-frame {
             width: 100%;
             height: 100%;
 
-            display: none;
-
             border: none;
+
+            display: none;
 
             background: #ffffff;
         }
@@ -474,11 +411,11 @@
         }
 
 
-        /* =====================================
-           MESSAGE
-           ===================================== */
+        /* ==============================
+           BLOCKED / EMBEDDING MESSAGE
+           ============================== */
 
-        .message {
+        .blocked-message {
             position: absolute;
 
             top: 50%;
@@ -486,28 +423,54 @@
 
             transform: translate(-50%, -50%);
 
-            width: min(550px, 85%);
+            width: min(600px, 90%);
 
-            padding: 25px;
+            padding: 30px;
 
             background: #f5f5f5;
 
             border: 1px solid #dddddd;
-            border-radius: 8px;
+            border-radius: 10px;
 
             text-align: center;
 
             display: none;
         }
 
-        .message.visible {
+        .blocked-message.visible {
             display: block;
         }
 
+        .blocked-message h2 {
+            margin-top: 0;
+        }
 
-        /* =====================================
+        .open-site-button {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 11px 20px;
+
+            border: none;
+            border-radius: 6px;
+
+            background: #4285f4;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .open-site-button:hover {
+            background: #3367d6;
+        }
+
+
+        /* ==============================
            MINIMIZED
-           ===================================== */
+           ============================== */
 
         .browser-window.minimized {
             height: 46px;
@@ -520,9 +483,9 @@
         }
 
 
-        /* =====================================
+        /* ==============================
            MOBILE
-           ===================================== */
+           ============================== */
 
         @media (max-width: 600px) {
 
@@ -535,6 +498,9 @@
                 height: 88vh;
 
                 left: 2vw;
+
+                transform: none;
+
                 top: 4%;
             }
 
@@ -565,9 +531,9 @@
 <body>
 
 
-    <!-- =====================================
+    <!-- =================================
          MAIN WEBSITE
-         ===================================== -->
+         ================================= -->
 
     <main>
 
@@ -602,15 +568,15 @@
     </main>
 
 
-    <!-- =====================================
+    <!-- =================================
          MINI BROWSER
-         ===================================== -->
+         ================================= -->
 
     <section
         class="browser-window"
         id="browserWindow"
         role="dialog"
-        aria-labelledby="windowTitle">
+        aria-label="Atlas Browser">
 
 
         <!-- TITLE BAR -->
@@ -630,7 +596,6 @@
                 <button
                     id="minimizeButton"
                     type="button"
-                    title="Minimize"
                     aria-label="Minimize">
                     −
                 </button>
@@ -638,38 +603,29 @@
                 <button
                     id="closeButton"
                     type="button"
-                    title="Close"
                     aria-label="Close">
                     ×
                 </button>
 
             </div>
-        </div>
-
-
-        <!-- =================================
-             TABS
-             ================================= -->
-
-        <div
-            class="tabs"
-            id="tabs">
-
-            <button
-                class="new-tab"
-                id="newTabButton"
-                type="button"
-                title="New tab"
-                aria-label="New tab">
-                +
-            </button>
 
         </div>
 
 
-        <!-- =================================
-             TOOLBAR
-             ================================= -->
+        <!-- ONE TAB -->
+
+        <div class="tabs">
+
+            <div
+                class="tab"
+                id="tabTitle">
+                New Tab
+            </div>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
 
         <div class="toolbar">
 
@@ -677,8 +633,8 @@
                 class="toolbar-button"
                 id="backButton"
                 type="button"
-                title="Back"
                 aria-label="Back"
+                title="Back"
                 disabled>
                 ←
             </button>
@@ -687,8 +643,8 @@
                 class="toolbar-button"
                 id="forwardButton"
                 type="button"
-                title="Forward"
                 aria-label="Forward"
+                title="Forward"
                 disabled>
                 →
             </button>
@@ -697,8 +653,8 @@
                 class="toolbar-button"
                 id="refreshButton"
                 type="button"
-                title="Refresh"
-                aria-label="Refresh">
+                aria-label="Refresh"
+                title="Refresh">
                 ↻
             </button>
 
@@ -706,8 +662,8 @@
                 class="toolbar-button"
                 id="homeButton"
                 type="button"
-                title="Home"
-                aria-label="Home">
+                aria-label="Home"
+                title="Home">
                 ⌂
             </button>
 
@@ -720,10 +676,10 @@
                     class="address-input"
                     id="addressInput"
                     type="text"
-                    placeholder="Search or enter a URL..."
+                    placeholder="Search or enter a website..."
                     autocomplete="off"
                     spellcheck="false"
-                    aria-label="Search or enter a URL">
+                    aria-label="Search or enter a website">
 
                 <button
                     class="go-button"
@@ -736,9 +692,7 @@
         </div>
 
 
-        <!-- =================================
-             CONTENT
-             ================================= -->
+        <!-- CONTENT -->
 
         <div class="content">
 
@@ -752,7 +706,12 @@
                 <h2>🌎 Atlas Browser</h2>
 
                 <p>
-                    Search for something or enter a website address.
+                    Search the web or enter a website address.
+                </p>
+
+                <p>
+                    For example:
+                    <strong>snokido.com</strong>
                 </p>
 
                 <form
@@ -762,7 +721,7 @@
                     <input
                         id="searchInput"
                         type="search"
-                        placeholder="What do you want to search for?"
+                        placeholder="Search for something..."
                         autocomplete="off">
 
                     <button type="submit">
@@ -780,34 +739,41 @@
             </div>
 
 
-            <!-- WEB PAGE -->
+            <!-- WEBSITE -->
 
             <iframe
                 class="page-frame"
                 id="pageFrame"
-                title="Current web page">
+                title="Website content">
             </iframe>
 
 
-            <!-- ERROR MESSAGE -->
+            <!-- EMBEDDING MESSAGE -->
 
             <div
-                class="message"
-                id="message">
+                class="blocked-message"
+                id="blockedMessage">
 
-                <h2>Page could not be displayed</h2>
+                <h2>Website can't be shown here</h2>
 
                 <p>
-                    This website does not allow itself to be
-                    displayed inside another webpage.
+                    This website doesn't allow itself to be
+                    displayed inside an embedded window.
                 </p>
 
-                <button
-                    id="returnButton"
-                    type="button"
-                    class="go-button">
-                    Return to Search
-                </button>
+                <p>
+                    You can still visit the website normally
+                    using the button below.
+                </p>
+
+                <a
+                    class="open-site-button"
+                    id="openSiteButton"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Open Website
+                </a>
 
             </div>
 
@@ -820,9 +786,9 @@
         "use strict";
 
 
-        /* =====================================
+        /* =================================
            ELEMENTS
-           ===================================== */
+           ================================= */
 
         const browserWindow =
             document.getElementById("browserWindow");
@@ -838,24 +804,6 @@
 
         const windowHeader =
             document.getElementById("windowHeader");
-
-        const tabs =
-            document.getElementById("tabs");
-
-        const newTabButton =
-            document.getElementById("newTabButton");
-
-        const backButton =
-            document.getElementById("backButton");
-
-        const forwardButton =
-            document.getElementById("forwardButton");
-
-        const refreshButton =
-            document.getElementById("refreshButton");
-
-        const homeButton =
-            document.getElementById("homeButton");
 
         const addressForm =
             document.getElementById("addressForm");
@@ -878,298 +826,165 @@
         const pageFrame =
             document.getElementById("pageFrame");
 
-        const message =
-            document.getElementById("message");
+        const blockedMessage =
+            document.getElementById("blockedMessage");
 
-        const returnButton =
-            document.getElementById("returnButton");
+        const openSiteButton =
+            document.getElementById("openSiteButton");
 
+        const backButton =
+            document.getElementById("backButton");
 
-        /* =====================================
-           TABS
-           ===================================== */
+        const forwardButton =
+            document.getElementById("forwardButton");
 
-        let tabCounter = 0;
+        const refreshButton =
+            document.getElementById("refreshButton");
 
-        let activeTabId = null;
+        const homeButton =
+            document.getElementById("homeButton");
 
-        const tabData = new Map();
-
-
-        function createTab() {
-
-            tabCounter++;
-
-            const id =
-                "tab-" + tabCounter;
+        const tabTitle =
+            document.getElementById("tabTitle");
 
 
-            tabData.set(id, {
-                title: "New Tab",
-                url: null,
-                history: [],
-                historyIndex: -1
-            });
+        /* =================================
+           BROWSER HISTORY
+           ================================= */
+
+        let history = [];
+
+        let historyIndex = -1;
+
+        let currentURL = null;
 
 
-            activeTabId = id;
+        /* =================================
+           OPEN
+           ================================= */
 
-            renderTabs();
+        openBrowser.addEventListener(
+            "click",
+            function () {
 
-            updateCurrentTab();
-        }
-
-
-        function renderTabs() {
-
-            tabs
-                .querySelectorAll(".tab")
-                .forEach(tab => tab.remove());
-
-
-            for (const [id, data] of tabData) {
-
-                const tab =
-                    document.createElement("button");
-
-                tab.type = "button";
-
-                tab.className = "tab";
-
-
-                if (id === activeTabId) {
-                    tab.classList.add("active");
-                }
-
-
-                const title =
-                    document.createElement("span");
-
-                title.className =
-                    "tab-title";
-
-                title.textContent =
-                    data.title;
-
-
-                const close =
-                    document.createElement("span");
-
-                close.className =
-                    "tab-close";
-
-                close.textContent =
-                    "×";
-
-
-                tab.appendChild(title);
-                tab.appendChild(close);
-
-
-                tab.addEventListener(
-                    "click",
-                    function (event) {
-
-                        if (
-                            event.target === close
-                        ) {
-
-                            closeTab(id);
-
-                            return;
-                        }
-
-
-                        switchTab(id);
-                    }
+                browserWindow.classList.add(
+                    "open"
                 );
 
+                browserWindow.classList.remove(
+                    "minimized"
+                );
 
-                tabs.insertBefore(
-                    tab,
-                    newTabButton
+                searchInput.focus();
+            }
+        );
+
+
+        /* =================================
+           CLOSE
+           ================================= */
+
+        closeButton.addEventListener(
+            "click",
+            function () {
+
+                browserWindow.classList.remove(
+                    "open"
                 );
             }
-        }
+        );
 
 
-        function switchTab(id) {
+        /* =================================
+           MINIMIZE
+           ================================= */
 
-            if (!tabData.has(id)) {
-                return;
+        minimizeButton.addEventListener(
+            "click",
+            function () {
+
+                browserWindow.classList.toggle(
+                    "minimized"
+                );
             }
+        );
 
 
-            activeTabId = id;
-
-            renderTabs();
-
-            updateCurrentTab();
-        }
-
-
-        function closeTab(id) {
-
-            if (tabData.size <= 1) {
-                return;
-            }
-
-
-            const ids =
-                Array.from(tabData.keys());
-
-            const index =
-                ids.indexOf(id);
-
-
-            tabData.delete(id);
-
-
-            if (activeTabId === id) {
-
-                const newIndex =
-                    Math.max(0, index - 1);
-
-                activeTabId =
-                    ids[newIndex];
-
-                updateCurrentTab();
-            }
-
-
-            renderTabs();
-        }
-
-
-        /* =====================================
-           CURRENT TAB
-           ===================================== */
-
-        function updateCurrentTab() {
-
-            const data =
-                tabData.get(activeTabId);
-
-
-            if (!data) {
-                return;
-            }
-
-
-            addressInput.value =
-                data.url || "";
-
-
-            updateNavigationButtons();
-
-
-            if (!data.url) {
-
-                showHome();
-
-                return;
-            }
-
-
-            showPage(data.url);
-        }
-
-
-        /* =====================================
-           SHOW HOME
-           ===================================== */
-
-        function showHome() {
-
-            homePage.style.display =
-                "block";
-
-            pageFrame.classList.remove(
-                "visible"
-            );
-
-            message.classList.remove(
-                "visible"
-            );
-        }
-
-
-        /* =====================================
-           SHOW PAGE
-           ===================================== */
-
-        function showPage(url) {
-
-            homePage.style.display =
-                "none";
-
-            message.classList.remove(
-                "visible"
-            );
-
-            pageFrame.classList.add(
-                "visible"
-            );
-
-            pageFrame.src = url;
-        }
-
-
-        /* =====================================
-           URL DETECTION
-           ===================================== */
+        /* =================================
+           WEBSITE DETECTION
+           ================================= */
 
         function isWebsiteAddress(value) {
 
+            const input =
+                value.trim();
+
+
             /*
-             * Complete URL.
+             * Full URLs.
              */
+
             if (
-                value.startsWith("https://") ||
-                value.startsWith("http://")
+                input.startsWith(
+                    "https://"
+                ) ||
+                input.startsWith(
+                    "http://"
+                )
             ) {
                 return true;
             }
 
 
             /*
-             * Domain names such as:
+             * Domain names.
+             *
+             * Examples:
              *
              * snokido.com
              * www.snokido.com
              * example.org
-             * example.net/games
+             * example.com/games
              */
+
             const domainPattern =
                 /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/.*)?$/;
 
 
-            return domainPattern.test(value);
+            return domainPattern.test(input);
         }
 
 
+        /* =================================
+           NORMALIZE URL
+           ================================= */
+
         function normalizeURL(value) {
 
-            const cleaned =
+            const input =
                 value.trim();
 
 
             if (
-                cleaned.startsWith("https://") ||
-                cleaned.startsWith("http://")
+                input.startsWith(
+                    "https://"
+                ) ||
+                input.startsWith(
+                    "http://"
+                )
             ) {
 
-                return cleaned;
+                return input;
             }
 
 
-            return "https://" + cleaned;
+            return "https://" + input;
         }
 
 
-        /* =====================================
+        /* =================================
            ADDRESS BAR
-           ===================================== */
+           ================================= */
 
         addressForm.addEventListener(
             "submit",
@@ -1189,13 +1004,8 @@
 
                 /*
                  * WEBSITE
-                 *
-                 * Example:
-                 *
-                 * snokido.com
-                 * www.snokido.com
-                 * example.com/games
                  */
+
                 if (
                     isWebsiteAddress(value)
                 ) {
@@ -1204,25 +1014,28 @@
                         normalizeURL(value);
 
 
-                    navigate(url);
+                    navigateTo(
+                        url,
+                        true
+                    );
+
 
                     return;
                 }
 
 
                 /*
-                 * OTHERWISE:
-                 *
-                 * Treat the text as a search.
+                 * SEARCH
                  */
+
                 performSearch(value);
             }
         );
 
 
-        /* =====================================
-           SEARCH
-           ===================================== */
+        /* =================================
+           SEARCH BOX
+           ================================= */
 
         searchForm.addEventListener(
             "submit",
@@ -1245,33 +1058,32 @@
         );
 
 
+        /* =================================
+           SEARCH
+           ================================= */
+
         async function performSearch(query) {
 
-            const data =
-                tabData.get(activeTabId);
+            currentURL = null;
 
+            homePage.style.display =
+                "block";
 
-            if (!data) {
-                return;
-            }
+            pageFrame.classList.remove(
+                "visible"
+            );
 
-
-            /*
-             * Keep the search page in
-             * the current tab.
-             */
-            data.url = null;
-
-            data.history = [];
-
-            data.historyIndex = -1;
+            blockedMessage.classList.remove(
+                "visible"
+            );
 
 
             addressInput.value =
                 query;
 
 
-            showHome();
+            tabTitle.textContent =
+                "Search";
 
 
             results.innerHTML =
@@ -1279,8 +1091,9 @@
 
 
             /*
-             * DuckDuckGo Instant Answer API.
+             * DuckDuckGo search API.
              */
+
             const apiURL =
                 "https://api.duckduckgo.com/?q=" +
                 encodeURIComponent(query) +
@@ -1300,13 +1113,13 @@
                 }
 
 
-                const searchData =
+                const data =
                     await response.json();
 
 
                 displayResults(
                     query,
-                    searchData
+                    data
                 );
 
             }
@@ -1314,17 +1127,16 @@
 
                 results.innerHTML = `
                     <p>
-                        The search service could not
-                        be reached.
+                        Search could not be completed.
                     </p>
 
                     <p>
-                        If you're trying to visit a
-                        website directly, enter its
-                        domain name, for example:
+                        You can enter a website directly
+                        into the address bar.
                     </p>
 
                     <p>
+                        Example:
                         <strong>snokido.com</strong>
                     </p>
                 `;
@@ -1332,9 +1144,9 @@
         }
 
 
-        /* =====================================
-           RESULTS
-           ===================================== */
+        /* =================================
+           DISPLAY SEARCH RESULTS
+           ================================= */
 
         function displayResults(
             query,
@@ -1350,6 +1162,7 @@
             /*
              * Main result.
              */
+
             if (
                 data.AbstractURL &&
                 data.AbstractText
@@ -1372,6 +1185,7 @@
             /*
              * Related results.
              */
+
             function collectTopics(
                 topics
             ) {
@@ -1419,9 +1233,6 @@
             );
 
 
-            /*
-             * No results.
-             */
             if (items.length === 0) {
 
                 results.innerHTML = `
@@ -1430,8 +1241,9 @@
                     </p>
 
                     <p>
-                        You can still enter a website
-                        directly in the address bar.
+                        Try entering a website directly,
+                        such as:
+                        <strong>snokido.com</strong>
                     </p>
                 `;
 
@@ -1440,8 +1252,9 @@
 
 
             /*
-             * Build result links.
+             * Create result links.
              */
+
             for (
                 const item of items
             ) {
@@ -1479,26 +1292,29 @@
                 /*
                  * IMPORTANT:
                  *
-                 * This link is controlled
-                 * by our website.
+                 * Do not use target="_blank".
                  *
-                 * It does NOT use
-                 * target="_blank".
+                 * Clicking the result navigates
+                 * the existing tab.
                  */
+
                 link.addEventListener(
                     "click",
                     function (event) {
 
                         event.preventDefault();
 
-                        navigate(
-                            item.url
+                        navigateTo(
+                            item.url,
+                            true
                         );
                     }
                 );
 
 
-                heading.appendChild(link);
+                heading.appendChild(
+                    link
+                );
 
 
                 const url =
@@ -1545,376 +1361,281 @@
         }
 
 
-        /* =====================================
-           NAVIGATION
-           ===================================== */
+        /* =================================
+           NAVIGATE
+           ================================= */
 
-        function navigate(url) {
+        function navigateTo(
+            url,
+            addToHistory
+        ) {
 
-            const data =
-                tabData.get(activeTabId);
-
-
-            if (!data) {
+            if (
+                !url ||
+                typeof url !== "string"
+            ) {
                 return;
             }
 
 
             /*
-             * Remove forward history.
+             * Make sure the URL is complete.
              */
-            data.history =
-                data.history.slice(
-                    0,
-                    data.historyIndex + 1
+
+            const finalURL =
+                normalizeURL(url);
+
+
+            /*
+             * Add to history.
+             */
+
+            if (addToHistory) {
+
+                history =
+                    history.slice(
+                        0,
+                        historyIndex + 1
+                    );
+
+
+                history.push(
+                    finalURL
                 );
 
 
-            /*
-             * Add new URL.
-             */
-            data.history.push(url);
+                historyIndex =
+                    history.length - 1;
+            }
 
 
-            data.historyIndex =
-                data.history.length - 1;
+            currentURL =
+                finalURL;
 
 
-            data.url =
-                url;
-
-
-            /*
-             * Update address bar.
-             */
             addressInput.value =
-                url;
+                finalURL;
 
 
             /*
-             * Load inside the existing
-             * iframe.
+             * Get hostname for tab title.
              */
-            showPage(url);
 
-
-            /*
-             * Update tab title.
-             */
             try {
 
                 const parsed =
-                    new URL(url);
+                    new URL(finalURL);
 
 
-                data.title =
-                    parsed.hostname ||
-                    "Web Page";
+                tabTitle.textContent =
+                    parsed.hostname;
 
             }
             catch {
 
-                data.title =
+                tabTitle.textContent =
                     "Web Page";
             }
 
 
-            renderTabs();
+            /*
+             * Hide home.
+             */
 
-            updateNavigationButtons();
+            homePage.style.display =
+                "none";
+
+
+            blockedMessage.classList.remove(
+                "visible"
+            );
+
+
+            /*
+             * Show website.
+             */
+
+            pageFrame.classList.add(
+                "visible"
+            );
+
+
+            pageFrame.src =
+                finalURL;
+
+
+            updateButtons();
         }
 
 
-        /* =====================================
-           NAVIGATION BUTTONS
-           ===================================== */
-
-        function updateNavigationButtons() {
-
-            const data =
-                tabData.get(activeTabId);
-
-
-            if (!data) {
-                return;
-            }
-
-
-            backButton.disabled =
-                data.historyIndex <= 0;
-
-
-            forwardButton.disabled =
-                data.historyIndex >=
-                data.history.length - 1;
-        }
-
-
-        /* =====================================
+        /* =================================
            BACK
-           ===================================== */
+           ================================= */
 
         backButton.addEventListener(
             "click",
             function () {
 
-                const data =
-                    tabData.get(activeTabId);
-
-
                 if (
-                    !data ||
-                    data.historyIndex <= 0
+                    historyIndex <= 0
                 ) {
                     return;
                 }
 
 
-                data.historyIndex--;
+                historyIndex--;
 
 
                 const url =
-                    data.history[
-                        data.historyIndex
+                    history[
+                        historyIndex
                     ];
 
 
-                data.url =
-                    url;
-
-
-                addressInput.value =
-                    url;
-
-
-                showPage(url);
-
-                updateNavigationButtons();
+                navigateTo(
+                    url,
+                    false
+                );
             }
         );
 
 
-        /* =====================================
+        /* =================================
            FORWARD
-           ===================================== */
+           ================================= */
 
         forwardButton.addEventListener(
             "click",
             function () {
 
-                const data =
-                    tabData.get(activeTabId);
-
-
                 if (
-                    !data ||
-                    data.historyIndex >=
-                    data.history.length - 1
+                    historyIndex >=
+                    history.length - 1
                 ) {
                     return;
                 }
 
 
-                data.historyIndex++;
+                historyIndex++;
 
 
                 const url =
-                    data.history[
-                        data.historyIndex
+                    history[
+                        historyIndex
                     ];
 
 
-                data.url =
-                    url;
-
-
-                addressInput.value =
-                    url;
-
-
-                showPage(url);
-
-                updateNavigationButtons();
+                navigateTo(
+                    url,
+                    false
+                );
             }
         );
 
 
-        /* =====================================
+        /* =================================
+           UPDATE NAVIGATION BUTTONS
+           ================================= */
+
+        function updateButtons() {
+
+            backButton.disabled =
+                historyIndex <= 0;
+
+
+            forwardButton.disabled =
+                historyIndex >=
+                history.length - 1;
+        }
+
+
+        /* =================================
            REFRESH
-           ===================================== */
+           ================================= */
 
         refreshButton.addEventListener(
             "click",
             function () {
 
-                if (
-                    !pageFrame.classList.contains(
-                        "visible"
-                    )
-                ) {
+                if (!currentURL) {
                     return;
                 }
 
 
                 pageFrame.src =
-                    pageFrame.src;
+                    currentURL;
             }
         );
 
 
-        /* =====================================
+        /* =================================
            HOME
-           ===================================== */
+           ================================= */
 
         homeButton.addEventListener(
             "click",
             function () {
 
-                const data =
-                    tabData.get(activeTabId);
-
-
-                if (data) {
-                    data.url = null;
-                }
-
+                currentURL = null;
 
                 addressInput.value =
                     "";
 
-
-                showHome();
-
-                updateNavigationButtons();
-            }
-        );
+                tabTitle.textContent =
+                    "New Tab";
 
 
-        /* =====================================
-           NEW TAB
-           ===================================== */
-
-        newTabButton.addEventListener(
-            "click",
-            function () {
-
-                createTab();
-
-                searchInput.focus();
-            }
-        );
-
-
-        /* =====================================
-           OPEN BROWSER
-           ===================================== */
-
-        openBrowser.addEventListener(
-            "click",
-            function () {
-
-                browserWindow.classList.add(
-                    "open"
-                );
-
-
-                browserWindow.classList.remove(
-                    "minimized"
-                );
-
-
-                if (tabData.size === 0) {
-
-                    createTab();
-
-                }
-
-
-                searchInput.focus();
-            }
-        );
-
-
-        /* =====================================
-           CLOSE
-           ===================================== */
-
-        closeButton.addEventListener(
-            "click",
-            function () {
-
-                browserWindow.classList.remove(
-                    "open"
-                );
-            }
-        );
-
-
-        /* =====================================
-           MINIMIZE
-           ===================================== */
-
-        minimizeButton.addEventListener(
-            "click",
-            function () {
-
-                browserWindow.classList.toggle(
-                    "minimized"
-                );
-            }
-        );
-
-
-        /* =====================================
-           ESCAPE
-           ===================================== */
-
-        document.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (
-                    event.key === "Escape" &&
-                    browserWindow.classList.contains(
-                        "open"
-                    )
-                ) {
-
-                    browserWindow.classList.remove(
-                        "open"
-                    );
-                }
-            }
-        );
-
-
-        /* =====================================
-           RETURN BUTTON
-           ===================================== */
-
-        returnButton.addEventListener(
-            "click",
-            function () {
-
-                message.classList.remove(
+                pageFrame.classList.remove(
                     "visible"
                 );
 
-                showHome();
+
+                blockedMessage.classList.remove(
+                    "visible"
+                );
+
+
+                homePage.style.display =
+                    "block";
+
+
+                searchInput.focus();
             }
         );
 
 
-        /* =====================================
-           DRAGGING
-           ===================================== */
+        /* =================================
+           IFRAME LOAD
+           ================================= */
+
+        pageFrame.addEventListener(
+            "load",
+            function () {
+
+                /*
+                 * We cannot reliably inspect another
+                 * website's security headers from here
+                 * because of browser same-origin rules.
+                 *
+                 * The iframe's load event therefore
+                 * does not mean the site necessarily
+                 * permitted embedding.
+                 */
+            }
+        );
+
+
+        /* =================================
+           DRAG WINDOW
+           ================================= */
 
         let dragging = false;
 
-        let pointerId = null;
-
         let offsetX = 0;
+
         let offsetY = 0;
+
+        let pointerId = null;
 
 
         windowHeader.addEventListener(
@@ -1922,15 +1643,8 @@
             function (event) {
 
                 if (
-                    event.target.closest("button")
-                ) {
-                    return;
-                }
-
-
-                if (
-                    browserWindow.classList.contains(
-                        "minimized"
+                    event.target.closest(
+                        "button"
                     )
                 ) {
                     return;
@@ -1961,6 +1675,15 @@
                     rect.top;
 
 
+                /*
+                 * Remove transform after the first
+                 * drag so left/top can be used normally.
+                 */
+
+                browserWindow.style.transform =
+                    "none";
+
+
                 browserWindow.style.left =
                     rect.left + "px";
 
@@ -1982,10 +1705,6 @@
                 }
 
 
-                const width =
-                    browserWindow.offsetWidth;
-
-
                 let left =
                     event.clientX -
                     offsetX;
@@ -1996,30 +1715,38 @@
                     offsetY;
 
 
-                const minimumVisible =
+                const minVisible =
                     30;
 
 
                 left =
+                    Math.max(
+                        -browserWindow.offsetWidth +
+                        minVisible,
+                        left
+                    );
+
+
+                left =
                     Math.min(
-                        Math.max(
-                            left,
-                            -width +
-                            minimumVisible
-                        ),
                         window.innerWidth -
-                        minimumVisible
+                        minVisible,
+                        left
+                    );
+
+
+                top =
+                    Math.max(
+                        0,
+                        top
                     );
 
 
                 top =
                     Math.min(
-                        Math.max(
-                            top,
-                            0
-                        ),
                         window.innerHeight -
-                        46
+                        46,
+                        top
                     );
 
 
@@ -2054,7 +1781,7 @@
 
             }
             catch {
-                // Pointer already released.
+                // Already released.
             }
         }
 
@@ -2071,11 +1798,34 @@
         );
 
 
-        /* =====================================
-           START
-           ===================================== */
+        /* =================================
+           ESCAPE
+           ================================= */
 
-        updateNavigationButtons();
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    browserWindow.classList.contains(
+                        "open"
+                    )
+                ) {
+
+                    browserWindow.classList.remove(
+                        "open"
+                    );
+                }
+            }
+        );
+
+
+        /* =================================
+           INITIAL STATE
+           ================================= */
+
+        updateButtons();
 
     </script>
 
