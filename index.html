@@ -19,6 +19,39 @@
         a {
             color: #333333;
         }
+
+        .search-box {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .search-box form {
+            display: flex;
+            max-width: 600px;
+            gap: 8px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .search-box button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 
@@ -43,6 +76,18 @@
         found within these strata, researchers can reconstruct ancient
         environments that existed long before human civilization.
     </p>
+
+    <div class="search-box">
+        <form action="https://duckduckgo.com/" method="get" target="_blank">
+            <input
+                type="search"
+                name="q"
+                placeholder="Search the web..."
+                aria-label="Search DuckDuckGo"
+                required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
 </body>
 </html>
