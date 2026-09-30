@@ -1,1171 +1,771 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-
-    <title>
-        World History Atlas
-    </title>
-
+    <title>Atlas Gaming</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
-
         html,
         body {
-
             margin: 0;
-
-            width: 100%;
-
+            padding: 0;
             min-height: 100%;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            background: #ffffff;
-
-            color: #333333;
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
         }
 
-
         body {
-
             padding: 20px;
         }
 
-
         h1 {
-
             margin-top: 0;
         }
 
+        /* ==============================
+           MAIN PAGE
+           ============================== */
 
-        a {
-
-            color: #333333;
+        .page {
+            max-width: 1200px;
+            margin: auto;
         }
 
+        .description {
+            color: #cccccc;
+            line-height: 1.6;
+        }
 
-        /* ==================================
+        /* ==============================
            SEARCH BUTTON
-           ================================== */
+           ============================== */
 
-        #openBrowser {
-
-            margin-top: 20px;
+        .open-search {
+            margin: 15px 0 20px;
 
             padding: 12px 20px;
 
             border: none;
+            border-radius: 7px;
 
-            border-radius: 6px;
-
-            background: #333333;
-
+            background: #4285f4;
             color: white;
 
             font-size: 16px;
-
             cursor: pointer;
         }
 
-
-        #openBrowser:hover {
-
-            background: #555555;
+        .open-search:hover {
+            background: #3367d6;
         }
 
+        /* ==============================
+           MINECRAFT
+           ============================== */
 
-        /* ==================================
-           GAME
-           ================================== */
+        .game-title {
+            margin-top: 10px;
+        }
 
-        .game-area {
-
+        .game-container {
             width: 100%;
+            height: 650px;
 
-            height: 600px;
+            background: #000;
 
-            margin-top: 25px;
-
-            background: #000000;
+            border: 2px solid #333;
+            border-radius: 10px;
 
             overflow: hidden;
-
-            border-radius: 8px;
         }
 
-
-        .game-area iframe {
-
+        .game-container iframe {
             width: 100%;
-
             height: 100%;
 
             border: none;
-
             display: block;
         }
 
+        /* ==============================
+           SEARCH WINDOW
+           ============================== */
 
-        /* ==================================
-           BROWSER WINDOW
-           ================================== */
-
-        #browserWindow {
-
+        .search-window {
             position: fixed;
 
             left: 50%;
+            top: 5%;
 
-            top: 50px;
+            transform: translateX(-50%);
 
-            width: 900px;
+            width: min(950px, 94vw);
+            height: min(700px, 88vh);
 
-            height: 650px;
+            background: #202020;
 
-            transform:
-                translateX(-50%);
+            border: 1px solid #555;
+            border-radius: 10px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.7);
 
             display: none;
 
             flex-direction: column;
 
-            background: #eeeeee;
-
-            border-radius:
-                8px 8px 0 0;
+            z-index: 1000;
 
             overflow: hidden;
-
-            z-index: 99999;
-
-            box-shadow:
-                0 15px 50px
-                rgba(0, 0, 0, 0.55);
         }
 
-
-        #browserWindow.visible {
-
+        .search-window.open {
             display: flex;
         }
 
+        /* ==============================
+           WINDOW HEADER
+           ============================== */
 
-        /* ==================================
-           TITLE BAR
-           ================================== */
-
-        #titleBar {
-
-            height: 40px;
-
-            flex-shrink: 0;
+        .window-header {
+            height: 42px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
-            padding-left: 12px;
+            padding: 0 10px;
 
-            background: #202020;
-
-            color: white;
+            background: #181818;
 
             user-select: none;
-
-            cursor: move;
         }
 
-
-        #browserTitle {
-
-            max-width: 75%;
-
-            overflow: hidden;
-
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
-
-            font-size: 14px;
-
+        .window-title {
             font-weight: bold;
         }
 
-
-        #windowButtons {
-
+        .window-buttons {
             display: flex;
-
             gap: 5px;
-
-            padding-right: 7px;
         }
 
-
-        #windowButtons button {
-
-            width: 30px;
-
-            height: 27px;
+        .window-buttons button {
+            width: 32px;
+            height: 28px;
 
             border: none;
+            border-radius: 5px;
 
-            border-radius: 4px;
-
-            background: #444444;
-
+            background: #444;
             color: white;
 
-            font-size: 17px;
+            font-size: 18px;
 
             cursor: pointer;
         }
 
-
-        #windowButtons button:hover {
-
-            background: #666666;
+        .window-buttons button:hover {
+            background: #666;
         }
 
-
-        /* ==================================
+        /* ==============================
            TAB
-           ================================== */
+           ============================== */
 
-        #tabBar {
-
-            height: 36px;
-
-            flex-shrink: 0;
+        .tab-bar {
+            height: 38px;
 
             display: flex;
-
             align-items: flex-end;
 
-            padding-left: 7px;
+            background: #252525;
 
-            background: #292929;
+            padding-left: 8px;
         }
 
-
-        #tab {
-
-            width: 210px;
-
+        .tab {
             height: 32px;
+            min-width: 200px;
 
             display: flex;
-
             align-items: center;
 
             padding: 0 12px;
 
-            background: #ffffff;
+            background: #fff;
+            color: #222;
 
-            color: #222222;
+            border-radius: 7px 7px 0 0;
 
-            border-radius:
-                6px 6px 0 0;
-
-            font-size: 13px;
-
-            overflow: hidden;
-
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
+            font-size: 14px;
         }
 
+        /* ==============================
+           SEARCH BAR
+           ============================== */
 
-        /* ==================================
-           TOOLBAR
-           ================================== */
-
-        #toolbar {
-
-            height: 46px;
-
-            flex-shrink: 0;
-
+        .toolbar {
             display: flex;
 
-            align-items: center;
+            gap: 6px;
 
-            gap: 5px;
+            padding: 8px;
 
-            padding: 6px;
-
-            background: #eeeeee;
+            background: #e9e9e9;
         }
 
+        .toolbar button {
+            width: 36px;
+            height: 34px;
 
-        .navButton {
-
-            width: 34px;
-
-            height: 32px;
-
-            flex-shrink: 0;
-
-            border: 1px solid #bbbbbb;
-
+            border: 1px solid #bbb;
             border-radius: 5px;
 
-            background: #ffffff;
-
-            color: #222222;
+            background: white;
 
             font-size: 17px;
 
             cursor: pointer;
         }
 
-
-        .navButton:hover {
-
-            background: #dddddd;
+        .toolbar button:hover {
+            background: #ddd;
         }
 
-
-        .navButton:disabled {
-
-            color: #aaaaaa;
-
-            cursor: default;
-
-            background: #eeeeee;
-        }
-
-
-        #addressForm {
-
+        .search-form {
             flex: 1;
-
-            min-width: 0;
 
             display: flex;
 
-            gap: 5px;
+            gap: 6px;
         }
 
-
-        #address {
-
+        .search-input {
             flex: 1;
 
             min-width: 0;
 
-            height: 32px;
+            height: 34px;
 
             padding: 0 10px;
 
-            border: 1px solid #aaaaaa;
-
+            border: 1px solid #aaa;
             border-radius: 5px;
 
-            outline: none;
+            font-size: 15px;
 
-            font-size: 14px;
+            outline: none;
         }
 
-
-        #address:focus {
-
+        .search-input:focus {
             border-color: #4285f4;
         }
 
+        .go-button {
+            width: auto !important;
 
-        #goButton {
+            padding: 0 15px;
 
-            height: 32px;
-
-            padding: 0 14px;
-
-            border: none;
-
-            border-radius: 5px;
-
-            background: #4285f4;
-
+            background: #4285f4 !important;
             color: white;
 
-            cursor: pointer;
+            border: none !important;
         }
 
-
-        #goButton:hover {
-
-            background: #3367d6;
+        .go-button:hover {
+            background: #3367d6 !important;
         }
 
+        /* ==============================
+           SEARCH RESULTS
+           ============================== */
 
-        /* ==================================
+        .results {
+            flex: 1;
+
+            background: white;
+
+            overflow: hidden;
+        }
+
+        .results iframe {
+            width: 100%;
+            height: 100%;
+
+            border: none;
+        }
+
+        /* ==============================
            MOBILE
-           ================================== */
-
-        @media (max-width: 950px) {
-
-            #browserWindow {
-
-                width: 94vw;
-            }
-        }
-
+           ============================== */
 
         @media (max-width: 600px) {
 
             body {
-
-                padding: 15px;
+                padding: 10px;
             }
 
-
-            .game-area {
-
+            .game-container {
                 height: 500px;
             }
 
-
-            #browserWindow {
-
-                width: 96vw;
-
-                height: 80vh;
-
-                top: 20px;
+            .search-window {
+                width: 97vw;
+                height: 90vh;
+                top: 3%;
             }
 
-
-            #tab {
-
-                width: 150px;
+            .tab {
+                min-width: 150px;
             }
 
+            .toolbar button {
+                width: 32px;
+            }
+
+            .go-button {
+                padding: 0 10px;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+<div class="page">
 
-    <h1>
-        Geological History of Earth
-    </h1>
+    <h1>🎮 Atlas Gaming</h1>
 
-
-    <p>
-
-        Earth's early geological history was shaped
-        by major changes in its crust, including
-        tectonic processes that contributed to the
-        formation and breakup of supercontinents
-        such as
-
-        <a
-            href="https://bull.ultradec.com/"
-            target="_blank"
-            rel="noopener noreferrer">
-
-            Pangaea
-
-        </a>.
-
+    <p class="description">
+        Welcome to Atlas Gaming! Play Minecraft below or
+        open the search engine to search the web.
     </p>
 
 
-    <p>
-
-        Sedimentary rock layers provide evidence of
-        volcanic activity, environmental changes,
-        and past climates.
-
-    </p>
-
+    <!-- SEARCH BUTTON -->
 
     <button
-        id="openBrowser"
+        class="open-search"
+        id="openSearch"
         type="button">
 
-        🔍 Open Search
+        🔍 Open Search Engine
 
     </button>
 
 
-    <!-- ==================================
-         GAME
-         ================================== -->
+    <!-- ==============================
+         MINECRAFT
+         ============================== -->
 
-    <div class="game-area">
+    <h2 class="game-title">
+        Minecraft
+    </h2>
+
+    <div class="game-container">
 
         <iframe
             src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
-            title="Game"
-            scrolling="no"
-            allowfullscreen>
+            title="Minecraft"
+            allowfullscreen
+            scrolling="no">
         </iframe>
 
     </div>
 
-
-    <!-- ==================================
-         BROWSER UI
-         ================================== -->
-
-    <div id="browserWindow">
+</div>
 
 
-        <!-- TITLE BAR -->
+<!-- ==============================
+     SEARCH WINDOW
+     ============================== -->
 
-        <div id="titleBar">
-
-            <span id="browserTitle">
-                Atlas Browser
-            </span>
-
-
-            <div id="windowButtons">
-
-                <button
-                    id="minimize"
-                    type="button"
-                    title="Minimize">
-
-                    −
-
-                </button>
+<div
+    class="search-window"
+    id="searchWindow">
 
 
-                <button
-                    id="close"
-                    type="button"
-                    title="Close">
+    <!-- WINDOW HEADER -->
 
-                    ×
+    <div class="window-header">
 
-                </button>
-
-            </div>
-
+        <div class="window-title">
+            Atlas Browser
         </div>
 
-
-        <!-- ONE TAB -->
-
-        <div id="tabBar">
-
-            <div id="tab">
-                New Tab
-            </div>
-
-        </div>
-
-
-        <!-- NAVIGATION -->
-
-        <div id="toolbar">
-
+        <div class="window-buttons">
 
             <button
-                class="navButton"
-                id="back"
+                id="minimizeSearch"
                 type="button"
-                title="Back">
+                title="Minimize">
 
-                ←
+                −
 
             </button>
 
-
             <button
-                class="navButton"
-                id="forward"
+                id="closeSearch"
                 type="button"
-                title="Forward">
+                title="Close">
 
-                →
+                ×
 
             </button>
-
-
-            <button
-                class="navButton"
-                id="refresh"
-                type="button"
-                title="Refresh">
-
-                ↻
-
-            </button>
-
-
-            <button
-                class="navButton"
-                id="home"
-                type="button"
-                title="Home">
-
-                ⌂
-
-            </button>
-
-
-            <form
-                id="addressForm">
-
-
-                <input
-                    id="address"
-                    type="text"
-                    placeholder="Search or enter a website..."
-                    autocomplete="off"
-                    spellcheck="false">
-
-
-                <button
-                    id="goButton"
-                    type="submit">
-
-                    Go
-
-                </button>
-
-            </form>
 
         </div>
 
     </div>
 
 
-    <script>
+    <!-- ONE TAB -->
 
-        const browserWindow =
-            document.getElementById(
-                "browserWindow"
+    <div class="tab-bar">
+
+        <div
+            class="tab"
+            id="tabTitle">
+
+            🔍 Bing Search
+
+        </div>
+
+    </div>
+
+
+    <!-- TOOLBAR -->
+
+    <div class="toolbar">
+
+
+        <button
+            id="backButton"
+            type="button"
+            title="Back">
+
+            ←
+
+        </button>
+
+
+        <button
+            id="forwardButton"
+            type="button"
+            title="Forward">
+
+            →
+
+        </button>
+
+
+        <button
+            id="refreshButton"
+            type="button"
+            title="Refresh">
+
+            ↻
+
+        </button>
+
+
+        <button
+            id="homeButton"
+            type="button"
+            title="Home">
+
+            🏠
+
+        </button>
+
+
+        <form
+            class="search-form"
+            id="searchForm">
+
+            <input
+                class="search-input"
+                id="searchInput"
+                type="text"
+                placeholder="Search Bing..."
+                autocomplete="off"
+                required>
+
+            <button
+                class="go-button"
+                type="submit">
+
+                Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div class="results">
+
+        <iframe
+            id="resultsFrame"
+            title="Search results"
+            src="https://www.bing.com/">
+        </iframe>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const openSearch =
+        document.getElementById("openSearch");
+
+    const closeSearch =
+        document.getElementById("closeSearch");
+
+    const minimizeSearch =
+        document.getElementById("minimizeSearch");
+
+    const searchWindow =
+        document.getElementById("searchWindow");
+
+    const searchForm =
+        document.getElementById("searchForm");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const resultsFrame =
+        document.getElementById("resultsFrame");
+
+    const backButton =
+        document.getElementById("backButton");
+
+    const forwardButton =
+        document.getElementById("forwardButton");
+
+    const refreshButton =
+        document.getElementById("refreshButton");
+
+    const homeButton =
+        document.getElementById("homeButton");
+
+    const tabTitle =
+        document.getElementById("tabTitle");
+
+
+    /* ==============================
+       OPEN
+       ============================== */
+
+    openSearch.addEventListener(
+        "click",
+        function () {
+
+            searchWindow.classList.add(
+                "open"
             );
 
+            searchInput.focus();
 
-        const titleBar =
-            document.getElementById(
-                "titleBar"
+        }
+    );
+
+
+    /* ==============================
+       CLOSE
+       ============================== */
+
+    closeSearch.addEventListener(
+        "click",
+        function () {
+
+            searchWindow.classList.remove(
+                "open"
             );
 
+        }
+    );
 
-        const browserTitle =
-            document.getElementById(
-                "browserTitle"
+
+    /* ==============================
+       MINIMIZE
+       ============================== */
+
+    minimizeSearch.addEventListener(
+        "click",
+        function () {
+
+            searchWindow.classList.toggle(
+                "open"
             );
 
-
-        const tab =
-            document.getElementById(
-                "tab"
-            );
+        }
+    );
 
 
-        const address =
-            document.getElementById(
-                "address"
-            );
+    /* ==============================
+       SEARCH
+       ============================== */
+
+    searchForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
 
 
-        const addressForm =
-            document.getElementById(
-                "addressForm"
-            );
+            const query =
+                searchInput.value.trim();
 
 
-        const openBrowser =
-            document.getElementById(
-                "openBrowser"
-            );
-
-
-        const closeButton =
-            document.getElementById(
-                "close"
-            );
-
-
-        const minimizeButton =
-            document.getElementById(
-                "minimize"
-            );
-
-
-        const backButton =
-            document.getElementById(
-                "back"
-            );
-
-
-        const forwardButton =
-            document.getElementById(
-                "forward"
-            );
-
-
-        const refreshButton =
-            document.getElementById(
-                "refresh"
-            );
-
-
-        const homeButton =
-            document.getElementById(
-                "home"
-            );
-
-
-        /* ==================================
-           UPDATE BROWSER POSITION
-           ================================== */
-
-        function updateBrowserPosition() {
-
-            if (
-                !browserWindow.classList
-                    .contains("visible")
-            ) {
+            if (!query) {
                 return;
             }
 
 
-            const rect =
-                browserWindow.getBoundingClientRect();
+            const searchURL =
+                "https://www.bing.com/search?q=" +
+                encodeURIComponent(query);
 
 
-            window.atlasBrowser.setBounds({
+            resultsFrame.src =
+                searchURL;
 
-                x: rect.left,
 
-                y: rect.top,
+            tabTitle.textContent =
+                "🔍 " + query;
 
-                width: rect.width,
-
-                height: rect.height
-            });
         }
+    );
 
 
-        /* ==================================
-           OPEN
-           ================================== */
+    /* ==============================
+       BACK
+       ============================== */
 
-        openBrowser.addEventListener(
-            "click",
-            async () => {
+    backButton.addEventListener(
+        "click",
+        function () {
 
-                browserWindow.classList.add(
-                    "visible"
+            try {
+
+                resultsFrame.contentWindow.history.back();
+
+            } catch (error) {
+
+                console.log(
+                    "Back navigation unavailable."
                 );
 
-
-                updateBrowserPosition();
-
-
-                await window.atlasBrowser.open();
-
-
-                updateBrowserPosition();
-
-
-                address.focus();
             }
-        );
+
+        }
+    );
 
 
-        /* ==================================
-           CLOSE
-           ================================== */
+    /* ==============================
+       FORWARD
+       ============================== */
 
-        closeButton.addEventListener(
-            "click",
-            () => {
+    forwardButton.addEventListener(
+        "click",
+        function () {
 
-                browserWindow.classList.remove(
-                    "visible"
+            try {
+
+                resultsFrame.contentWindow.history.forward();
+
+            } catch (error) {
+
+                console.log(
+                    "Forward navigation unavailable."
                 );
 
-
-                window.atlasBrowser.close();
             }
-        );
+
+        }
+    );
 
 
-        /* ==================================
-           MINIMIZE
-           ================================== */
+    /* ==============================
+       REFRESH
+       ============================== */
 
-        minimizeButton.addEventListener(
-            "click",
-            () => {
+    refreshButton.addEventListener(
+        "click",
+        function () {
 
-                window.atlasBrowser.minimize();
-            }
-        );
+            try {
 
+                resultsFrame.contentWindow.location.reload();
 
-        /* ==================================
-           SEARCH OR WEBSITE
-           ================================== */
+            } catch (error) {
 
-        addressForm.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-
-                const value =
-                    address.value.trim();
-
-
-                if (!value) {
-                    return;
-                }
-
-
-                /*
-                 * Detect normal domain names.
-                 *
-                 * Examples:
-                 *
-                 * youtube.com
-                 * snokido.com
-                 * google.com
-                 */
-
-                const looksLikeWebsite =
-                    /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/.*)?$/i
-                        .test(value);
-
-
-                if (looksLikeWebsite) {
-
-                    window.atlasBrowser.navigate(
-                        value
-                    );
-
-                } else {
-
-                    window.atlasBrowser.search(
-                        value
-                    );
-                }
+                resultsFrame.src =
+                    resultsFrame.src;
 
             }
-        );
+
+        }
+    );
 
 
-        /* ==================================
-           BACK
-           ================================== */
+    /* ==============================
+       HOME
+       ============================== */
 
-        backButton.addEventListener(
-            "click",
-            () => {
+    homeButton.addEventListener(
+        "click",
+        function () {
 
-                window.atlasBrowser.back();
-            }
-        );
+            resultsFrame.src =
+                "https://www.bing.com/";
 
+            searchInput.value = "";
 
-        /* ==================================
-           FORWARD
-           ================================== */
+            tabTitle.textContent =
+                "🔍 Bing Search";
 
-        forwardButton.addEventListener(
-            "click",
-            () => {
-
-                window.atlasBrowser.forward();
-            }
-        );
+        }
+    );
 
 
-        /* ==================================
-           REFRESH
-           ================================== */
+    /* ==============================
+       ESCAPE CLOSES WINDOW
+       ============================== */
 
-        refreshButton.addEventListener(
-            "click",
-            () => {
+    document.addEventListener(
+        "keydown",
+        function (event) {
 
-                window.atlasBrowser.refresh();
-            }
-        );
+            if (
+                event.key === "Escape" &&
+                searchWindow.classList.contains("open")
+            ) {
 
-
-        /* ==================================
-           HOME
-           ================================== */
-
-        homeButton.addEventListener(
-            "click",
-            () => {
-
-                window.atlasBrowser.home();
-            }
-        );
-
-
-        /* ==================================
-           URL CHANGED
-           ================================== */
-
-        window.atlasBrowser.onURL(
-            url => {
-
-                address.value =
-                    url;
-            }
-        );
-
-
-        /* ==================================
-           TITLE CHANGED
-           ================================== */
-
-        window.atlasBrowser.onTitle(
-            title => {
-
-                if (!title) {
-                    return;
-                }
-
-
-                browserTitle.textContent =
-                    title;
-
-
-                tab.textContent =
-                    title;
-            }
-        );
-
-
-        /* ==================================
-           NAVIGATION STATE
-           ================================== */
-
-        window.atlasBrowser.onNavigation(
-            state => {
-
-                backButton.disabled =
-                    !state.back;
-
-
-                forwardButton.disabled =
-                    !state.forward;
-            }
-        );
-
-
-        /* ==================================
-           BROWSER OPENED
-           ================================== */
-
-        window.atlasBrowser.onOpen(
-            () => {
-
-                browserWindow.classList.add(
-                    "visible"
+                searchWindow.classList.remove(
+                    "open"
                 );
 
-
-                updateBrowserPosition();
             }
-        );
 
+        }
+    );
 
-        /* ==================================
-           BROWSER CLOSED
-           ================================== */
-
-        window.atlasBrowser.onClose(
-            () => {
-
-                browserWindow.classList.remove(
-                    "visible"
-                );
-            }
-        );
-
-
-        /* ==================================
-           MINIMIZE
-           ================================== */
-
-        window.atlasBrowser.onMinimized(
-            minimized => {
-
-                if (minimized) {
-
-                    browserWindow.style.display =
-                        "none";
-
-                } else {
-
-                    browserWindow.style.display =
-                        "flex";
-
-
-                    updateBrowserPosition();
-                }
-            }
-        );
-
-
-        /* ==================================
-           DRAGGING
-           ================================== */
-
-        let dragging = false;
-
-        let offsetX = 0;
-
-        let offsetY = 0;
-
-
-        titleBar.addEventListener(
-            "pointerdown",
-            event => {
-
-                if (
-                    event.target.closest(
-                        "button"
-                    )
-                ) {
-                    return;
-                }
-
-
-                dragging = true;
-
-
-                const rect =
-                    browserWindow
-                        .getBoundingClientRect();
-
-
-                offsetX =
-                    event.clientX -
-                    rect.left;
-
-
-                offsetY =
-                    event.clientY -
-                    rect.top;
-
-
-                titleBar.setPointerCapture(
-                    event.pointerId
-                );
-            }
-        );
-
-
-        titleBar.addEventListener(
-            "pointermove",
-            event => {
-
-                if (!dragging) {
-                    return;
-                }
-
-
-                const left =
-                    event.clientX -
-                    offsetX;
-
-
-                const top =
-                    event.clientY -
-                    offsetY;
-
-
-                browserWindow.style.left =
-                    left + "px";
-
-
-                browserWindow.style.top =
-                    top + "px";
-
-
-                browserWindow.style.transform =
-                    "none";
-
-
-                updateBrowserPosition();
-            }
-        );
-
-
-        titleBar.addEventListener(
-            "pointerup",
-            event => {
-
-                dragging = false;
-
-
-                try {
-
-                    titleBar.releasePointerCapture(
-                        event.pointerId
-                    );
-
-                } catch (error) {
-
-                    /* Nothing to do. */
-                }
-            }
-        );
-
-
-        titleBar.addEventListener(
-            "pointercancel",
-            () => {
-
-                dragging = false;
-            }
-        );
-
-
-        /* ==================================
-           WINDOW RESIZE
-           ================================== */
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                updateBrowserPosition();
-            }
-        );
-
-    </script>
+</script>
 
 </body>
-
 </html>
