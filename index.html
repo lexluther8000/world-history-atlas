@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <title>World History Atlas - Earth Geological Eras</title>
+    <title>World History Atlas</title>
 
     <style>
         * {
@@ -20,6 +22,7 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+
             padding: 20px;
 
             background: #ffffff;
@@ -30,20 +33,26 @@
             color: #333333;
         }
 
-        a:focus-visible,
+        button,
+        input {
+            font: inherit;
+        }
+
         button:focus-visible,
-        input:focus-visible {
+        input:focus-visible,
+        a:focus-visible {
             outline: 3px solid #4285f4;
             outline-offset: 2px;
         }
 
+
+        /* =====================================
+           MAIN PAGE
+           ===================================== */
+
         h1 {
             margin-top: 0;
         }
-
-        /* =====================================
-           OPEN SEARCH BUTTON
-           ===================================== */
 
         .search-launcher {
             margin-top: 30px;
@@ -54,7 +63,7 @@
             border-radius: 6px;
 
             background: #333333;
-            color: #ffffff;
+            color: white;
 
             font-size: 16px;
 
@@ -65,31 +74,32 @@
             background: #555555;
         }
 
+
         /* =====================================
-           MINI BROWSER WINDOW
+           MINI BROWSER
            ===================================== */
 
         .browser-window {
             position: fixed;
 
-            top: 8%;
+            top: 7%;
             left: 50%;
 
-            width: min(950px, 94vw);
-            height: min(720px, 84vh);
+            width: min(1000px, 94vw);
+            height: min(750px, 86vh);
 
             display: none;
             flex-direction: column;
 
-            background: #ffffff;
+            background: white;
 
-            border: 1px solid #777777;
+            border: 1px solid #777;
             border-radius: 9px;
 
             overflow: hidden;
 
             box-shadow:
-                0 15px 45px rgba(0, 0, 0, 0.45);
+                0 20px 55px rgba(0, 0, 0, 0.45);
 
             z-index: 1000;
         }
@@ -98,8 +108,9 @@
             display: flex;
         }
 
+
         /* =====================================
-           WINDOW TITLE BAR
+           TITLE BAR
            ===================================== */
 
         .window-header {
@@ -112,12 +123,13 @@
 
             padding: 0 10px 0 14px;
 
-            background: #222222;
-            color: #ffffff;
+            background: #222;
+            color: white;
+
+            cursor: grab;
 
             user-select: none;
 
-            cursor: grab;
             touch-action: none;
         }
 
@@ -128,8 +140,9 @@
         .window-title {
             font-weight: bold;
 
-            overflow: hidden;
             white-space: nowrap;
+
+            overflow: hidden;
             text-overflow: ellipsis;
         }
 
@@ -145,24 +158,109 @@
             border: none;
             border-radius: 4px;
 
-            background: #444444;
-            color: #ffffff;
+            background: #444;
+            color: white;
+
+            cursor: pointer;
 
             font-size: 18px;
             line-height: 1;
-
-            cursor: pointer;
         }
 
         .window-controls button:hover {
-            background: #666666;
+            background: #666;
         }
 
+
         /* =====================================
-           BROWSER TOOLBAR
+           TABS
            ===================================== */
 
-        .browser-toolbar {
+        .tabs {
+            display: flex;
+
+            align-items: center;
+
+            min-height: 38px;
+
+            padding: 4px 6px 0;
+
+            gap: 4px;
+
+            background: #2c2c2c;
+
+            overflow-x: auto;
+        }
+
+        .tab {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            max-width: 220px;
+
+            padding: 7px 10px;
+
+            border: none;
+            border-radius: 6px 6px 0 0;
+
+            background: #444;
+            color: #ddd;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: #fff;
+            color: #222;
+        }
+
+        .tab-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab-close {
+            color: inherit;
+            font-weight: bold;
+        }
+
+        .new-tab {
+            width: 30px;
+            height: 30px;
+
+            flex-shrink: 0;
+
+            border: none;
+            border-radius: 5px;
+
+            background: #444;
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+        .new-tab:hover,
+        .tab:hover {
+            background: #555;
+        }
+
+        .tab.active:hover {
+            background: #f5f5f5;
+        }
+
+
+        /* =====================================
+           TOOLBAR
+           ===================================== */
+
+        .toolbar {
             display: flex;
             align-items: center;
 
@@ -172,36 +270,30 @@
 
             background: #eeeeee;
 
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px solid #ccc;
         }
 
-        .browser-button {
+        .toolbar-button {
             width: 36px;
             height: 34px;
 
-            border: 1px solid #bbbbbb;
+            border: 1px solid #bbb;
             border-radius: 5px;
 
-            background: #ffffff;
-            color: #333333;
-
-            font-size: 17px;
+            background: white;
+            color: #333;
 
             cursor: pointer;
         }
 
-        .browser-button:hover:not(:disabled) {
-            background: #dddddd;
+        .toolbar-button:hover:not(:disabled) {
+            background: #ddd;
         }
 
-        .browser-button:disabled {
-            color: #aaaaaa;
+        .toolbar-button:disabled {
+            color: #aaa;
             cursor: not-allowed;
         }
-
-        /* =====================================
-           ADDRESS / SEARCH BAR
-           ===================================== */
 
         .address-form {
             flex: 1;
@@ -220,22 +312,20 @@
 
             padding: 8px 10px;
 
-            border: 1px solid #bbbbbb;
+            border: 1px solid #bbb;
             border-radius: 5px;
-
-            background: #ffffff;
 
             font-size: 15px;
         }
 
         .go-button {
-            padding: 8px 15px;
+            padding: 8px 16px;
 
             border: none;
             border-radius: 5px;
 
             background: #4285f4;
-            color: #ffffff;
+            color: white;
 
             cursor: pointer;
         }
@@ -244,36 +334,145 @@
             background: #3367d6;
         }
 
+
         /* =====================================
-           PAGE AREA
+           CONTENT
            ===================================== */
 
-        .page-area {
+        .content {
             position: relative;
 
             flex: 1;
 
             min-height: 0;
 
-            background: #ffffff;
+            background: white;
         }
+
+
+        /* =====================================
+           HOME / SEARCH RESULTS
+           ===================================== */
+
+        .home-page {
+            height: 100%;
+
+            overflow-y: auto;
+
+            padding: 30px;
+        }
+
+        .home-page.hidden {
+            display: none;
+        }
+
+        .home-page h2 {
+            margin-top: 0;
+        }
+
+        .search-form {
+            display: flex;
+
+            gap: 8px;
+
+            max-width: 700px;
+        }
+
+        .search-form input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 12px;
+
+            border: 1px solid #bbb;
+            border-radius: 6px;
+
+            font-size: 16px;
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+
+            border: none;
+            border-radius: 6px;
+
+            background: #4285f4;
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .results {
+            max-width: 800px;
+
+            margin-top: 25px;
+        }
+
+        .result {
+            padding: 15px 0;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-title {
+            margin: 0 0 5px;
+
+            font-size: 19px;
+        }
+
+        .result-title a {
+            color: #1a0dab;
+
+            text-decoration: none;
+        }
+
+        .result-title a:hover {
+            text-decoration: underline;
+        }
+
+        .result-url {
+            margin: 0 0 5px;
+
+            color: #188038;
+
+            font-size: 13px;
+        }
+
+        .result-description {
+            margin: 0;
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================
+           IFRAME
+           ===================================== */
 
         .page-frame {
             width: 100%;
             height: 100%;
 
-            display: block;
-
             border: none;
 
-            background: #ffffff;
+            display: none;
+
+            background: white;
         }
 
+        .page-frame.visible {
+            display: block;
+        }
+
+
         /* =====================================
-           HOME SCREEN
+           ERROR / INFO
            ===================================== */
 
-        .home-screen {
+        .message {
             position: absolute;
 
             top: 50%;
@@ -281,46 +480,24 @@
 
             transform: translate(-50%, -50%);
 
-            width: min(500px, 85%);
+            width: min(550px, 85%);
+
+            padding: 25px;
+
+            background: #f5f5f5;
+
+            border: 1px solid #ddd;
+            border-radius: 8px;
 
             text-align: center;
 
-            color: #666666;
-        }
-
-        .home-screen.hidden {
             display: none;
         }
 
-        .home-screen h2 {
-            color: #333333;
+        .message.visible {
+            display: block;
         }
 
-        /* =====================================
-           LOADING
-           ===================================== */
-
-        .loading {
-            position: absolute;
-
-            top: 15px;
-            right: 15px;
-
-            padding: 7px 12px;
-
-            border-radius: 5px;
-
-            background: rgba(0, 0, 0, 0.75);
-            color: #ffffff;
-
-            font-size: 13px;
-
-            z-index: 10;
-        }
-
-        .loading.hidden {
-            display: none;
-        }
 
         /* =====================================
            MINIMIZED
@@ -330,10 +507,12 @@
             height: 46px;
         }
 
-        .browser-window.minimized .browser-toolbar,
-        .browser-window.minimized .page-area {
+        .browser-window.minimized .tabs,
+        .browser-window.minimized .toolbar,
+        .browser-window.minimized .content {
             display: none;
         }
+
 
         /* =====================================
            MOBILE
@@ -347,29 +526,31 @@
 
             .browser-window {
                 width: 96vw;
-                height: 86vh;
+                height: 88vh;
 
                 left: 2vw;
-                top: 5%;
+                top: 4%;
             }
 
-            .browser-toolbar {
+            .toolbar {
                 flex-wrap: wrap;
             }
 
             .address-form {
-                order: 2;
-
                 flex-basis: 100%;
+                order: 2;
             }
 
-            .browser-button {
-                width: 34px;
+            .home-page {
+                padding: 20px;
             }
 
-            .go-button {
-                padding-left: 12px;
-                padding-right: 12px;
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-form button {
+                width: 100%;
             }
         }
     </style>
@@ -377,8 +558,9 @@
 
 <body>
 
+
     <!-- =====================================
-         MAIN PAGE
+         MAIN WEBSITE
          ===================================== -->
 
     <main>
@@ -415,7 +597,7 @@
 
 
     <!-- =====================================
-         MINI BROWSER
+         MINI BROWSER WINDOW
          ===================================== -->
 
     <section
@@ -423,6 +605,7 @@
         id="browserWindow"
         role="dialog"
         aria-labelledby="windowTitle">
+
 
         <!-- TITLE BAR -->
 
@@ -433,7 +616,7 @@
             <span
                 class="window-title"
                 id="windowTitle">
-                Atlas Web Browser
+                Atlas Browser
             </span>
 
             <div class="window-controls">
@@ -441,62 +624,78 @@
                 <button
                     id="minimizeButton"
                     type="button"
-                    title="Minimize"
-                    aria-label="Minimize">
+                    title="Minimize">
                     −
                 </button>
 
                 <button
                     id="closeButton"
                     type="button"
-                    title="Close"
-                    aria-label="Close">
+                    title="Close">
                     ×
                 </button>
 
             </div>
+
         </div>
 
 
-        <!-- TOOLBAR -->
+        <!-- =================================
+             TABS
+             ================================= -->
 
-        <div class="browser-toolbar">
+        <div
+            class="tabs"
+            id="tabs">
 
             <button
-                class="browser-button"
+                class="new-tab"
+                id="newTabButton"
+                type="button"
+                title="New tab">
+                +
+            </button>
+
+        </div>
+
+
+        <!-- =================================
+             TOOLBAR
+             ================================= -->
+
+        <div class="toolbar">
+
+            <button
+                class="toolbar-button"
                 id="backButton"
                 type="button"
                 title="Back"
-                aria-label="Back"
                 disabled>
                 ←
             </button>
 
             <button
-                class="browser-button"
+                class="toolbar-button"
                 id="forwardButton"
                 type="button"
                 title="Forward"
-                aria-label="Forward"
                 disabled>
                 →
             </button>
 
             <button
-                class="browser-button"
+                class="toolbar-button"
                 id="refreshButton"
                 type="button"
-                title="Refresh"
-                aria-label="Refresh">
+                title="Refresh">
                 ↻
             </button>
 
             <button
-                class="browser-button"
+                class="toolbar-button"
                 id="homeButton"
                 type="button"
-                title="Home"
-                aria-label="Home">
+                title="Home">
                 ⌂
             </button>
 
@@ -509,10 +708,9 @@
                     class="address-input"
                     id="addressInput"
                     type="text"
-                    placeholder="Search the web or enter a URL..."
+                    placeholder="Search or enter a URL..."
                     autocomplete="off"
-                    spellcheck="false"
-                    aria-label="Search or enter URL">
+                    spellcheck="false">
 
                 <button
                     class="go-button"
@@ -525,34 +723,79 @@
         </div>
 
 
-        <!-- PAGE -->
+        <!-- =================================
+             CONTENT
+             ================================= -->
 
-        <div class="page-area">
+        <div class="content">
+
+
+            <!-- HOME / SEARCH -->
 
             <div
-                class="home-screen"
-                id="homeScreen">
+                class="home-page"
+                id="homePage">
 
-                <h2>🌎 Atlas Web Browser</h2>
+                <h2>🌎 Atlas Browser</h2>
 
                 <p>
-                    Search for something above to get started.
+                    Search the web or enter a website address.
                 </p>
 
+                <form
+                    class="search-form"
+                    id="searchForm">
+
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="What do you want to search for?"
+                        autocomplete="off">
+
+                    <button type="submit">
+                        Search
+                    </button>
+
+                </form>
+
+                <div
+                    class="results"
+                    id="results">
+                </div>
+
             </div>
 
-            <div
-                class="loading hidden"
-                id="loading">
-                Loading...
-            </div>
+
+            <!-- EXTERNAL PAGE -->
 
             <iframe
                 class="page-frame"
                 id="pageFrame"
-                title="Web page"
-                loading="lazy">
+                title="Current page">
             </iframe>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                class="message"
+                id="message">
+
+                <h2>Page couldn't be displayed</h2>
+
+                <p>
+                    This website doesn't allow itself to be displayed
+                    inside another webpage.
+                </p>
+
+                <button
+                    id="returnButton"
+                    type="button"
+                    class="go-button">
+                    Return to Search
+                </button>
+
+            </div>
 
         </div>
 
@@ -567,14 +810,11 @@
            ELEMENTS
            ===================================== */
 
-        const openBrowser =
-            document.getElementById("openBrowser");
-
         const browserWindow =
             document.getElementById("browserWindow");
 
-        const windowHeader =
-            document.getElementById("windowHeader");
+        const openBrowser =
+            document.getElementById("openBrowser");
 
         const closeButton =
             document.getElementById("closeButton");
@@ -582,20 +822,14 @@
         const minimizeButton =
             document.getElementById("minimizeButton");
 
-        const addressForm =
-            document.getElementById("addressForm");
+        const windowHeader =
+            document.getElementById("windowHeader");
 
-        const addressInput =
-            document.getElementById("addressInput");
+        const tabs =
+            document.getElementById("tabs");
 
-        const pageFrame =
-            document.getElementById("pageFrame");
-
-        const homeScreen =
-            document.getElementById("homeScreen");
-
-        const loading =
-            document.getElementById("loading");
+        const newTabButton =
+            document.getElementById("newTabButton");
 
         const backButton =
             document.getElementById("backButton");
@@ -609,130 +843,289 @@
         const homeButton =
             document.getElementById("homeButton");
 
+        const addressForm =
+            document.getElementById("addressForm");
+
+        const addressInput =
+            document.getElementById("addressInput");
+
+        const searchForm =
+            document.getElementById("searchForm");
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+        const homePage =
+            document.getElementById("homePage");
+
+        const results =
+            document.getElementById("results");
+
+        const pageFrame =
+            document.getElementById("pageFrame");
+
+        const message =
+            document.getElementById("message");
+
+        const returnButton =
+            document.getElementById("returnButton");
+
 
         /* =====================================
-           HISTORY
+           TAB DATA
            ===================================== */
 
-        const browserHistory = [];
+        let tabCounter = 0;
 
-        let historyPosition = -1;
+        let activeTabId = null;
+
+        const tabData = new Map();
 
 
-        function updateNavigationButtons() {
+        function createTab(url = null) {
 
-            backButton.disabled =
-                historyPosition <= 0;
+            tabCounter++;
 
-            forwardButton.disabled =
-                historyPosition >=
-                browserHistory.length - 1;
+            const id =
+                "tab-" + tabCounter;
+
+
+            tabData.set(id, {
+                title: "New Tab",
+                url: url,
+                history: [],
+                historyIndex: -1
+            });
+
+
+            renderTabs();
+
+            switchTab(id);
+
+
+            if (url) {
+                navigate(url);
+            }
         }
 
 
-        /* =====================================
-           NAVIGATE
-           ===================================== */
+        function renderTabs() {
 
-        function navigate(url, saveHistory = true) {
+            /*
+             * Remove all existing tabs.
+             */
+            tabs.querySelectorAll(".tab").forEach(
+                tab => tab.remove()
+            );
 
-            if (!url) {
+
+            for (const [id, data] of tabData) {
+
+                const tab =
+                    document.createElement("button");
+
+                tab.className = "tab";
+
+                if (id === activeTabId) {
+                    tab.classList.add("active");
+                }
+
+
+                const title =
+                    document.createElement("span");
+
+                title.className = "tab-title";
+
+                title.textContent =
+                    data.title;
+
+
+                const close =
+                    document.createElement("span");
+
+                close.className = "tab-close";
+
+                close.textContent = "×";
+
+
+                tab.appendChild(title);
+                tab.appendChild(close);
+
+
+                tab.addEventListener(
+                    "click",
+                    (event) => {
+
+                        if (
+                            event.target === close
+                        ) {
+                            closeTab(id);
+                            return;
+                        }
+
+                        switchTab(id);
+                    }
+                );
+
+
+                tabs.insertBefore(
+                    tab,
+                    newTabButton
+                );
+            }
+        }
+
+
+        function closeTab(id) {
+
+            if (tabData.size === 1) {
                 return;
             }
 
 
-            if (saveHistory) {
+            const ids =
+                Array.from(tabData.keys());
 
-                /*
-                 * Delete forward history.
-                 */
-                browserHistory.splice(
-                    historyPosition + 1
-                );
+            const index =
+                ids.indexOf(id);
 
-                browserHistory.push(url);
 
-                historyPosition =
-                    browserHistory.length - 1;
+            tabData.delete(id);
+
+
+            if (id === activeTabId) {
+
+                const newIndex =
+                    Math.max(0, index - 1);
+
+                activeTabId =
+                    ids[newIndex];
+
+                renderTabs();
+
+                updateCurrentTab();
+            }
+            else {
+                renderTabs();
+            }
+        }
+
+
+        function switchTab(id) {
+
+            if (!tabData.has(id)) {
+                return;
             }
 
 
-            addressInput.value = url;
+            activeTabId = id;
 
-            homeScreen.classList.add("hidden");
+            renderTabs();
 
-            loading.classList.remove("hidden");
+            updateCurrentTab();
+        }
 
-            pageFrame.src = url;
+
+        function updateCurrentTab() {
+
+            const data =
+                tabData.get(activeTabId);
+
+
+            if (!data) {
+                return;
+            }
+
+
+            addressInput.value =
+                data.url || "";
+
 
             updateNavigationButtons();
+
+
+            if (!data.url) {
+
+                showHome();
+
+                return;
+            }
+
+
+            showPage(data.url);
         }
 
 
         /* =====================================
-           OPEN
+           HOME
            ===================================== */
 
-        openBrowser.addEventListener(
-            "click",
-            () => {
+        function showHome() {
 
-                browserWindow.classList.add("open");
+            homePage.classList.remove(
+                "hidden"
+            );
 
-                browserWindow.classList.remove(
-                    "minimized"
-                );
+            homePage.style.display =
+                "block";
 
-                addressInput.focus();
-            }
-        );
+            pageFrame.classList.remove(
+                "visible"
+            );
+
+            message.classList.remove(
+                "visible"
+            );
+        }
 
 
         /* =====================================
-           CLOSE
+           PAGE
            ===================================== */
 
-        closeButton.addEventListener(
-            "click",
-            () => {
+        function showPage(url) {
 
-                browserWindow.classList.remove(
-                    "open"
-                );
-            }
-        );
+            homePage.style.display =
+                "none";
 
+            message.classList.remove(
+                "visible"
+            );
 
-        /* =====================================
-           MINIMIZE
-           ===================================== */
+            pageFrame.classList.add(
+                "visible"
+            );
 
-        minimizeButton.addEventListener(
-            "click",
-            () => {
-
-                browserWindow.classList.toggle(
-                    "minimized"
-                );
-
-                if (
-                    !browserWindow.classList.contains(
-                        "minimized"
-                    )
-                ) {
-                    addressInput.focus();
-                }
-            }
-        );
+            pageFrame.src = url;
+        }
 
 
         /* =====================================
            SEARCH
            ===================================== */
 
+        searchForm.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+                const query =
+                    searchInput.value.trim();
+
+                if (!query) {
+                    return;
+                }
+
+
+                performSearch(query);
+            }
+        );
+
+
         addressForm.addEventListener(
             "submit",
-            (event) => {
+            event => {
 
                 event.preventDefault();
 
@@ -744,49 +1137,391 @@
                 }
 
 
-                let destination;
-
-
-                /*
-                 * Direct URL.
-                 */
                 if (
-                    value.startsWith("https://") ||
-                    value.startsWith("http://")
+                    value.startsWith("http://") ||
+                    value.startsWith("https://")
                 ) {
 
-                    destination = value;
+                    navigate(value);
 
                 }
-
-                /*
-                 * Domain entered without protocol.
-                 */
                 else if (
                     value.includes(".") &&
                     !value.includes(" ")
                 ) {
 
-                    destination =
-                        "https://" + value;
+                    navigate(
+                        "https://" + value
+                    );
 
                 }
-
-                /*
-                 * Otherwise perform a
-                 * DuckDuckGo search.
-                 */
                 else {
 
-                    destination =
-                        "https://duckduckgo.com/?q=" +
-                        encodeURIComponent(value);
+                    performSearch(value);
+                }
+            }
+        );
+
+
+        /*
+         * This uses DuckDuckGo's lightweight
+         * search endpoint to obtain search
+         * information for the page.
+         *
+         * If your host blocks this request,
+         * replace this function with your own
+         * search API/backend.
+         */
+        async function performSearch(query) {
+
+            const data =
+                tabData.get(activeTabId);
+
+
+            if (!data) {
+                return;
+            }
+
+
+            data.url = null;
+
+            data.history = [];
+
+            data.historyIndex = -1;
+
+
+            addressInput.value =
+                query;
+
+
+            showHome();
+
+
+            results.innerHTML =
+                "<p>Searching...</p>";
+
+
+            /*
+             * DuckDuckGo's public instant-answer
+             * endpoint.
+             */
+            const apiURL =
+                "https://api.duckduckgo.com/?q=" +
+                encodeURIComponent(query) +
+                "&format=json&no_html=1";
+
+
+            try {
+
+                const response =
+                    await fetch(apiURL);
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Search request failed."
+                    );
                 }
 
 
-                navigate(destination, true);
+                const searchData =
+                    await response.json();
+
+
+                displayResults(
+                    query,
+                    searchData
+                );
+
             }
-        );
+            catch (error) {
+
+                results.innerHTML = `
+                    <p>
+                        Search could not be loaded.
+                    </p>
+
+                    <p>
+                        Try entering a full website
+                        address in the bar above.
+                    </p>
+                `;
+            }
+        }
+
+
+        /* =====================================
+           DISPLAY RESULTS
+           ===================================== */
+
+        function displayResults(
+            query,
+            data
+        ) {
+
+            results.innerHTML = "";
+
+
+            const items = [];
+
+
+            if (
+                data.AbstractURL &&
+                data.AbstractText
+            ) {
+
+                items.push({
+                    title:
+                        data.Heading ||
+                        query,
+
+                    url:
+                        data.AbstractURL,
+
+                    description:
+                        data.AbstractText
+                });
+            }
+
+
+            function collectTopics(
+                topics
+            ) {
+
+                if (!Array.isArray(topics)) {
+                    return;
+                }
+
+
+                for (const topic of topics) {
+
+                    if (
+                        topic.FirstURL &&
+                        topic.Text
+                    ) {
+
+                        items.push({
+                            title:
+                                topic.Text
+                                    .split(" - ")[0],
+
+                            url:
+                                topic.FirstURL,
+
+                            description:
+                                topic.Text
+                        });
+                    }
+
+
+                    if (topic.Topics) {
+
+                        collectTopics(
+                            topic.Topics
+                        );
+                    }
+                }
+            }
+
+
+            collectTopics(
+                data.RelatedTopics
+            );
+
+
+            if (items.length === 0) {
+
+                results.innerHTML = `
+                    <p>
+                        No results were returned
+                        by the search service.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            for (const item of items) {
+
+                const article =
+                    document.createElement("article");
+
+                article.className =
+                    "result";
+
+
+                const heading =
+                    document.createElement("h3");
+
+                heading.className =
+                    "result-title";
+
+
+                const link =
+                    document.createElement("a");
+
+                link.href = "#";
+
+                link.textContent =
+                    item.title;
+
+
+                /*
+                 * IMPORTANT:
+                 *
+                 * This is YOUR link.
+                 *
+                 * It doesn't use target="_blank".
+                 *
+                 * Clicking it calls navigate()
+                 * and therefore loads the page
+                 * in our iframe.
+                 */
+                link.addEventListener(
+                    "click",
+                    event => {
+
+                        event.preventDefault();
+
+                        navigate(
+                            item.url
+                        );
+                    }
+                );
+
+
+                heading.appendChild(link);
+
+
+                const url =
+                    document.createElement("p");
+
+                url.className =
+                    "result-url";
+
+                url.textContent =
+                    item.url;
+
+
+                const description =
+                    document.createElement("p");
+
+                description.className =
+                    "result-description";
+
+                description.textContent =
+                    item.description;
+
+
+                article.appendChild(
+                    heading
+                );
+
+                article.appendChild(
+                    url
+                );
+
+                article.appendChild(
+                    description
+                );
+
+
+                results.appendChild(
+                    article
+                );
+            }
+        }
+
+
+        /* =====================================
+           NAVIGATION
+           ===================================== */
+
+        function navigate(url) {
+
+            const data =
+                tabData.get(activeTabId);
+
+
+            if (!data) {
+                return;
+            }
+
+
+            /*
+             * Remove forward history.
+             */
+            data.history =
+                data.history.slice(
+                    0,
+                    data.historyIndex + 1
+                );
+
+
+            data.history.push(url);
+
+            data.historyIndex =
+                data.history.length - 1;
+
+
+            data.url = url;
+
+
+            addressInput.value =
+                url;
+
+
+            /*
+             * Use the same iframe.
+             */
+            showPage(url);
+
+
+            /*
+             * Use hostname as tab title.
+             */
+            try {
+
+                const hostname =
+                    new URL(url).hostname;
+
+                data.title =
+                    hostname;
+
+            }
+            catch {
+
+                data.title =
+                    "Web Page";
+            }
+
+
+            renderTabs();
+
+            updateNavigationButtons();
+        }
+
+
+        function updateNavigationButtons() {
+
+            const data =
+                tabData.get(activeTabId);
+
+
+            if (!data) {
+                return;
+            }
+
+
+            backButton.disabled =
+                data.historyIndex <= 0;
+
+
+            forwardButton.disabled =
+                data.historyIndex >=
+                data.history.length - 1;
+        }
 
 
         /* =====================================
@@ -797,24 +1532,34 @@
             "click",
             () => {
 
-                if (historyPosition <= 0) {
+                const data =
+                    tabData.get(activeTabId);
+
+
+                if (
+                    !data ||
+                    data.historyIndex <= 0
+                ) {
                     return;
                 }
 
 
-                historyPosition--;
+                data.historyIndex--;
+
 
                 const url =
-                    browserHistory[historyPosition];
+                    data.history[
+                        data.historyIndex
+                    ];
 
 
-                addressInput.value = url;
+                data.url = url;
 
-                loading.classList.remove(
-                    "hidden"
-                );
+                addressInput.value =
+                    url;
 
-                pageFrame.src = url;
+
+                showPage(url);
 
                 updateNavigationButtons();
             }
@@ -829,27 +1574,35 @@
             "click",
             () => {
 
+                const data =
+                    tabData.get(activeTabId);
+
+
                 if (
-                    historyPosition >=
-                    browserHistory.length - 1
+                    !data ||
+                    data.historyIndex >=
+                    data.history.length - 1
                 ) {
                     return;
                 }
 
 
-                historyPosition++;
+                data.historyIndex++;
+
 
                 const url =
-                    browserHistory[historyPosition];
+                    data.history[
+                        data.historyIndex
+                    ];
 
 
-                addressInput.value = url;
+                data.url = url;
 
-                loading.classList.remove(
-                    "hidden"
-                );
+                addressInput.value =
+                    url;
 
-                pageFrame.src = url;
+
+                showPage(url);
 
                 updateNavigationButtons();
             }
@@ -864,17 +1617,15 @@
             "click",
             () => {
 
-                if (!pageFrame.src) {
-                    return;
+                if (
+                    pageFrame.classList.contains(
+                        "visible"
+                    )
+                ) {
+
+                    pageFrame.src =
+                        pageFrame.src;
                 }
-
-
-                loading.classList.remove(
-                    "hidden"
-                );
-
-                pageFrame.src =
-                    pageFrame.src;
             }
         );
 
@@ -887,33 +1638,99 @@
             "click",
             () => {
 
-                pageFrame.removeAttribute(
-                    "src"
-                );
+                const data =
+                    tabData.get(activeTabId);
+
+
+                if (data) {
+                    data.url = null;
+                }
+
 
                 addressInput.value = "";
 
-                homeScreen.classList.remove(
-                    "hidden"
-                );
-
-                loading.classList.add(
-                    "hidden"
-                );
+                showHome();
             }
         );
 
 
         /* =====================================
-           IFRAME LOADED
+           NEW TAB
+           ===================================== */
+
+        newTabButton.addEventListener(
+            "click",
+            () => {
+
+                createTab();
+
+                searchInput.focus();
+            }
+        );
+
+
+        /* =====================================
+           IFRAME LOAD
            ===================================== */
 
         pageFrame.addEventListener(
             "load",
             () => {
 
-                loading.classList.add(
-                    "hidden"
+                /*
+                 * We cannot inspect the page
+                 * because it may be cross-origin.
+                 *
+                 * The iframe itself is responsible
+                 * for whether the destination allows
+                 * embedding.
+                 */
+            }
+        );
+
+
+        /* =====================================
+           OPEN / CLOSE
+           ===================================== */
+
+        openBrowser.addEventListener(
+            "click",
+            () => {
+
+                browserWindow.classList.add(
+                    "open"
+                );
+
+
+                if (activeTabId === null) {
+
+                    createTab();
+
+                }
+
+
+                searchInput.focus();
+            }
+        );
+
+
+        closeButton.addEventListener(
+            "click",
+            () => {
+
+                browserWindow.classList.remove(
+                    "open"
+                );
+            }
+        );
+
+
+        minimizeButton.addEventListener(
+            "click",
+            () => {
+
+                browserWindow.classList.toggle(
+                    "minimized"
                 );
             }
         );
@@ -925,7 +1742,7 @@
 
         document.addEventListener(
             "keydown",
-            (event) => {
+            event => {
 
                 if (
                     event.key === "Escape" &&
@@ -956,12 +1773,8 @@
 
         windowHeader.addEventListener(
             "pointerdown",
-            (event) => {
+            event => {
 
-                /*
-                 * Don't drag when pressing
-                 * the window controls.
-                 */
                 if (
                     event.target.closest("button")
                 ) {
@@ -1002,10 +1815,6 @@
                     rect.top;
 
 
-                /*
-                 * Convert from percentage
-                 * positioning to pixels.
-                 */
                 browserWindow.style.left =
                     rect.left + "px";
 
@@ -1017,7 +1826,7 @@
 
         windowHeader.addEventListener(
             "pointermove",
-            (event) => {
+            event => {
 
                 if (
                     !dragging ||
@@ -1027,59 +1836,52 @@
                 }
 
 
-                let newLeft =
+                const width =
+                    browserWindow.offsetWidth;
+
+
+                let left =
                     event.clientX -
                     offsetX;
 
-                let newTop =
+
+                let top =
                     event.clientY -
                     offsetY;
-
-
-                const width =
-                    browserWindow.offsetWidth;
 
 
                 const minimumVisible =
                     30;
 
 
-                const maxLeft =
-                    window.innerWidth -
-                    minimumVisible;
-
-
-                const maxTop =
-                    window.innerHeight -
-                    46;
-
-
-                newLeft =
+                left =
                     Math.min(
                         Math.max(
-                            newLeft,
+                            left,
                             -width +
                             minimumVisible
                         ),
-                        maxLeft
+                        window.innerWidth -
+                        minimumVisible
                     );
 
 
-                newTop =
+                top =
                     Math.min(
                         Math.max(
-                            newTop,
+                            top,
                             0
                         ),
-                        maxTop
+                        window.innerHeight -
+                        46
                     );
 
 
                 browserWindow.style.left =
-                    newLeft + "px";
+                    left + "px";
 
                 browserWindow.style.top =
-                    newTop + "px";
+                    top + "px";
             }
         );
 
@@ -1104,7 +1906,8 @@
                     event.pointerId
                 );
 
-            } catch {
+            }
+            catch {
                 // Already released.
             }
         }
@@ -1123,7 +1926,24 @@
 
 
         /* =====================================
-           INITIALIZE
+           RETURN BUTTON
+           ===================================== */
+
+        returnButton.addEventListener(
+            "click",
+            () => {
+
+                message.classList.remove(
+                    "visible"
+                );
+
+                showHome();
+            }
+        );
+
+
+        /* =====================================
+           STARTUP
            ===================================== */
 
         updateNavigationButtons();
