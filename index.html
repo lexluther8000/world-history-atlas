@@ -1,697 +1,1171 @@
-const {
-    app,
-    BrowserWindow,
-    WebContentsView,
-    ipcMain
-} = require("electron");
+<!DOCTYPE html>
 
-const path = require("path");
+<html lang="en">
 
-let mainWindow;
-let browserView;
+<head>
 
-let browserVisible = false;
-let browserMinimized = false;
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
 
-/* ==========================================
-   BROWSER SIZE
-   ========================================== */
-
-const DEFAULT_WIDTH = 900;
-const DEFAULT_HEIGHT = 650;
+    <title>
+        World History Atlas
+    </title>
 
 
-/* ==========================================
-   CREATE MAIN WINDOW
-   ========================================== */
+    <style>
 
-function createMainWindow() {
-
-    mainWindow = new BrowserWindow({
-
-        width: 1200,
-        height: 800,
-
-        minWidth: 800,
-        minHeight: 600,
-
-        backgroundColor: "#ffffff",
-
-        webPreferences: {
-
-            preload: path.join(
-                __dirname,
-                "preload.js"
-            ),
-
-            contextIsolation: true,
-
-            nodeIntegration: false
+        * {
+            box-sizing: border-box;
         }
-    });
 
 
-    mainWindow.loadFile(
-        path.join(
-            __dirname,
-            "index.html"
-        )
-    );
+        html,
+        body {
+
+            margin: 0;
+
+            width: 100%;
+
+            min-height: 100%;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            background: #ffffff;
+
+            color: #333333;
+        }
 
 
-    /*
-     * Create the actual browser.
-     */
+        body {
 
-    browserView =
-        new WebContentsView({
+            padding: 20px;
+        }
 
-            webPreferences: {
 
-                contextIsolation: true,
+        h1 {
 
-                nodeIntegration: false,
+            margin-top: 0;
+        }
 
-                sandbox: true,
 
-                javascript: true,
+        a {
 
-                webSecurity: true
+            color: #333333;
+        }
+
+
+        /* ==================================
+           SEARCH BUTTON
+           ================================== */
+
+        #openBrowser {
+
+            margin-top: 20px;
+
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #333333;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+
+        #openBrowser:hover {
+
+            background: #555555;
+        }
+
+
+        /* ==================================
+           GAME
+           ================================== */
+
+        .game-area {
+
+            width: 100%;
+
+            height: 600px;
+
+            margin-top: 25px;
+
+            background: #000000;
+
+            overflow: hidden;
+
+            border-radius: 8px;
+        }
+
+
+        .game-area iframe {
+
+            width: 100%;
+
+            height: 100%;
+
+            border: none;
+
+            display: block;
+        }
+
+
+        /* ==================================
+           BROWSER WINDOW
+           ================================== */
+
+        #browserWindow {
+
+            position: fixed;
+
+            left: 50%;
+
+            top: 50px;
+
+            width: 900px;
+
+            height: 650px;
+
+            transform:
+                translateX(-50%);
+
+            display: none;
+
+            flex-direction: column;
+
+            background: #eeeeee;
+
+            border-radius:
+                8px 8px 0 0;
+
+            overflow: hidden;
+
+            z-index: 99999;
+
+            box-shadow:
+                0 15px 50px
+                rgba(0, 0, 0, 0.55);
+        }
+
+
+        #browserWindow.visible {
+
+            display: flex;
+        }
+
+
+        /* ==================================
+           TITLE BAR
+           ================================== */
+
+        #titleBar {
+
+            height: 40px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding-left: 12px;
+
+            background: #202020;
+
+            color: white;
+
+            user-select: none;
+
+            cursor: move;
+        }
+
+
+        #browserTitle {
+
+            max-width: 75%;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        #windowButtons {
+
+            display: flex;
+
+            gap: 5px;
+
+            padding-right: 7px;
+        }
+
+
+        #windowButtons button {
+
+            width: 30px;
+
+            height: 27px;
+
+            border: none;
+
+            border-radius: 4px;
+
+            background: #444444;
+
+            color: white;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+
+        #windowButtons button:hover {
+
+            background: #666666;
+        }
+
+
+        /* ==================================
+           TAB
+           ================================== */
+
+        #tabBar {
+
+            height: 36px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding-left: 7px;
+
+            background: #292929;
+        }
+
+
+        #tab {
+
+            width: 210px;
+
+            height: 32px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 12px;
+
+            background: #ffffff;
+
+            color: #222222;
+
+            border-radius:
+                6px 6px 0 0;
+
+            font-size: 13px;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+        }
+
+
+        /* ==================================
+           TOOLBAR
+           ================================== */
+
+        #toolbar {
+
+            height: 46px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 6px;
+
+            background: #eeeeee;
+        }
+
+
+        .navButton {
+
+            width: 34px;
+
+            height: 32px;
+
+            flex-shrink: 0;
+
+            border: 1px solid #bbbbbb;
+
+            border-radius: 5px;
+
+            background: #ffffff;
+
+            color: #222222;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+
+        .navButton:hover {
+
+            background: #dddddd;
+        }
+
+
+        .navButton:disabled {
+
+            color: #aaaaaa;
+
+            cursor: default;
+
+            background: #eeeeee;
+        }
+
+
+        #addressForm {
+
+            flex: 1;
+
+            min-width: 0;
+
+            display: flex;
+
+            gap: 5px;
+        }
+
+
+        #address {
+
+            flex: 1;
+
+            min-width: 0;
+
+            height: 32px;
+
+            padding: 0 10px;
+
+            border: 1px solid #aaaaaa;
+
+            border-radius: 5px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+
+        #address:focus {
+
+            border-color: #4285f4;
+        }
+
+
+        #goButton {
+
+            height: 32px;
+
+            padding: 0 14px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: #4285f4;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        #goButton:hover {
+
+            background: #3367d6;
+        }
+
+
+        /* ==================================
+           MOBILE
+           ================================== */
+
+        @media (max-width: 950px) {
+
+            #browserWindow {
+
+                width: 94vw;
             }
-        });
+        }
 
 
-    /*
-     * Add the browser to the main
-     * application window.
-     */
+        @media (max-width: 600px) {
 
-    mainWindow.contentView.addChildView(
-        browserView
-    );
+            body {
+
+                padding: 15px;
+            }
 
 
-    /*
-     * Don't show it until the user
-     * presses Open Search.
-     */
+            .game-area {
 
-    browserView.setVisible(false);
+                height: 500px;
+            }
 
 
-    /*
-     * Navigation events.
-     */
+            #browserWindow {
 
-    browserView.webContents.on(
-        "did-navigate",
-        (event, url) => {
+                width: 96vw;
 
-            send(
-                "browser-url",
-                url
+                height: 80vh;
+
+                top: 20px;
+            }
+
+
+            #tab {
+
+                width: 150px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <h1>
+        Geological History of Earth
+    </h1>
+
+
+    <p>
+
+        Earth's early geological history was shaped
+        by major changes in its crust, including
+        tectonic processes that contributed to the
+        formation and breakup of supercontinents
+        such as
+
+        <a
+            href="https://bull.ultradec.com/"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            Pangaea
+
+        </a>.
+
+    </p>
+
+
+    <p>
+
+        Sedimentary rock layers provide evidence of
+        volcanic activity, environmental changes,
+        and past climates.
+
+    </p>
+
+
+    <button
+        id="openBrowser"
+        type="button">
+
+        🔍 Open Search
+
+    </button>
+
+
+    <!-- ==================================
+         GAME
+         ================================== -->
+
+    <div class="game-area">
+
+        <iframe
+            src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
+            title="Game"
+            scrolling="no"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+
+    <!-- ==================================
+         BROWSER UI
+         ================================== -->
+
+    <div id="browserWindow">
+
+
+        <!-- TITLE BAR -->
+
+        <div id="titleBar">
+
+            <span id="browserTitle">
+                Atlas Browser
+            </span>
+
+
+            <div id="windowButtons">
+
+                <button
+                    id="minimize"
+                    type="button"
+                    title="Minimize">
+
+                    −
+
+                </button>
+
+
+                <button
+                    id="close"
+                    type="button"
+                    title="Close">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ONE TAB -->
+
+        <div id="tabBar">
+
+            <div id="tab">
+                New Tab
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <div id="toolbar">
+
+
+            <button
+                class="navButton"
+                id="back"
+                type="button"
+                title="Back">
+
+                ←
+
+            </button>
+
+
+            <button
+                class="navButton"
+                id="forward"
+                type="button"
+                title="Forward">
+
+                →
+
+            </button>
+
+
+            <button
+                class="navButton"
+                id="refresh"
+                type="button"
+                title="Refresh">
+
+                ↻
+
+            </button>
+
+
+            <button
+                class="navButton"
+                id="home"
+                type="button"
+                title="Home">
+
+                ⌂
+
+            </button>
+
+
+            <form
+                id="addressForm">
+
+
+                <input
+                    id="address"
+                    type="text"
+                    placeholder="Search or enter a website..."
+                    autocomplete="off"
+                    spellcheck="false">
+
+
+                <button
+                    id="goButton"
+                    type="submit">
+
+                    Go
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const browserWindow =
+            document.getElementById(
+                "browserWindow"
             );
 
-            updateNavigation();
-        }
-    );
 
-
-    browserView.webContents.on(
-        "did-navigate-in-page",
-        (event, url) => {
-
-            send(
-                "browser-url",
-                url
+        const titleBar =
+            document.getElementById(
+                "titleBar"
             );
 
-            updateNavigation();
-        }
-    );
 
-
-    /*
-     * Page title.
-     */
-
-    browserView.webContents.on(
-        "page-title-updated",
-        (event, pageTitle) => {
-
-            send(
-                "browser-title",
-                pageTitle
+        const browserTitle =
+            document.getElementById(
+                "browserTitle"
             );
-        }
-    );
 
 
-    /*
-     * Loading failed.
-     */
+        const tab =
+            document.getElementById(
+                "tab"
+            );
 
-    browserView.webContents.on(
-        "did-fail-load",
-        (
-            event,
-            errorCode,
-            errorDescription,
-            validatedURL
-        ) => {
 
-            /*
-             * -3 = navigation was cancelled.
-             * This isn't a real error.
-             */
+        const address =
+            document.getElementById(
+                "address"
+            );
 
-            if (errorCode === -3) {
+
+        const addressForm =
+            document.getElementById(
+                "addressForm"
+            );
+
+
+        const openBrowser =
+            document.getElementById(
+                "openBrowser"
+            );
+
+
+        const closeButton =
+            document.getElementById(
+                "close"
+            );
+
+
+        const minimizeButton =
+            document.getElementById(
+                "minimize"
+            );
+
+
+        const backButton =
+            document.getElementById(
+                "back"
+            );
+
+
+        const forwardButton =
+            document.getElementById(
+                "forward"
+            );
+
+
+        const refreshButton =
+            document.getElementById(
+                "refresh"
+            );
+
+
+        const homeButton =
+            document.getElementById(
+                "home"
+            );
+
+
+        /* ==================================
+           UPDATE BROWSER POSITION
+           ================================== */
+
+        function updateBrowserPosition() {
+
+            if (
+                !browserWindow.classList
+                    .contains("visible")
+            ) {
                 return;
             }
 
 
-            send(
-                "browser-error",
-                {
-                    errorCode,
-                    errorDescription,
-                    url: validatedURL
-                }
-            );
+            const rect =
+                browserWindow.getBoundingClientRect();
+
+
+            window.atlasBrowser.setBounds({
+
+                x: rect.left,
+
+                y: rect.top,
+
+                width: rect.width,
+
+                height: rect.height
+            });
         }
-    );
 
 
-    /*
-     * If a website asks to open a new
-     * window, keep it in our ONE tab.
-     */
+        /* ==================================
+           OPEN
+           ================================== */
 
-    browserView.webContents.setWindowOpenHandler(
-        ({ url }) => {
+        openBrowser.addEventListener(
+            "click",
+            async () => {
 
-            if (url) {
+                browserWindow.classList.add(
+                    "visible"
+                );
 
-                browserView.webContents.loadURL(
-                    url
+
+                updateBrowserPosition();
+
+
+                await window.atlasBrowser.open();
+
+
+                updateBrowserPosition();
+
+
+                address.focus();
+            }
+        );
+
+
+        /* ==================================
+           CLOSE
+           ================================== */
+
+        closeButton.addEventListener(
+            "click",
+            () => {
+
+                browserWindow.classList.remove(
+                    "visible"
+                );
+
+
+                window.atlasBrowser.close();
+            }
+        );
+
+
+        /* ==================================
+           MINIMIZE
+           ================================== */
+
+        minimizeButton.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.minimize();
+            }
+        );
+
+
+        /* ==================================
+           SEARCH OR WEBSITE
+           ================================== */
+
+        addressForm.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+
+                const value =
+                    address.value.trim();
+
+
+                if (!value) {
+                    return;
+                }
+
+
+                /*
+                 * Detect normal domain names.
+                 *
+                 * Examples:
+                 *
+                 * youtube.com
+                 * snokido.com
+                 * google.com
+                 */
+
+                const looksLikeWebsite =
+                    /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/.*)?$/i
+                        .test(value);
+
+
+                if (looksLikeWebsite) {
+
+                    window.atlasBrowser.navigate(
+                        value
+                    );
+
+                } else {
+
+                    window.atlasBrowser.search(
+                        value
+                    );
+                }
+
+            }
+        );
+
+
+        /* ==================================
+           BACK
+           ================================== */
+
+        backButton.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.back();
+            }
+        );
+
+
+        /* ==================================
+           FORWARD
+           ================================== */
+
+        forwardButton.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.forward();
+            }
+        );
+
+
+        /* ==================================
+           REFRESH
+           ================================== */
+
+        refreshButton.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.refresh();
+            }
+        );
+
+
+        /* ==================================
+           HOME
+           ================================== */
+
+        homeButton.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.home();
+            }
+        );
+
+
+        /* ==================================
+           URL CHANGED
+           ================================== */
+
+        window.atlasBrowser.onURL(
+            url => {
+
+                address.value =
+                    url;
+            }
+        );
+
+
+        /* ==================================
+           TITLE CHANGED
+           ================================== */
+
+        window.atlasBrowser.onTitle(
+            title => {
+
+                if (!title) {
+                    return;
+                }
+
+
+                browserTitle.textContent =
+                    title;
+
+
+                tab.textContent =
+                    title;
+            }
+        );
+
+
+        /* ==================================
+           NAVIGATION STATE
+           ================================== */
+
+        window.atlasBrowser.onNavigation(
+            state => {
+
+                backButton.disabled =
+                    !state.back;
+
+
+                forwardButton.disabled =
+                    !state.forward;
+            }
+        );
+
+
+        /* ==================================
+           BROWSER OPENED
+           ================================== */
+
+        window.atlasBrowser.onOpen(
+            () => {
+
+                browserWindow.classList.add(
+                    "visible"
+                );
+
+
+                updateBrowserPosition();
+            }
+        );
+
+
+        /* ==================================
+           BROWSER CLOSED
+           ================================== */
+
+        window.atlasBrowser.onClose(
+            () => {
+
+                browserWindow.classList.remove(
+                    "visible"
                 );
             }
-
-
-            return {
-                action: "deny"
-            };
-        }
-    );
-
-
-    /*
-     * Also catch target="_blank" style
-     * navigation where possible.
-     */
-
-    browserView.webContents.on(
-        "will-navigate",
-        (event, url) => {
-
-            /*
-             * Electron normally handles this
-             * automatically. We intentionally
-             * leave the navigation alone.
-             */
-        }
-    );
-
-
-    /*
-     * Clean up.
-     */
-
-    mainWindow.on(
-        "closed",
-        () => {
-
-            browserView = null;
-
-            mainWindow = null;
-        }
-    );
-}
-
-
-/* ==========================================
-   SEND MESSAGE TO INDEX
-   ========================================== */
-
-function send(
-    channel,
-    data
-) {
-
-    if (!mainWindow) {
-        return;
-    }
-
-
-    mainWindow.webContents.send(
-        channel,
-        data
-    );
-}
-
-
-/* ==========================================
-   UPDATE NAVIGATION BUTTONS
-   ========================================== */
-
-function updateNavigation() {
-
-    if (
-        !browserView ||
-        !mainWindow
-    ) {
-        return;
-    }
-
-
-    send(
-        "navigation-state",
-        {
-            back:
-                browserView.webContents.canGoBack(),
-
-            forward:
-                browserView.webContents.canGoForward()
-        }
-    );
-}
-
-
-/* ==========================================
-   POSITION BROWSER
-   ========================================== */
-
-function positionBrowser(bounds) {
-
-    if (
-        !browserView ||
-        !browserVisible ||
-        browserMinimized
-    ) {
-        return;
-    }
-
-
-    /*
-     * bounds describes the complete
-     * browser popup in the renderer.
-     *
-     * The first 122px are the browser
-     * toolbar.
-     */
-
-    const toolbarHeight = 122;
-
-
-    const x =
-        Math.round(
-            Number(bounds.x) || 0
         );
 
 
-    const y =
-        Math.round(
-            Number(bounds.y) || 0
-        );
+        /* ==================================
+           MINIMIZE
+           ================================== */
 
+        window.atlasBrowser.onMinimized(
+            minimized => {
 
-    const width =
-        Math.max(
-            350,
-            Math.round(
-                Number(bounds.width) ||
-                DEFAULT_WIDTH
-            )
-        );
+                if (minimized) {
 
+                    browserWindow.style.display =
+                        "none";
 
-    const height =
-        Math.max(
-            250,
-            Math.round(
-                Number(bounds.height) ||
-                DEFAULT_HEIGHT
-            )
-        );
+                } else {
 
+                    browserWindow.style.display =
+                        "flex";
 
-    browserView.setBounds({
 
-        x: x,
-
-        y:
-            y +
-            toolbarHeight,
-
-        width: width,
-
-        height:
-            Math.max(
-                100,
-                height -
-                toolbarHeight
-            )
-    });
-}
-
-
-/* ==========================================
-   OPEN BROWSER
-   ========================================== */
-
-ipcMain.handle(
-    "open-browser",
-    () => {
-
-        if (
-            !browserView ||
-            !mainWindow
-        ) {
-            return;
-        }
-
-
-        browserVisible = true;
-
-        browserMinimized = false;
-
-
-        browserView.setVisible(
-            true
-        );
-
-
-        /*
-         * Tell index.html that it can
-         * position the browser.
-         */
-
-        send(
-            "browser-open",
-            true
-        );
-
-
-        /*
-         * Load Bing the first time.
-         */
-
-        if (
-            !browserView.webContents
-                .getURL()
-        ) {
-
-            browserView.webContents.loadURL(
-                "https://www.bing.com/"
-            );
-        }
-    }
-);
-
-
-/* ==========================================
-   CLOSE BROWSER
-   ========================================== */
-
-ipcMain.handle(
-    "close-browser",
-    () => {
-
-        browserVisible = false;
-
-        browserMinimized = false;
-
-
-        if (browserView) {
-
-            browserView.setVisible(
-                false
-            );
-        }
-
-
-        send(
-            "browser-close",
-            true
-        );
-    }
-);
-
-
-/* ==========================================
-   MINIMIZE
-   ========================================== */
-
-ipcMain.handle(
-    "minimize-browser",
-    () => {
-
-        if (!browserView) {
-            return;
-        }
-
-
-        browserMinimized =
-            !browserMinimized;
-
-
-        browserView.setVisible(
-            !browserMinimized
-        );
-
-
-        send(
-            "browser-minimized",
-            browserMinimized
-        );
-    }
-);
-
-
-/* ==========================================
-   SET BROWSER POSITION
-   ========================================== */
-
-ipcMain.handle(
-    "set-browser-bounds",
-    (event, bounds) => {
-
-        positionBrowser(
-            bounds
-        );
-    }
-);
-
-
-/* ==========================================
-   SEARCH BING
-   ========================================== */
-
-ipcMain.handle(
-    "search",
-    (event, query) => {
-
-        if (
-            !browserView ||
-            !query
-        ) {
-            return;
-        }
-
-
-        const searchURL =
-            "https://www.bing.com/search?q=" +
-            encodeURIComponent(
-                query
-            );
-
-
-        browserView.webContents.loadURL(
-            searchURL
-        );
-    }
-);
-
-
-/* ==========================================
-   NAVIGATE TO WEBSITE
-   ========================================== */
-
-ipcMain.handle(
-    "navigate",
-    (event, input) => {
-
-        if (
-            !browserView ||
-            !input
-        ) {
-            return;
-        }
-
-
-        let value =
-            String(input).trim();
-
-
-        if (!value) {
-            return;
-        }
-
-
-        /*
-         * If the user typed something like:
-         *
-         * snokido.com
-         *
-         * turn it into:
-         *
-         * https://snokido.com
-         */
-
-        if (
-            !value.startsWith(
-                "http://"
-            ) &&
-            !value.startsWith(
-                "https://"
-            )
-        ) {
-
-            value =
-                "https://" +
-                value;
-        }
-
-
-        browserView.webContents.loadURL(
-            value
-        );
-    }
-);
-
-
-/* ==========================================
-   BACK
-   ========================================== */
-
-ipcMain.handle(
-    "back",
-    () => {
-
-        if (
-            browserView &&
-            browserView.webContents.canGoBack()
-        ) {
-
-            browserView.webContents.goBack();
-        }
-    }
-);
-
-
-/* ==========================================
-   FORWARD
-   ========================================== */
-
-ipcMain.handle(
-    "forward",
-    () => {
-
-        if (
-            browserView &&
-            browserView.webContents.canGoForward()
-        ) {
-
-            browserView.webContents.goForward();
-        }
-    }
-);
-
-
-/* ==========================================
-   REFRESH
-   ========================================== */
-
-ipcMain.handle(
-    "refresh",
-    () => {
-
-        if (browserView) {
-
-            browserView.webContents.reload();
-        }
-    }
-);
-
-
-/* ==========================================
-   HOME
-   ========================================== */
-
-ipcMain.handle(
-    "home",
-    () => {
-
-        if (browserView) {
-
-            browserView.webContents.loadURL(
-                "https://www.bing.com/"
-            );
-        }
-    }
-);
-
-
-/* ==========================================
-   APP READY
-   ========================================== */
-
-app.whenReady().then(() => {
-
-    createMainWindow();
-
-
-    app.on(
-        "activate",
-        () => {
-
-            if (
-                BrowserWindow
-                    .getAllWindows()
-                    .length === 0
-            ) {
-
-                createMainWindow();
+                    updateBrowserPosition();
+                }
             }
-        }
-    );
-});
+        );
 
 
-/* ==========================================
-   CLOSE APP
-   ========================================== */
+        /* ==================================
+           DRAGGING
+           ================================== */
 
-app.on(
-    "window-all-closed",
-    () => {
+        let dragging = false;
 
-        if (
-            process.platform !== "darwin"
-        ) {
+        let offsetX = 0;
 
-            app.quit();
-        }
-    }
-);
+        let offsetY = 0;
+
+
+        titleBar.addEventListener(
+            "pointerdown",
+            event => {
+
+                if (
+                    event.target.closest(
+                        "button"
+                    )
+                ) {
+                    return;
+                }
+
+
+                dragging = true;
+
+
+                const rect =
+                    browserWindow
+                        .getBoundingClientRect();
+
+
+                offsetX =
+                    event.clientX -
+                    rect.left;
+
+
+                offsetY =
+                    event.clientY -
+                    rect.top;
+
+
+                titleBar.setPointerCapture(
+                    event.pointerId
+                );
+            }
+        );
+
+
+        titleBar.addEventListener(
+            "pointermove",
+            event => {
+
+                if (!dragging) {
+                    return;
+                }
+
+
+                const left =
+                    event.clientX -
+                    offsetX;
+
+
+                const top =
+                    event.clientY -
+                    offsetY;
+
+
+                browserWindow.style.left =
+                    left + "px";
+
+
+                browserWindow.style.top =
+                    top + "px";
+
+
+                browserWindow.style.transform =
+                    "none";
+
+
+                updateBrowserPosition();
+            }
+        );
+
+
+        titleBar.addEventListener(
+            "pointerup",
+            event => {
+
+                dragging = false;
+
+
+                try {
+
+                    titleBar.releasePointerCapture(
+                        event.pointerId
+                    );
+
+                } catch (error) {
+
+                    /* Nothing to do. */
+                }
+            }
+        );
+
+
+        titleBar.addEventListener(
+            "pointercancel",
+            () => {
+
+                dragging = false;
+            }
+        );
+
+
+        /* ==================================
+           WINDOW RESIZE
+           ================================== */
+
+        window.addEventListener(
+            "resize",
+            () => {
+
+                updateBrowserPosition();
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
