@@ -30,14 +30,14 @@
             padding: 12px 20px;
             border: none;
             border-radius: 6px;
-            background: #333333;
+            background-color: #333333;
             color: #ffffff;
             font-size: 16px;
             cursor: pointer;
         }
 
         .search-launcher:hover {
-            background: #555555;
+            background-color: #555555;
         }
 
         /* Search window */
@@ -46,8 +46,9 @@
             top: 8%;
             left: 50%;
             transform: translateX(-50%);
-            width: min(850px, 92%);
-            height: 650px;
+
+            width: min(700px, 92%);
+            height: 300px;
 
             background: #ffffff;
             border: 1px solid #888888;
@@ -62,7 +63,7 @@
             overflow: hidden;
         }
 
-        /* Window title bar */
+        /* Window header */
         .window-header {
             display: flex;
             align-items: center;
@@ -81,7 +82,7 @@
             font-weight: bold;
         }
 
-        /* Window buttons */
+        /* Window controls */
         .window-controls {
             display: flex;
             gap: 6px;
@@ -105,22 +106,51 @@
             background: #666666;
         }
 
-        /* Search area */
+        /* Search content */
         .search-content {
-            flex: 1;
-            overflow: auto;
-            padding: 15px;
+            padding: 25px;
         }
 
-        /*
-         * Google Programmable Search Element
-         *
-         * Replace YOUR_SEARCH_ENGINE_ID below
-         * with your Google Search Engine ID.
-         */
-
-        .gcse-search {
+        .search-form {
+            display: flex;
+            gap: 8px;
             width: 100%;
+        }
+
+        .search-form input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 12px;
+
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+
+            font-size: 16px;
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+
+            border: none;
+            border-radius: 5px;
+
+            background: #4285f4;
+            color: #ffffff;
+
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background: #3367d6;
+        }
+
+        .search-info {
+            margin-top: 20px;
+            color: #666666;
+            font-size: 14px;
         }
 
         /* Minimized window */
@@ -140,16 +170,18 @@
 
             .search-window {
                 width: 95%;
-                height: 80%;
                 top: 5%;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-form button {
+                width: 100%;
             }
         }
     </style>
-
-    <!-- Google Programmable Search Engine -->
-    <script async
-        src="https://cse.google.com/cse.js?cx=YOUR_SEARCH_ENGINE_ID">
-    </script>
 </head>
 
 <body>
@@ -160,9 +192,10 @@
         Earth's early geological history was shaped by major changes in its
         crust, including tectonic processes that contributed to the formation
         and breakup of supercontinents such as
-        <a href="https://bull.ultradec.com/"
-           target="_blank"
-           rel="noopener noreferrer">
+        <a
+            href="https://bull.ultradec.com/"
+            target="_blank"
+            rel="noopener noreferrer">
             Pangaea
         </a>.
     </p>
@@ -174,12 +207,12 @@
         environments that existed long before human civilization.
     </p>
 
-    <!-- Open Search -->
+    <!-- Open search -->
     <button
         class="search-launcher"
         id="openSearch"
         type="button">
-        🔍 Open Search
+        🔍 Open Google Search
     </button>
 
 
@@ -188,7 +221,6 @@
         class="search-window"
         id="searchWindow">
 
-        <!-- Title bar -->
         <div
             class="window-header"
             id="windowHeader">
@@ -217,13 +249,30 @@
         </div>
 
 
-        <!-- Search contents -->
         <div class="search-content">
 
-            <!--
-                Google renders the search box AND results here.
-            -->
-            <div class="gcse-search"></div>
+            <form
+                class="search-form"
+                action="https://www.google.com/search"
+                method="get">
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Search Google..."
+                    aria-label="Search Google"
+                    autocomplete="off"
+                    required>
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+            <p class="search-info">
+                Type something above and click Search.
+            </p>
 
         </div>
     </div>
@@ -247,7 +296,7 @@
             document.getElementById("windowHeader");
 
 
-        /* Open search window */
+        /* Open window */
         openSearch.addEventListener("click", function () {
 
             searchWindow.style.display = "flex";
@@ -257,7 +306,7 @@
         });
 
 
-        /* Close search window */
+        /* Close window */
         closeSearch.addEventListener("click", function () {
 
             searchWindow.style.display = "none";
@@ -265,7 +314,7 @@
         });
 
 
-        /* Minimize search window */
+        /* Minimize window */
         minimizeSearch.addEventListener("click", function () {
 
             searchWindow.classList.toggle("minimized");
@@ -273,7 +322,7 @@
         });
 
 
-        /* Make the window draggable */
+        /* Dragging */
 
         let dragging = false;
 
@@ -283,7 +332,6 @@
 
         windowHeader.addEventListener("mousedown", function (event) {
 
-            /* Don't drag when clicking window buttons */
             if (event.target.closest("button")) {
                 return;
             }
