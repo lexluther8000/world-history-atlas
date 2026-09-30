@@ -9,7 +9,9 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Atlas Browser</title>
+    <title>
+        World History Atlas - Gaming
+    </title>
 
 
     <style>
@@ -24,47 +26,136 @@
 
             margin: 0;
 
-            width: 100%;
-            height: 100%;
-
-            overflow: hidden;
+            min-height: 100%;
 
             font-family:
                 Arial,
-                Helvetica,
                 sans-serif;
         }
 
 
         body {
 
+            padding: 20px;
+
             background: #ffffff;
 
-            color: #222;
+            color: #333333;
         }
 
 
-        /* =================================
-           TOOLBAR
-           ================================= */
+        a {
 
-        .browser-ui {
+            color: #333333;
+        }
 
-            height: 122px;
 
-            display: flex;
+        /* =========================
+           HEADER
+           ========================= */
+
+        h1 {
+
+            margin-top: 0;
+        }
+
+
+        /* =========================
+           SEARCH BUTTON
+           ========================= */
+
+        .search-launcher {
+
+            margin-top: 30px;
+
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #333333;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+
+        .search-launcher:hover {
+
+            background: #555555;
+        }
+
+
+        /* =========================
+           GAME BUTTON
+           ========================= */
+
+        .game-button {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 12px 20px;
+
+            border-radius: 6px;
+
+            background: #4285f4;
+
+            color: white;
+
+            text-decoration: none;
+        }
+
+
+        .game-button:hover {
+
+            background: #3367d6;
+        }
+
+
+        /* =========================
+           BROWSER WINDOW
+           ========================= */
+
+        .browser-controls {
+
+            position: fixed;
+
+            z-index: 2000;
+
+            display: none;
 
             flex-direction: column;
 
-            background: #242424;
+            background: #222222;
 
             color: white;
+
+            border-radius:
+                8px 8px 0 0;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, 0.4);
+
+            user-select: none;
         }
 
 
-        /* =================================
+        .browser-controls.open {
+
+            display: flex;
+        }
+
+
+        /* =========================
            TITLE BAR
-           ================================= */
+           ========================= */
 
         .title-bar {
 
@@ -74,17 +165,24 @@
 
             align-items: center;
 
-            padding: 0 12px;
+            justify-content: space-between;
 
-            background: #202020;
+            padding: 0 8px 0 12px;
+
+            background: #222222;
+
+            border-radius:
+                8px 8px 0 0;
+
+            cursor: move;
         }
 
 
-        .title {
-
-            font-size: 14px;
+        .title-text {
 
             font-weight: bold;
+
+            font-size: 14px;
 
             overflow: hidden;
 
@@ -94,27 +192,61 @@
         }
 
 
-        /* =================================
+        .window-buttons {
+
+            display: flex;
+
+            gap: 5px;
+        }
+
+
+        .window-buttons button {
+
+            width: 30px;
+
+            height: 26px;
+
+            border: none;
+
+            border-radius: 4px;
+
+            background: #444444;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+
+        .window-buttons button:hover {
+
+            background: #666666;
+        }
+
+
+        /* =========================
            TAB
-           ================================= */
+           ========================= */
 
-        .tabs {
+        .tab-bar {
 
-            height: 38px;
+            height: 36px;
 
             display: flex;
 
             align-items: flex-end;
 
-            padding-left: 8px;
+            background: #2c2c2c;
 
-            background: #292929;
+            padding-left: 7px;
         }
 
 
         .tab {
 
-            height: 34px;
+            height: 32px;
 
             min-width: 180px;
 
@@ -126,12 +258,12 @@
 
             align-items: center;
 
-            background: #ffffff;
+            background: white;
 
-            color: #222;
+            color: #222222;
 
             border-radius:
-                7px 7px 0 0;
+                6px 6px 0 0;
 
             font-size: 13px;
 
@@ -143,21 +275,21 @@
         }
 
 
-        /* =================================
+        /* =========================
            NAVIGATION BAR
-           ================================= */
+           ========================= */
 
         .navigation {
 
-            height: 44px;
+            height: 46px;
 
             display: flex;
 
             align-items: center;
 
-            gap: 6px;
+            gap: 5px;
 
-            padding: 5px 8px;
+            padding: 6px;
 
             background: #eeeeee;
         }
@@ -166,6 +298,7 @@
         .nav-button {
 
             width: 34px;
+
             height: 32px;
 
             border: 1px solid #bbb;
@@ -174,31 +307,15 @@
 
             background: white;
 
-            color: #333;
-
-            font-size: 17px;
-
             cursor: pointer;
         }
 
 
-        .nav-button:hover:not(:disabled) {
+        .nav-button:hover {
 
             background: #ddd;
         }
 
-
-        .nav-button:disabled {
-
-            opacity: 0.4;
-
-            cursor: default;
-        }
-
-
-        /* =================================
-           ADDRESS BAR
-           ================================= */
 
         .address-form {
 
@@ -206,9 +323,9 @@
 
             display: flex;
 
-            min-width: 0;
-
             gap: 5px;
+
+            min-width: 0;
         }
 
 
@@ -226,23 +343,11 @@
 
             border-radius: 5px;
 
-            outline: none;
-
             font-size: 14px;
         }
 
 
-        .address:focus {
-
-            border-color: #4285f4;
-
-            box-shadow:
-                0 0 0 2px
-                rgba(66, 133, 244, 0.2);
-        }
-
-
-        .go {
+        .go-button {
 
             height: 32px;
 
@@ -260,82 +365,63 @@
         }
 
 
-        .go:hover {
+        .go-button:hover {
 
             background: #3367d6;
         }
 
 
-        /* =================================
-           ERROR MESSAGE
-           ================================= */
+        /* =========================
+           GAME AREA
+           ========================= */
 
-        .error {
+        .game-area {
 
-            position: fixed;
+            margin-top: 30px;
 
-            bottom: 20px;
+            width: 100%;
 
-            left: 50%;
+            height: 600px;
 
-            transform:
-                translateX(-50%);
+            background: #000000;
 
-            padding: 10px 18px;
+            border-radius: 8px;
 
-            border-radius: 6px;
-
-            background: #222;
-
-            color: white;
-
-            font-size: 13px;
-
-            display: none;
-
-            z-index: 100;
+            overflow: hidden;
         }
 
 
-        .error.show {
+        .game-area iframe {
 
-            display: block;
+            width: 100%;
+
+            height: 100%;
+
+            border: none;
         }
 
 
-        /* =================================
+        /* =========================
            MOBILE
-           ================================= */
+           ========================= */
 
         @media (max-width: 600px) {
 
-            .browser-ui {
+            body {
 
-                height: 122px;
+                padding: 15px;
+            }
+
+
+            .game-area {
+
+                height: 500px;
             }
 
 
             .tab {
 
                 min-width: 130px;
-            }
-
-
-            .navigation {
-
-                gap: 4px;
-            }
-
-
-            .nav-button {
-
-                width: 32px;
-            }
-
-
-            .go {
-
-                padding: 0 10px;
             }
         }
 
@@ -347,35 +433,135 @@
 <body>
 
 
-    <!-- =================================
-         BROWSER INTERFACE
-         ================================= -->
+    <!-- ==================================
+         GAMING WEBSITE
+         ================================== -->
 
-    <div class="browser-ui">
+    <main>
+
+        <h1>
+            Geological History of Earth
+        </h1>
+
+
+        <p>
+
+            Earth's early geological history was
+            shaped by major changes in its crust,
+            including tectonic processes that
+            contributed to the formation and breakup
+            of supercontinents such as
+
+            <a
+                href="https://bull.ultradec.com/"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                Pangaea
+
+            </a>.
+
+        </p>
+
+
+        <p>
+
+            Sedimentary rock layers provide evidence
+            of volcanic activity, environmental
+            changes, and past climates.
+
+        </p>
+
+
+        <!-- SEARCH BUTTON -->
+
+        <button
+            class="search-launcher"
+            id="openBrowser"
+            type="button">
+
+            🔍 Open Search
+
+        </button>
+
+
+        <!-- GAME -->
+
+        <div class="game-area">
+
+            <iframe
+                src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
+                title="Game"
+                scrolling="no"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================
+         BROWSER CONTROLS
+         ================================== -->
+
+    <div
+        class="browser-controls"
+        id="browserControls">
 
 
         <!-- TITLE -->
 
-        <div class="title-bar">
+        <div
+            class="title-bar"
+            id="titleBar">
 
-            <div
-                class="title"
-                id="title">
+
+            <span
+                class="title-text"
+                id="browserTitle">
 
                 Atlas Browser
+
+            </span>
+
+
+            <div
+                class="window-buttons">
+
+
+                <button
+                    id="minimizeBrowser"
+                    type="button"
+                    title="Minimize">
+
+                    −
+
+                </button>
+
+
+                <button
+                    id="closeBrowser"
+                    type="button"
+                    title="Close">
+
+                    ×
+
+                </button>
+
 
             </div>
 
         </div>
 
 
-        <!-- ONE TAB -->
+        <!-- TAB -->
 
-        <div class="tabs">
+        <div class="tab-bar">
 
             <div
                 class="tab"
-                id="tab">
+                id="browserTab">
 
                 New Tab
 
@@ -392,8 +578,8 @@
             <button
                 class="nav-button"
                 id="back"
-                title="Back"
-                disabled>
+                type="button"
+                title="Back">
 
                 ←
 
@@ -403,8 +589,8 @@
             <button
                 class="nav-button"
                 id="forward"
-                title="Forward"
-                disabled>
+                type="button"
+                title="Forward">
 
                 →
 
@@ -414,6 +600,7 @@
             <button
                 class="nav-button"
                 id="refresh"
+                type="button"
                 title="Refresh">
 
                 ↻
@@ -424,6 +611,7 @@
             <button
                 class="nav-button"
                 id="home"
+                type="button"
                 title="Home">
 
                 ⌂
@@ -446,7 +634,7 @@
 
 
                 <button
-                    class="go"
+                    class="go-button"
                     type="submit">
 
                     Go
@@ -461,18 +649,35 @@
     </div>
 
 
-    <!-- ERROR -->
-
-    <div
-        class="error"
-        id="error">
-
-        The website could not be loaded.
-
-    </div>
-
-
     <script>
+
+        /* ==================================
+           ELEMENTS
+           ================================== */
+
+        const openBrowser =
+            document.getElementById(
+                "openBrowser"
+            );
+
+
+        const browserControls =
+            document.getElementById(
+                "browserControls"
+            );
+
+
+        const closeBrowser =
+            document.getElementById(
+                "closeBrowser"
+            );
+
+
+        const minimizeBrowser =
+            document.getElementById(
+                "minimizeBrowser"
+            );
+
 
         const address =
             document.getElementById(
@@ -510,31 +715,80 @@
             );
 
 
-        const tab =
+        const browserTitle =
             document.getElementById(
-                "tab"
+                "browserTitle"
             );
 
 
-        const title =
+        const browserTab =
             document.getElementById(
-                "title"
+                "browserTab"
             );
 
 
-        const error =
+        const titleBar =
             document.getElementById(
-                "error"
+                "titleBar"
             );
 
 
-        /* =================================
-           NAVIGATE
-           ================================= */
+        /* ==================================
+           OPEN
+           ================================== */
+
+        openBrowser.addEventListener(
+            "click",
+            () => {
+
+                browserControls.classList.add(
+                    "open"
+                );
+
+
+                window.atlas.openBrowser();
+            }
+        );
+
+
+        /* ==================================
+           CLOSE
+           ================================== */
+
+        closeBrowser.addEventListener(
+            "click",
+            () => {
+
+                browserControls.classList.remove(
+                    "open"
+                );
+
+
+                window.atlas.closeBrowser();
+            }
+        );
+
+
+        /* ==================================
+           MINIMIZE
+           ================================== */
+
+        minimizeBrowser.addEventListener(
+            "click",
+            () => {
+
+                window.atlas.minimizeBrowser();
+            }
+        );
+
+
+        /* ==================================
+           ADDRESS BAR
+           ================================== */
 
         addressForm.addEventListener(
             "submit",
-            async (event) => {
+            event => {
 
                 event.preventDefault();
 
@@ -549,98 +803,94 @@
 
 
                 /*
-                 * If it looks like a URL,
-                 * navigate directly.
+                 * Detect websites.
                  */
 
-                const looksLikeURL =
-                    /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+/
-                        .test(value) ||
+                const isURL =
                     value.startsWith(
                         "http://"
                     ) ||
                     value.startsWith(
                         "https://"
+                    ) ||
+                    /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+/
+                        .test(value);
+
+
+                if (isURL) {
+
+                    window.atlas.navigate(
+                        value
                     );
 
+                } else {
 
-                if (looksLikeURL) {
-
-                    await window.atlasBrowser
-                        .navigate(
-                            value
-                        );
-
-                }
-                else {
-
-                    await window.atlasBrowser
-                        .search(
-                            value
-                        );
+                    window.atlas.search(
+                        value
+                    );
                 }
             }
         );
 
 
-        /* =================================
+        /* ==================================
            BACK
-           ================================= */
+           ================================== */
 
         back.addEventListener(
             "click",
             () => {
 
-                window.atlasBrowser.back();
+                window.atlas.back();
             }
         );
 
 
-        /* =================================
+        /* ==================================
            FORWARD
-           ================================= */
+           ================================== */
 
         forward.addEventListener(
             "click",
             () => {
 
-                window.atlasBrowser.forward();
+                window.atlas.forward();
             }
         );
 
 
-        /* =================================
+        /* ==================================
            REFRESH
-           ================================= */
+           ================================== */
 
         refresh.addEventListener(
             "click",
             () => {
 
-                window.atlasBrowser.refresh();
+                window.atlas.refresh();
             }
         );
 
 
-        /* =================================
+        /* ==================================
            HOME
-           ================================= */
+           ================================== */
 
         home.addEventListener(
             "click",
             () => {
 
-                window.atlasBrowser.home();
+                window.atlas.home();
             }
         );
 
 
-        /* =================================
-           URL CHANGED
-           ================================= */
+        /* ==================================
+           URL UPDATE
+           ================================== */
 
-        window.atlasBrowser.onURLChange(
-            (url) => {
+        window.atlas.onBrowserURL(
+            url => {
 
                 address.value =
                     url;
@@ -648,77 +898,237 @@
         );
 
 
-        /* =================================
-           TITLE CHANGED
-           ================================= */
+        /* ==================================
+           TITLE UPDATE
+           ================================== */
 
-        window.atlasBrowser.onTitleChange(
-            (pageTitle) => {
+        window.atlas.onBrowserTitle(
+            pageTitle => {
 
                 if (!pageTitle) {
                     return;
                 }
 
 
-                tab.textContent =
+                browserTitle.textContent =
                     pageTitle;
 
 
-                title.textContent =
+                browserTab.textContent =
                     pageTitle;
             }
         );
 
 
-        /* =================================
-           NAVIGATION STATE
-           ================================= */
+        /* ==================================
+           BROWSER ERROR
+           ================================== */
 
-        window.atlasBrowser.onNavigationState(
-            (state) => {
+        window.atlas.onBrowserError(
+            info => {
 
-                back.disabled =
-                    !state.canGoBack;
-
-
-                forward.disabled =
-                    !state.canGoForward;
-            }
-        );
-
-
-        /* =================================
-           ERROR
-           ================================= */
-
-        window.atlasBrowser.onError(
-            (info) => {
-
-                console.error(
+                console.log(
+                    "Browser error:",
                     info
                 );
+            }
+        );
 
 
-                error.textContent =
-                    "Could not load: " +
-                    info.errorDescription;
+        /* ==================================
+           MINIMIZED
+           ================================== */
+
+        window.atlas.onBrowserMinimized(
+            minimized => {
+
+                if (minimized) {
+
+                    browserControls.style.display =
+                        "flex";
+
+                    browserControls.style.height =
+                        "40px";
+
+                } else {
+
+                    browserControls.style.height =
+                        "";
+                }
+            }
+        );
 
 
-                error.classList.add(
-                    "show"
+        /* ==================================
+           DRAGGING
+           ================================== */
+
+        let dragging = false;
+
+        let dragStartX = 0;
+
+        let dragStartY = 0;
+
+
+        titleBar.addEventListener(
+            "pointerdown",
+            event => {
+
+                if (
+                    event.target.closest(
+                        "button"
+                    )
+                ) {
+                    return;
+                }
+
+
+                dragging = true;
+
+
+                dragStartX =
+                    event.clientX;
+
+
+                dragStartY =
+                    event.clientY;
+
+
+                titleBar.setPointerCapture(
+                    event.pointerId
                 );
+            }
+        );
 
 
-                setTimeout(
-                    () => {
+        titleBar.addEventListener(
+            "pointermove",
+            event => {
 
-                        error.classList.remove(
-                            "show"
-                        );
+                if (!dragging) {
+                    return;
+                }
 
-                    },
-                    5000
+
+                const dx =
+                    event.clientX -
+                    dragStartX;
+
+
+                const dy =
+                    event.clientY -
+                    dragStartY;
+
+
+                /*
+                 * We don't directly move the
+                 * WebContentsView from here.
+                 *
+                 * Instead we move the visual
+                 * control position and tell
+                 * Electron about it.
+                 */
+
+                const rect =
+                    browserControls
+                        .getBoundingClientRect();
+
+
+                const newX =
+                    rect.left + dx;
+
+
+                const newY =
+                    rect.top + dy;
+
+
+                browserControls.style.left =
+                    newX + "px";
+
+
+                browserControls.style.top =
+                    newY + "px";
+
+
+                browserControls.style.transform =
+                    "none";
+
+
+                dragStartX =
+                    event.clientX;
+
+
+                dragStartY =
+                    event.clientY;
+
+
+                /*
+                 * Tell Electron where the
+                 * actual browser view should be.
+                 */
+
+                window.atlas.moveBrowser({
+
+                    x: newX,
+
+                    y: newY,
+
+                    width:
+                        browserControls
+                            .offsetWidth,
+
+                    height:
+                        browserControls
+                            .offsetHeight
+                });
+            }
+        );
+
+
+        titleBar.addEventListener(
+            "pointerup",
+            event => {
+
+                dragging = false;
+
+
+                titleBar.releasePointerCapture(
+                    event.pointerId
                 );
+            }
+        );
+
+
+        titleBar.addEventListener(
+            "pointercancel",
+            () => {
+
+                dragging = false;
+            }
+        );
+
+
+        /* ==================================
+           ESCAPE CLOSES BROWSER
+           ================================== */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape" &&
+                    browserControls.classList
+                        .contains("open")
+                ) {
+
+                    browserControls.classList.remove(
+                        "open"
+                    );
+
+
+                    window.atlas.closeBrowser();
+                }
             }
         );
 
