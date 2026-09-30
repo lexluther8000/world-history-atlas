@@ -4,30 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlas View - Data Matrix</title>
-</head>
-<body style="margin: 0; padding: 0; background-color: #000000; display: flex; justify-content: center; align-items: center; height: 100vh;">
 
-    <!-- Secure, embed-friendly unblocked arcade frame -->
-    <iframe src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/" 
-            style="width: 100%; height: 100%; border: none;" 
-            scrolling="no"
-            allowfullscreen>
-    </iframe>
-
-    <!-- Boss Key Script: Press Escape to instantly jump to Google Classroom -->
-    <script>
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-          window.location.href = 'https://classroom.google.com';
-        }
-      });
-    </script>
-
-</body>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
     <style>
         html, body {
             width: 100%;
@@ -45,11 +22,22 @@
         }
     </style>
 </head>
+
 <body>
     <iframe
         src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
         title="Game"
+        scrolling="no"
         allowfullscreen>
     </iframe>
+
+    <!-- Boss Key -->
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                window.location.href = 'https://classroom.google.com';
+            }
+        });
+    </script>
 </body>
 </html>
