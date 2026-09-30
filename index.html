@@ -21,7 +21,6 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             padding: 20px;
-
             background: #ffffff;
             color: #333333;
         }
@@ -30,14 +29,9 @@
             color: #333333;
         }
 
-        button,
-        input {
-            font: inherit;
-        }
-
-        /* ==============================
+        /* =========================
            MAIN PAGE
-           ============================== */
+           ========================= */
 
         h1 {
             margin-top: 0;
@@ -45,7 +39,6 @@
 
         .search-launcher {
             margin-top: 30px;
-
             padding: 12px 20px;
 
             border: none;
@@ -55,7 +48,6 @@
             color: #ffffff;
 
             font-size: 16px;
-
             cursor: pointer;
         }
 
@@ -63,34 +55,33 @@
             background: #555555;
         }
 
-
-        /* ==============================
+        /* =========================
            BROWSER WINDOW
-           ============================== */
+           ========================= */
 
         .browser-window {
             position: fixed;
 
-            top: 7%;
+            top: 6%;
             left: 50%;
 
             transform: translateX(-50%);
 
-            width: min(1000px, 94vw);
-            height: min(750px, 86vh);
+            width: min(1100px, 94vw);
+            height: min(800px, 88vh);
 
             display: none;
             flex-direction: column;
 
             background: #ffffff;
 
-            border: 1px solid #777777;
+            border: 1px solid #777;
             border-radius: 9px;
 
             overflow: hidden;
 
             box-shadow:
-                0 20px 55px rgba(0, 0, 0, 0.45);
+                0 20px 60px rgba(0, 0, 0, 0.45);
 
             z-index: 1000;
         }
@@ -99,10 +90,9 @@
             display: flex;
         }
 
-
-        /* ==============================
-           TITLE BAR
-           ============================== */
+        /* =========================
+           WINDOW HEADER
+           ========================= */
 
         .window-header {
             height: 46px;
@@ -114,8 +104,8 @@
 
             padding: 0 10px 0 14px;
 
-            background: #222222;
-            color: #ffffff;
+            background: #222;
+            color: white;
 
             cursor: grab;
             user-select: none;
@@ -147,23 +137,20 @@
             border: none;
             border-radius: 4px;
 
-            background: #444444;
-            color: #ffffff;
+            background: #444;
+            color: white;
 
             font-size: 18px;
-            line-height: 1;
-
             cursor: pointer;
         }
 
         .window-controls button:hover {
-            background: #666666;
+            background: #666;
         }
 
-
-        /* ==============================
-           SINGLE TAB
-           ============================== */
+        /* =========================
+           ONE TAB
+           ========================= */
 
         .tabs {
             height: 38px;
@@ -172,9 +159,9 @@
             display: flex;
             align-items: flex-end;
 
-            padding: 0 6px;
+            padding-left: 6px;
 
-            background: #2c2c2c;
+            background: #2b2b2b;
         }
 
         .tab {
@@ -183,23 +170,19 @@
             display: flex;
             align-items: center;
 
-            padding: 0 14px;
+            padding: 0 15px;
 
-            border: none;
+            background: white;
+            color: #222;
+
             border-radius: 6px 6px 0 0;
 
-            background: #ffffff;
-            color: #222222;
-
             font-size: 14px;
-
-            cursor: default;
         }
 
-
-        /* ==============================
+        /* =========================
            TOOLBAR
-           ============================== */
+           ========================= */
 
         .toolbar {
             display: flex;
@@ -211,24 +194,29 @@
 
             background: #eeeeee;
 
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px solid #ccc;
         }
 
         .toolbar-button {
             width: 36px;
             height: 34px;
 
-            border: 1px solid #bbbbbb;
+            border: 1px solid #bbb;
             border-radius: 5px;
 
-            background: #ffffff;
-            color: #333333;
+            background: white;
+            color: #333;
 
             cursor: pointer;
         }
 
-        .toolbar-button:hover {
-            background: #dddddd;
+        .toolbar-button:hover:not(:disabled) {
+            background: #ddd;
+        }
+
+        .toolbar-button:disabled {
+            opacity: 0.45;
+            cursor: default;
         }
 
         .address-form {
@@ -248,7 +236,7 @@
 
             padding: 8px 10px;
 
-            border: 1px solid #bbbbbb;
+            border: 1px solid #aaa;
             border-radius: 5px;
 
             font-size: 15px;
@@ -261,7 +249,7 @@
             border-radius: 5px;
 
             background: #4285f4;
-            color: #ffffff;
+            color: white;
 
             cursor: pointer;
         }
@@ -270,10 +258,9 @@
             background: #3367d6;
         }
 
-
-        /* ==============================
+        /* =========================
            CONTENT
-           ============================== */
+           ========================= */
 
         .content {
             position: relative;
@@ -281,13 +268,12 @@
             flex: 1;
             min-height: 0;
 
-            background: #ffffff;
+            background: white;
         }
 
-
-        /* ==============================
-           HOME / SEARCH
-           ============================== */
+        /* =========================
+           HOME
+           ========================= */
 
         .home-page {
             height: 100%;
@@ -306,7 +292,7 @@
 
             gap: 8px;
 
-            max-width: 700px;
+            max-width: 750px;
         }
 
         .search-form input {
@@ -316,7 +302,7 @@
 
             padding: 12px;
 
-            border: 1px solid #bbbbbb;
+            border: 1px solid #aaa;
             border-radius: 6px;
 
             font-size: 16px;
@@ -329,7 +315,7 @@
             border-radius: 6px;
 
             background: #4285f4;
-            color: #ffffff;
+            color: white;
 
             cursor: pointer;
         }
@@ -338,33 +324,28 @@
             background: #3367d6;
         }
 
-
-        /* ==============================
-           SEARCH RESULTS
-           ============================== */
+        /* =========================
+           RESULTS
+           ========================= */
 
         .results {
-            max-width: 800px;
+            max-width: 850px;
             margin-top: 25px;
         }
 
         .result {
             padding: 15px 0;
 
-            border-bottom: 1px solid #dddddd;
+            border-bottom: 1px solid #ddd;
         }
 
         .result-title {
             margin: 0 0 5px;
-
-            font-size: 19px;
         }
 
         .result-title a {
             color: #1a0dab;
-
             text-decoration: none;
-
             cursor: pointer;
         }
 
@@ -385,37 +366,35 @@
         .result-description {
             margin: 0;
 
-            color: #555555;
+            color: #555;
 
             font-size: 14px;
         }
 
-
-        /* ==============================
-           WEBSITE FRAME
-           ============================== */
+        /* =========================
+           IFRAME
+           ========================= */
 
         .page-frame {
             width: 100%;
             height: 100%;
 
-            border: none;
+            border: 0;
 
             display: none;
 
-            background: #ffffff;
+            background: white;
         }
 
         .page-frame.visible {
             display: block;
         }
 
+        /* =========================
+           ERROR PANEL
+           ========================= */
 
-        /* ==============================
-           BLOCKED / EMBEDDING MESSAGE
-           ============================== */
-
-        .blocked-message {
+        .error-panel {
             position: absolute;
 
             top: 50%;
@@ -423,13 +402,13 @@
 
             transform: translate(-50%, -50%);
 
-            width: min(600px, 90%);
+            width: min(650px, 90%);
 
             padding: 30px;
 
             background: #f5f5f5;
 
-            border: 1px solid #dddddd;
+            border: 1px solid #ddd;
             border-radius: 10px;
 
             text-align: center;
@@ -437,40 +416,36 @@
             display: none;
         }
 
-        .blocked-message.visible {
+        .error-panel.visible {
             display: block;
         }
 
-        .blocked-message h2 {
+        .error-panel h2 {
             margin-top: 0;
         }
 
-        .open-site-button {
+        .open-site {
             display: inline-block;
 
             margin-top: 10px;
 
             padding: 11px 20px;
 
-            border: none;
             border-radius: 6px;
 
             background: #4285f4;
-            color: #ffffff;
+            color: white;
 
             text-decoration: none;
-
-            cursor: pointer;
         }
 
-        .open-site-button:hover {
+        .open-site:hover {
             background: #3367d6;
         }
 
-
-        /* ==============================
+        /* =========================
            MINIMIZED
-           ============================== */
+           ========================= */
 
         .browser-window.minimized {
             height: 46px;
@@ -482,10 +457,9 @@
             display: none;
         }
 
-
-        /* ==============================
+        /* =========================
            MOBILE
-           ============================== */
+           ========================= */
 
         @media (max-width: 600px) {
 
@@ -530,10 +504,9 @@
 
 <body>
 
-
-    <!-- =================================
-         MAIN WEBSITE
-         ================================= -->
+    <!-- =========================
+         MAIN PAGE
+         ========================= -->
 
     <main>
 
@@ -568,16 +541,15 @@
     </main>
 
 
-    <!-- =================================
-         MINI BROWSER
-         ================================= -->
+    <!-- =========================
+         BROWSER
+         ========================= -->
 
     <section
         class="browser-window"
         id="browserWindow"
         role="dialog"
         aria-label="Atlas Browser">
-
 
         <!-- TITLE BAR -->
 
@@ -633,7 +605,6 @@
                 class="toolbar-button"
                 id="backButton"
                 type="button"
-                aria-label="Back"
                 title="Back"
                 disabled>
                 ←
@@ -643,7 +614,6 @@
                 class="toolbar-button"
                 id="forwardButton"
                 type="button"
-                aria-label="Forward"
                 title="Forward"
                 disabled>
                 →
@@ -653,7 +623,6 @@
                 class="toolbar-button"
                 id="refreshButton"
                 type="button"
-                aria-label="Refresh"
                 title="Refresh">
                 ↻
             </button>
@@ -662,11 +631,9 @@
                 class="toolbar-button"
                 id="homeButton"
                 type="button"
-                aria-label="Home"
                 title="Home">
                 ⌂
             </button>
-
 
             <form
                 class="address-form"
@@ -678,8 +645,7 @@
                     type="text"
                     placeholder="Search or enter a website..."
                     autocomplete="off"
-                    spellcheck="false"
-                    aria-label="Search or enter a website">
+                    spellcheck="false">
 
                 <button
                     class="go-button"
@@ -696,8 +662,7 @@
 
         <div class="content">
 
-
-            <!-- HOME -->
+            <!-- HOME PAGE -->
 
             <div
                 class="home-page"
@@ -710,7 +675,9 @@
                 </p>
 
                 <p>
-                    For example:
+                    Try:
+                    <strong>youtube.com</strong>
+                    or
                     <strong>snokido.com</strong>
                 </p>
 
@@ -721,7 +688,7 @@
                     <input
                         id="searchInput"
                         type="search"
-                        placeholder="Search for something..."
+                        placeholder="Search the web..."
                         autocomplete="off">
 
                     <button type="submit">
@@ -729,7 +696,6 @@
                     </button>
 
                 </form>
-
 
                 <div
                     class="results"
@@ -744,31 +710,41 @@
             <iframe
                 class="page-frame"
                 id="pageFrame"
-                title="Website content">
+                title="Website"
+                allow="
+                    autoplay;
+                    fullscreen;
+                    picture-in-picture;
+                    encrypted-media;
+                    web-share;
+                    clipboard-read;
+                    clipboard-write
+                "
+                allowfullscreen>
             </iframe>
 
 
-            <!-- EMBEDDING MESSAGE -->
+            <!-- ERROR -->
 
             <div
-                class="blocked-message"
-                id="blockedMessage">
+                class="error-panel"
+                id="errorPanel">
 
-                <h2>Website can't be shown here</h2>
+                <h2>⚠️ This site won't load here</h2>
 
                 <p>
-                    This website doesn't allow itself to be
-                    displayed inside an embedded window.
+                    The website appears to prevent itself from
+                    being displayed inside an embedded window.
                 </p>
 
                 <p>
-                    You can still visit the website normally
-                    using the button below.
+                    Your browser is enforcing the website's
+                    security rules.
                 </p>
 
                 <a
-                    class="open-site-button"
-                    id="openSiteButton"
+                    class="open-site"
+                    id="openSite"
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer">
@@ -786,9 +762,9 @@
         "use strict";
 
 
-        /* =================================
+        /* =========================
            ELEMENTS
-           ================================= */
+           ========================= */
 
         const browserWindow =
             document.getElementById("browserWindow");
@@ -826,11 +802,11 @@
         const pageFrame =
             document.getElementById("pageFrame");
 
-        const blockedMessage =
-            document.getElementById("blockedMessage");
+        const errorPanel =
+            document.getElementById("errorPanel");
 
-        const openSiteButton =
-            document.getElementById("openSiteButton");
+        const openSite =
+            document.getElementById("openSite");
 
         const backButton =
             document.getElementById("backButton");
@@ -848,60 +824,54 @@
             document.getElementById("tabTitle");
 
 
-        /* =================================
-           BROWSER HISTORY
-           ================================= */
+        /* =========================
+           HISTORY
+           ========================= */
 
         let history = [];
 
         let historyIndex = -1;
 
-        let currentURL = null;
+        let currentURL = "";
 
 
-        /* =================================
-           OPEN
-           ================================= */
+        /* =========================
+           OPEN BROWSER
+           ========================= */
 
         openBrowser.addEventListener(
             "click",
-            function () {
+            () => {
 
-                browserWindow.classList.add(
-                    "open"
-                );
+                browserWindow.classList.add("open");
 
-                browserWindow.classList.remove(
-                    "minimized"
-                );
+                browserWindow.classList.remove("minimized");
 
                 searchInput.focus();
             }
         );
 
 
-        /* =================================
+        /* =========================
            CLOSE
-           ================================= */
+           ========================= */
 
         closeButton.addEventListener(
             "click",
-            function () {
+            () => {
 
-                browserWindow.classList.remove(
-                    "open"
-                );
+                browserWindow.classList.remove("open");
             }
         );
 
 
-        /* =================================
+        /* =========================
            MINIMIZE
-           ================================= */
+           ========================= */
 
         minimizeButton.addEventListener(
             "click",
-            function () {
+            () => {
 
                 browserWindow.classList.toggle(
                     "minimized"
@@ -910,85 +880,67 @@
         );
 
 
-        /* =================================
-           WEBSITE DETECTION
-           ================================= */
+        /* =========================
+           DETECT WEBSITE
+           ========================= */
 
-        function isWebsiteAddress(value) {
+        function looksLikeURL(value) {
 
-            const input =
+            const text =
                 value.trim();
 
 
-            /*
-             * Full URLs.
-             */
-
             if (
-                input.startsWith(
-                    "https://"
-                ) ||
-                input.startsWith(
-                    "http://"
-                )
+                text.startsWith("http://") ||
+                text.startsWith("https://")
             ) {
                 return true;
             }
 
 
             /*
-             * Domain names.
+             * Recognizes:
              *
-             * Examples:
-             *
+             * youtube.com
+             * www.youtube.com
              * snokido.com
-             * www.snokido.com
-             * example.org
-             * example.com/games
+             * example.org/page
              */
 
-            const domainPattern =
-                /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/.*)?$/;
-
-
-            return domainPattern.test(input);
+            return /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/.*)?$/
+                .test(text);
         }
 
 
-        /* =================================
-           NORMALIZE URL
-           ================================= */
+        /* =========================
+           MAKE URL
+           ========================= */
 
-        function normalizeURL(value) {
+        function makeURL(value) {
 
-            const input =
+            const text =
                 value.trim();
 
 
             if (
-                input.startsWith(
-                    "https://"
-                ) ||
-                input.startsWith(
-                    "http://"
-                )
+                text.startsWith("http://") ||
+                text.startsWith("https://")
             ) {
-
-                return input;
+                return text;
             }
 
 
-            return "https://" + input;
+            return "https://" + text;
         }
 
 
-        /* =================================
+        /* =========================
            ADDRESS BAR
-           ================================= */
+           ========================= */
 
         addressForm.addEventListener(
             "submit",
-            function (event) {
+            event => {
 
                 event.preventDefault();
 
@@ -1002,44 +954,28 @@
                 }
 
 
-                /*
-                 * WEBSITE
-                 */
+                if (looksLikeURL(value)) {
 
-                if (
-                    isWebsiteAddress(value)
-                ) {
-
-                    const url =
-                        normalizeURL(value);
-
-
-                    navigateTo(
-                        url,
+                    navigate(
+                        makeURL(value),
                         true
                     );
 
+                } else {
 
-                    return;
+                    searchWeb(value);
                 }
-
-
-                /*
-                 * SEARCH
-                 */
-
-                performSearch(value);
             }
         );
 
 
-        /* =================================
-           SEARCH BOX
-           ================================= */
+        /* =========================
+           SEARCH
+           ========================= */
 
         searchForm.addEventListener(
             "submit",
-            function (event) {
+            event => {
 
                 event.preventDefault();
 
@@ -1053,18 +989,16 @@
                 }
 
 
-                performSearch(query);
+                searchWeb(query);
             }
         );
 
 
-        /* =================================
-           SEARCH
-           ================================= */
+        /* =========================
+           SEARCH ENGINE
+           ========================= */
 
-        async function performSearch(query) {
-
-            currentURL = null;
+        function searchWeb(query) {
 
             homePage.style.display =
                 "block";
@@ -1073,7 +1007,7 @@
                 "visible"
             );
 
-            blockedMessage.classList.remove(
+            errorPanel.classList.remove(
                 "visible"
             );
 
@@ -1086,311 +1020,96 @@
                 "Search";
 
 
-            results.innerHTML =
-                "<p>Searching...</p>";
+            /*
+             * Use Bing search.
+             *
+             * Search results themselves are
+             * displayed in our one tab.
+             */
+
+            const url =
+                "https://www.bing.com/search?q=" +
+                encodeURIComponent(query);
 
 
             /*
-             * DuckDuckGo search API.
+             * Bing may prevent itself from being
+             * embedded, so instead of putting Bing
+             * itself into the iframe, create a
+             * simple search link.
              */
 
-            const apiURL =
-                "https://api.duckduckgo.com/?q=" +
-                encodeURIComponent(query) +
-                "&format=json&no_html=1";
+            results.innerHTML = `
+                <div class="result">
+                    <h3 class="result-title">
+                        <a href="#" id="bingSearch">
+                            Search Bing for "${escapeHTML(query)}"
+                        </a>
+                    </h3>
 
-
-            try {
-
-                const response =
-                    await fetch(apiURL);
-
-
-                if (!response.ok) {
-                    throw new Error(
-                        "Search failed"
-                    );
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                displayResults(
-                    query,
-                    data
-                );
-
-            }
-            catch (error) {
-
-                results.innerHTML = `
-                    <p>
-                        Search could not be completed.
+                    <p class="result-url">
+                        ${escapeHTML(url)}
                     </p>
 
-                    <p>
-                        You can enter a website directly
-                        into the address bar.
+                    <p class="result-description">
+                        Open the search results.
                     </p>
-
-                    <p>
-                        Example:
-                        <strong>snokido.com</strong>
-                    </p>
-                `;
-            }
-        }
+                </div>
+            `;
 
 
-        /* =================================
-           DISPLAY SEARCH RESULTS
-           ================================= */
-
-        function displayResults(
-            query,
-            data
-        ) {
-
-            results.innerHTML = "";
-
-
-            const items = [];
-
-
-            /*
-             * Main result.
-             */
-
-            if (
-                data.AbstractURL &&
-                data.AbstractText
-            ) {
-
-                items.push({
-                    title:
-                        data.Heading ||
-                        query,
-
-                    url:
-                        data.AbstractURL,
-
-                    description:
-                        data.AbstractText
-                });
-            }
-
-
-            /*
-             * Related results.
-             */
-
-            function collectTopics(
-                topics
-            ) {
-
-                if (!Array.isArray(topics)) {
-                    return;
-                }
-
-
-                for (
-                    const topic of topics
-                ) {
-
-                    if (
-                        topic.FirstURL &&
-                        topic.Text
-                    ) {
-
-                        items.push({
-                            title:
-                                topic.Text
-                                    .split(" - ")[0],
-
-                            url:
-                                topic.FirstURL,
-
-                            description:
-                                topic.Text
-                        });
-                    }
-
-
-                    if (topic.Topics) {
-
-                        collectTopics(
-                            topic.Topics
-                        );
-                    }
-                }
-            }
-
-
-            collectTopics(
-                data.RelatedTopics
-            );
-
-
-            if (items.length === 0) {
-
-                results.innerHTML = `
-                    <p>
-                        No results were returned.
-                    </p>
-
-                    <p>
-                        Try entering a website directly,
-                        such as:
-                        <strong>snokido.com</strong>
-                    </p>
-                `;
-
-                return;
-            }
-
-
-            /*
-             * Create result links.
-             */
-
-            for (
-                const item of items
-            ) {
-
-                const article =
-                    document.createElement(
-                        "article"
-                    );
-
-                article.className =
-                    "result";
-
-
-                const heading =
-                    document.createElement(
-                        "h3"
-                    );
-
-                heading.className =
-                    "result-title";
-
-
-                const link =
-                    document.createElement(
-                        "a"
-                    );
-
-                link.href =
-                    "#";
-
-                link.textContent =
-                    item.title;
-
-
-                /*
-                 * IMPORTANT:
-                 *
-                 * Do not use target="_blank".
-                 *
-                 * Clicking the result navigates
-                 * the existing tab.
-                 */
-
-                link.addEventListener(
+            document
+                .getElementById("bingSearch")
+                .addEventListener(
                     "click",
-                    function (event) {
+                    event => {
 
                         event.preventDefault();
 
-                        navigateTo(
-                            item.url,
+                        /*
+                         * This navigates the current
+                         * iframe, not a new tab.
+                         */
+
+                        navigate(
+                            url,
                             true
                         );
                     }
                 );
-
-
-                heading.appendChild(
-                    link
-                );
-
-
-                const url =
-                    document.createElement(
-                        "p"
-                    );
-
-                url.className =
-                    "result-url";
-
-                url.textContent =
-                    item.url;
-
-
-                const description =
-                    document.createElement(
-                        "p"
-                    );
-
-                description.className =
-                    "result-description";
-
-                description.textContent =
-                    item.description;
-
-
-                article.appendChild(
-                    heading
-                );
-
-                article.appendChild(
-                    url
-                );
-
-                article.appendChild(
-                    description
-                );
-
-
-                results.appendChild(
-                    article
-                );
-            }
         }
 
 
-        /* =================================
-           NAVIGATE
-           ================================= */
+        /* =========================
+           ESCAPE HTML
+           ========================= */
 
-        function navigateTo(
+        function escapeHTML(value) {
+
+            return value
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+
+        /* =========================
+           NAVIGATE
+           ========================= */
+
+        function navigate(
             url,
-            addToHistory
+            addHistory
         ) {
 
-            if (
-                !url ||
-                typeof url !== "string"
-            ) {
+            if (!url) {
                 return;
             }
 
 
-            /*
-             * Make sure the URL is complete.
-             */
-
-            const finalURL =
-                normalizeURL(url);
-
-
-            /*
-             * Add to history.
-             */
-
-            if (addToHistory) {
+            if (addHistory) {
 
                 history =
                     history.slice(
@@ -1399,9 +1118,7 @@
                     );
 
 
-                history.push(
-                    finalURL
-                );
+                history.push(url);
 
 
                 historyIndex =
@@ -1410,24 +1127,25 @@
 
 
             currentURL =
-                finalURL;
+                url;
 
 
             addressInput.value =
-                finalURL;
+                url;
 
-
-            /*
-             * Get hostname for tab title.
-             */
 
             try {
 
                 const parsed =
-                    new URL(finalURL);
+                    new URL(url);
 
 
                 tabTitle.textContent =
+                    parsed.hostname;
+
+                browserWindow
+                    .querySelector(".window-title")
+                    .textContent =
                     parsed.hostname;
 
             }
@@ -1438,47 +1156,47 @@
             }
 
 
-            /*
-             * Hide home.
-             */
-
             homePage.style.display =
                 "none";
 
 
-            blockedMessage.classList.remove(
+            errorPanel.classList.remove(
                 "visible"
             );
 
-
-            /*
-             * Show website.
-             */
 
             pageFrame.classList.add(
                 "visible"
             );
 
 
+            /*
+             * IMPORTANT:
+             *
+             * We don't add target="_blank".
+             * We don't call window.open().
+             *
+             * The current single iframe/tab is
+             * reused for every navigation.
+             */
+
             pageFrame.src =
-                finalURL;
+                url;
 
 
-            updateButtons();
+            updateNavigation();
         }
 
 
-        /* =================================
+        /* =========================
            BACK
-           ================================= */
+           ========================= */
 
         backButton.addEventListener(
             "click",
-            function () {
+            () => {
 
-                if (
-                    historyIndex <= 0
-                ) {
+                if (historyIndex <= 0) {
                     return;
                 }
 
@@ -1486,27 +1204,21 @@
                 historyIndex--;
 
 
-                const url =
-                    history[
-                        historyIndex
-                    ];
-
-
-                navigateTo(
-                    url,
+                navigate(
+                    history[historyIndex],
                     false
                 );
             }
         );
 
 
-        /* =================================
+        /* =========================
            FORWARD
-           ================================= */
+           ========================= */
 
         forwardButton.addEventListener(
             "click",
-            function () {
+            () => {
 
                 if (
                     historyIndex >=
@@ -1519,25 +1231,19 @@
                 historyIndex++;
 
 
-                const url =
-                    history[
-                        historyIndex
-                    ];
-
-
-                navigateTo(
-                    url,
+                navigate(
+                    history[historyIndex],
                     false
                 );
             }
         );
 
 
-        /* =================================
-           UPDATE NAVIGATION BUTTONS
-           ================================= */
+        /* =========================
+           NAVIGATION BUTTONS
+           ========================= */
 
-        function updateButtons() {
+        function updateNavigation() {
 
             backButton.disabled =
                 historyIndex <= 0;
@@ -1549,13 +1255,13 @@
         }
 
 
-        /* =================================
+        /* =========================
            REFRESH
-           ================================= */
+           ========================= */
 
         refreshButton.addEventListener(
             "click",
-            function () {
+            () => {
 
                 if (!currentURL) {
                     return;
@@ -1568,21 +1274,30 @@
         );
 
 
-        /* =================================
+        /* =========================
            HOME
-           ================================= */
+           ========================= */
 
         homeButton.addEventListener(
             "click",
-            function () {
+            () => {
 
-                currentURL = null;
+                currentURL =
+                    "";
+
 
                 addressInput.value =
                     "";
 
+
                 tabTitle.textContent =
                     "New Tab";
+
+
+                browserWindow
+                    .querySelector(".window-title")
+                    .textContent =
+                    "Atlas Browser";
 
 
                 pageFrame.classList.remove(
@@ -1590,7 +1305,7 @@
                 );
 
 
-                blockedMessage.classList.remove(
+                errorPanel.classList.remove(
                     "visible"
                 );
 
@@ -1604,30 +1319,29 @@
         );
 
 
-        /* =================================
+        /* =========================
            IFRAME LOAD
-           ================================= */
+           ========================= */
 
         pageFrame.addEventListener(
             "load",
-            function () {
+            () => {
 
                 /*
-                 * We cannot reliably inspect another
-                 * website's security headers from here
-                 * because of browser same-origin rules.
+                 * A load event doesn't guarantee
+                 * that the website allowed iframe
+                 * embedding.
                  *
-                 * The iframe's load event therefore
-                 * does not mean the site necessarily
-                 * permitted embedding.
+                 * We intentionally don't try to
+                 * bypass the site's security policy.
                  */
             }
         );
 
 
-        /* =================================
-           DRAG WINDOW
-           ================================= */
+        /* =========================
+           DRAGGING
+           ========================= */
 
         let dragging = false;
 
@@ -1640,12 +1354,10 @@
 
         windowHeader.addEventListener(
             "pointerdown",
-            function (event) {
+            event => {
 
                 if (
-                    event.target.closest(
-                        "button"
-                    )
+                    event.target.closest("button")
                 ) {
                     return;
                 }
@@ -1670,15 +1382,11 @@
                     event.clientX -
                     rect.left;
 
+
                 offsetY =
                     event.clientY -
                     rect.top;
 
-
-                /*
-                 * Remove transform after the first
-                 * drag so left/top can be used normally.
-                 */
 
                 browserWindow.style.transform =
                     "none";
@@ -1686,6 +1394,7 @@
 
                 browserWindow.style.left =
                     rect.left + "px";
+
 
                 browserWindow.style.top =
                     rect.top + "px";
@@ -1695,7 +1404,7 @@
 
         windowHeader.addEventListener(
             "pointermove",
-            function (event) {
+            event => {
 
                 if (
                     !dragging ||
@@ -1715,43 +1424,31 @@
                     offsetY;
 
 
-                const minVisible =
-                    30;
-
-
                 left =
                     Math.max(
-                        -browserWindow.offsetWidth +
-                        minVisible,
-                        left
-                    );
-
-
-                left =
-                    Math.min(
-                        window.innerWidth -
-                        minVisible,
-                        left
+                        0,
+                        Math.min(
+                            window.innerWidth -
+                            browserWindow.offsetWidth,
+                            left
+                        )
                     );
 
 
                 top =
                     Math.max(
                         0,
-                        top
-                    );
-
-
-                top =
-                    Math.min(
-                        window.innerHeight -
-                        46,
-                        top
+                        Math.min(
+                            window.innerHeight -
+                            46,
+                            top
+                        )
                     );
 
 
                 browserWindow.style.left =
                     left + "px";
+
 
                 browserWindow.style.top =
                     top + "px";
@@ -1771,18 +1468,6 @@
             dragging = false;
 
             pointerId = null;
-
-
-            try {
-
-                windowHeader.releasePointerCapture(
-                    event.pointerId
-                );
-
-            }
-            catch {
-                // Already released.
-            }
         }
 
 
@@ -1798,13 +1483,13 @@
         );
 
 
-        /* =================================
+        /* =========================
            ESCAPE
-           ================================= */
+           ========================= */
 
         document.addEventListener(
             "keydown",
-            function (event) {
+            event => {
 
                 if (
                     event.key === "Escape" &&
@@ -1821,11 +1506,11 @@
         );
 
 
-        /* =================================
-           INITIAL STATE
-           ================================= */
+        /* =========================
+           INITIALIZE
+           ========================= */
 
-        updateButtons();
+        updateNavigation();
 
     </script>
 
