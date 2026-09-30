@@ -11,11 +11,16 @@
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+        }
+
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             padding: 20px;
-            margin: 0;
             background-color: #ffffff;
             color: #333333;
         }
@@ -30,46 +35,47 @@
             padding: 12px 20px;
             border: none;
             border-radius: 6px;
-            background-color: #333333;
+            background: #333333;
             color: #ffffff;
             font-size: 16px;
             cursor: pointer;
         }
 
         .search-launcher:hover {
-            background-color: #555555;
+            background: #555555;
         }
 
-        /* Search window */
+        /* Floating search window */
         .search-window {
             position: fixed;
             top: 8%;
             left: 50%;
-            transform: translateX(-50%);
 
-            width: min(700px, 92%);
-            height: 300px;
+            width: min(900px, 92vw);
+            height: min(700px, 82vh);
 
             background: #ffffff;
             border: 1px solid #888888;
             border-radius: 8px;
 
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 
             display: none;
             flex-direction: column;
 
-            z-index: 1000;
             overflow: hidden;
+            z-index: 1000;
         }
 
-        /* Window header */
+        /* Title bar */
         .window-header {
+            height: 46px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 10px 14px;
+            padding: 0 12px;
 
             background: #222222;
             color: #ffffff;
@@ -82,7 +88,6 @@
             font-weight: bold;
         }
 
-        /* Window controls */
         .window-controls {
             display: flex;
             gap: 6px;
@@ -106,59 +111,68 @@
             background: #666666;
         }
 
-        /* Search content */
-        .search-content {
-            padding: 25px;
-        }
-
-        .search-form {
+        /* Search bar */
+        .search-bar {
             display: flex;
             gap: 8px;
-            width: 100%;
+
+            padding: 12px;
+
+            background: #f2f2f2;
+            border-bottom: 1px solid #dddddd;
         }
 
-        .search-form input {
+        .search-bar input {
             flex: 1;
 
             min-width: 0;
 
-            padding: 12px;
+            padding: 10px;
 
-            border: 1px solid #cccccc;
+            border: 1px solid #bbbbbb;
             border-radius: 5px;
 
             font-size: 16px;
         }
 
-        .search-form button {
-            padding: 12px 20px;
+        .search-bar button {
+            padding: 10px 18px;
 
             border: none;
             border-radius: 5px;
 
             background: #4285f4;
-            color: #ffffff;
+            color: white;
 
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
         }
 
-        .search-form button:hover {
+        .search-bar button:hover {
             background: #3367d6;
         }
 
-        .search-info {
-            margin-top: 20px;
-            color: #666666;
-            font-size: 14px;
+        /* Embedded browser area */
+        .browser-area {
+            flex: 1;
+            background: #ffffff;
         }
 
-        /* Minimized window */
+        .browser-area iframe {
+            width: 100%;
+            height: 100%;
+
+            border: none;
+            display: block;
+        }
+
+        /* Minimized state */
         .search-window.minimized {
-            height: auto;
+            height: 46px;
         }
 
-        .search-window.minimized .search-content {
+        .search-window.minimized .search-bar,
+        .search-window.minimized .browser-area {
             display: none;
         }
 
@@ -169,15 +183,16 @@
             }
 
             .search-window {
-                width: 95%;
+                width: 96vw;
+                height: 85vh;
                 top: 5%;
             }
 
-            .search-form {
+            .search-bar {
                 flex-direction: column;
             }
 
-            .search-form button {
+            .search-bar button {
                 width: 100%;
             }
         }
@@ -207,26 +222,27 @@
         environments that existed long before human civilization.
     </p>
 
-    <!-- Open search -->
+    <!-- Open search window -->
     <button
         class="search-launcher"
         id="openSearch"
         type="button">
-        🔍 Open Google Search
+        🔍 Open Search
     </button>
 
 
-    <!-- Google Search Window -->
+    <!-- Floating search window -->
     <div
         class="search-window"
         id="searchWindow">
 
+        <!-- Window header -->
         <div
             class="window-header"
             id="windowHeader">
 
             <span class="window-title">
-                Google Search
+                Web Search
             </span>
 
             <div class="window-controls">
@@ -249,32 +265,35 @@
         </div>
 
 
-        <div class="search-content">
+        <!-- Search bar -->
+        <form
+            class="search-bar"
+            id="searchForm">
 
-            <form
-                class="search-form"
-                action="https://www.google.com/search"
-                method="get">
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search the web..."
+                autocomplete="off"
+                required>
 
-                <input
-                    type="search"
-                    name="q"
-                    placeholder="Search Google..."
-                    aria-label="Search Google"
-                    autocomplete="off"
-                    required>
+            <button type="submit">
+                Search
+            </button>
 
-                <button type="submit">
-                    Search
-                </button>
+        </form>
 
-            </form>
 
-            <p class="search-info">
-                Type something above and click Search.
-            </p>
+        <!-- Results window -->
+        <div class="browser-area">
+
+            <iframe
+                id="searchFrame"
+                title="Search results">
+            </iframe>
 
         </div>
+
     </div>
 
 
@@ -295,18 +314,29 @@
         const windowHeader =
             document.getElementById("windowHeader");
 
+        const searchForm =
+            document.getElementById("searchForm");
 
-        /* Open window */
+        const searchInput =
+            document.getElementById("searchInput");
+
+        const searchFrame =
+            document.getElementById("searchFrame");
+
+
+        /* Open the window */
         openSearch.addEventListener("click", function () {
 
             searchWindow.style.display = "flex";
 
             searchWindow.classList.remove("minimized");
 
+            searchInput.focus();
+
         });
 
 
-        /* Close window */
+        /* Close the window */
         closeSearch.addEventListener("click", function () {
 
             searchWindow.style.display = "none";
@@ -314,7 +344,7 @@
         });
 
 
-        /* Minimize window */
+        /* Minimize the window */
         minimizeSearch.addEventListener("click", function () {
 
             searchWindow.classList.toggle("minimized");
@@ -322,7 +352,28 @@
         });
 
 
-        /* Dragging */
+        /* Search inside the window */
+        searchForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const query =
+                searchInput.value.trim();
+
+            if (!query) {
+                return;
+            }
+
+            const searchURL =
+                "https://www.bing.com/search?q=" +
+                encodeURIComponent(query);
+
+            searchFrame.src = searchURL;
+
+        });
+
+
+        /* Make the window draggable */
 
         let dragging = false;
 
@@ -347,14 +398,6 @@
             offsetY =
                 event.clientY - rect.top;
 
-            searchWindow.style.transform = "none";
-
-            searchWindow.style.left =
-                rect.left + "px";
-
-            searchWindow.style.top =
-                rect.top + "px";
-
         });
 
 
@@ -364,17 +407,17 @@
                 return;
             }
 
+            const newLeft =
+                event.clientX - offsetX;
+
+            const newTop =
+                event.clientY - offsetY;
+
             searchWindow.style.left =
-                Math.max(
-                    0,
-                    event.clientX - offsetX
-                ) + "px";
+                Math.max(0, newLeft) + "px";
 
             searchWindow.style.top =
-                Math.max(
-                    0,
-                    event.clientY - offsetY
-                ) + "px";
+                Math.max(0, newTop) + "px";
 
         });
 
