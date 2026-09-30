@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0">
@@ -22,7 +23,6 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-
             padding: 20px;
 
             background: #ffffff;
@@ -63,7 +63,7 @@
             border-radius: 6px;
 
             background: #333333;
-            color: white;
+            color: #ffffff;
 
             font-size: 16px;
 
@@ -76,7 +76,7 @@
 
 
         /* =====================================
-           MINI BROWSER
+           BROWSER WINDOW
            ===================================== */
 
         .browser-window {
@@ -91,9 +91,9 @@
             display: none;
             flex-direction: column;
 
-            background: white;
+            background: #ffffff;
 
-            border: 1px solid #777;
+            border: 1px solid #777777;
             border-radius: 9px;
 
             overflow: hidden;
@@ -123,11 +123,10 @@
 
             padding: 0 10px 0 14px;
 
-            background: #222;
-            color: white;
+            background: #222222;
+            color: #ffffff;
 
             cursor: grab;
-
             user-select: none;
 
             touch-action: none;
@@ -141,7 +140,6 @@
             font-weight: bold;
 
             white-space: nowrap;
-
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -158,17 +156,17 @@
             border: none;
             border-radius: 4px;
 
-            background: #444;
-            color: white;
-
-            cursor: pointer;
+            background: #444444;
+            color: #ffffff;
 
             font-size: 18px;
             line-height: 1;
+
+            cursor: pointer;
         }
 
         .window-controls button:hover {
-            background: #666;
+            background: #666666;
         }
 
 
@@ -178,7 +176,6 @@
 
         .tabs {
             display: flex;
-
             align-items: center;
 
             min-height: 38px;
@@ -194,7 +191,6 @@
 
         .tab {
             display: flex;
-
             align-items: center;
 
             gap: 8px;
@@ -206,17 +202,25 @@
             border: none;
             border-radius: 6px 6px 0 0;
 
-            background: #444;
-            color: #ddd;
+            background: #444444;
+            color: #dddddd;
 
             cursor: pointer;
 
             white-space: nowrap;
         }
 
+        .tab:hover {
+            background: #555555;
+        }
+
         .tab.active {
-            background: #fff;
-            color: #222;
+            background: #ffffff;
+            color: #222222;
+        }
+
+        .tab.active:hover {
+            background: #f5f5f5;
         }
 
         .tab-title {
@@ -225,7 +229,6 @@
         }
 
         .tab-close {
-            color: inherit;
             font-weight: bold;
         }
 
@@ -238,21 +241,16 @@
             border: none;
             border-radius: 5px;
 
-            background: #444;
-            color: white;
+            background: #444444;
+            color: #ffffff;
 
             cursor: pointer;
 
             font-size: 20px;
         }
 
-        .new-tab:hover,
-        .tab:hover {
-            background: #555;
-        }
-
-        .tab.active:hover {
-            background: #f5f5f5;
+        .new-tab:hover {
+            background: #555555;
         }
 
 
@@ -270,28 +268,28 @@
 
             background: #eeeeee;
 
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid #cccccc;
         }
 
         .toolbar-button {
             width: 36px;
             height: 34px;
 
-            border: 1px solid #bbb;
+            border: 1px solid #bbbbbb;
             border-radius: 5px;
 
-            background: white;
-            color: #333;
+            background: #ffffff;
+            color: #333333;
 
             cursor: pointer;
         }
 
         .toolbar-button:hover:not(:disabled) {
-            background: #ddd;
+            background: #dddddd;
         }
 
         .toolbar-button:disabled {
-            color: #aaa;
+            color: #aaaaaa;
             cursor: not-allowed;
         }
 
@@ -312,7 +310,7 @@
 
             padding: 8px 10px;
 
-            border: 1px solid #bbb;
+            border: 1px solid #bbbbbb;
             border-radius: 5px;
 
             font-size: 15px;
@@ -325,7 +323,7 @@
             border-radius: 5px;
 
             background: #4285f4;
-            color: white;
+            color: #ffffff;
 
             cursor: pointer;
         }
@@ -343,15 +341,14 @@
             position: relative;
 
             flex: 1;
-
             min-height: 0;
 
-            background: white;
+            background: #ffffff;
         }
 
 
         /* =====================================
-           HOME / SEARCH RESULTS
+           HOME PAGE
            ===================================== */
 
         .home-page {
@@ -360,10 +357,6 @@
             overflow-y: auto;
 
             padding: 30px;
-        }
-
-        .home-page.hidden {
-            display: none;
         }
 
         .home-page h2 {
@@ -385,7 +378,7 @@
 
             padding: 12px;
 
-            border: 1px solid #bbb;
+            border: 1px solid #bbbbbb;
             border-radius: 6px;
 
             font-size: 16px;
@@ -398,10 +391,19 @@
             border-radius: 6px;
 
             background: #4285f4;
-            color: white;
+            color: #ffffff;
 
             cursor: pointer;
         }
+
+        .search-form button:hover {
+            background: #3367d6;
+        }
+
+
+        /* =====================================
+           SEARCH RESULTS
+           ===================================== */
 
         .results {
             max-width: 800px;
@@ -412,7 +414,7 @@
         .result {
             padding: 15px 0;
 
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #dddddd;
         }
 
         .result-title {
@@ -425,6 +427,8 @@
             color: #1a0dab;
 
             text-decoration: none;
+
+            cursor: pointer;
         }
 
         .result-title a:hover {
@@ -437,12 +441,14 @@
             color: #188038;
 
             font-size: 13px;
+
+            word-break: break-all;
         }
 
         .result-description {
             margin: 0;
 
-            color: #555;
+            color: #555555;
 
             font-size: 14px;
         }
@@ -456,11 +462,11 @@
             width: 100%;
             height: 100%;
 
-            border: none;
-
             display: none;
 
-            background: white;
+            border: none;
+
+            background: #ffffff;
         }
 
         .page-frame.visible {
@@ -469,7 +475,7 @@
 
 
         /* =====================================
-           ERROR / INFO
+           MESSAGE
            ===================================== */
 
         .message {
@@ -486,7 +492,7 @@
 
             background: #f5f5f5;
 
-            border: 1px solid #ddd;
+            border: 1px solid #dddddd;
             border-radius: 8px;
 
             text-align: center;
@@ -597,7 +603,7 @@
 
 
     <!-- =====================================
-         MINI BROWSER WINDOW
+         MINI BROWSER
          ===================================== -->
 
     <section
@@ -624,19 +630,20 @@
                 <button
                     id="minimizeButton"
                     type="button"
-                    title="Minimize">
+                    title="Minimize"
+                    aria-label="Minimize">
                     −
                 </button>
 
                 <button
                     id="closeButton"
                     type="button"
-                    title="Close">
+                    title="Close"
+                    aria-label="Close">
                     ×
                 </button>
 
             </div>
-
         </div>
 
 
@@ -652,7 +659,8 @@
                 class="new-tab"
                 id="newTabButton"
                 type="button"
-                title="New tab">
+                title="New tab"
+                aria-label="New tab">
                 +
             </button>
 
@@ -670,6 +678,7 @@
                 id="backButton"
                 type="button"
                 title="Back"
+                aria-label="Back"
                 disabled>
                 ←
             </button>
@@ -679,6 +688,7 @@
                 id="forwardButton"
                 type="button"
                 title="Forward"
+                aria-label="Forward"
                 disabled>
                 →
             </button>
@@ -687,7 +697,8 @@
                 class="toolbar-button"
                 id="refreshButton"
                 type="button"
-                title="Refresh">
+                title="Refresh"
+                aria-label="Refresh">
                 ↻
             </button>
 
@@ -695,7 +706,8 @@
                 class="toolbar-button"
                 id="homeButton"
                 type="button"
-                title="Home">
+                title="Home"
+                aria-label="Home">
                 ⌂
             </button>
 
@@ -710,7 +722,8 @@
                     type="text"
                     placeholder="Search or enter a URL..."
                     autocomplete="off"
-                    spellcheck="false">
+                    spellcheck="false"
+                    aria-label="Search or enter a URL">
 
                 <button
                     class="go-button"
@@ -730,7 +743,7 @@
         <div class="content">
 
 
-            <!-- HOME / SEARCH -->
+            <!-- HOME -->
 
             <div
                 class="home-page"
@@ -739,7 +752,7 @@
                 <h2>🌎 Atlas Browser</h2>
 
                 <p>
-                    Search the web or enter a website address.
+                    Search for something or enter a website address.
                 </p>
 
                 <form
@@ -758,6 +771,7 @@
 
                 </form>
 
+
                 <div
                     class="results"
                     id="results">
@@ -766,26 +780,26 @@
             </div>
 
 
-            <!-- EXTERNAL PAGE -->
+            <!-- WEB PAGE -->
 
             <iframe
                 class="page-frame"
                 id="pageFrame"
-                title="Current page">
+                title="Current web page">
             </iframe>
 
 
-            <!-- MESSAGE -->
+            <!-- ERROR MESSAGE -->
 
             <div
                 class="message"
                 id="message">
 
-                <h2>Page couldn't be displayed</h2>
+                <h2>Page could not be displayed</h2>
 
                 <p>
-                    This website doesn't allow itself to be displayed
-                    inside another webpage.
+                    This website does not allow itself to be
+                    displayed inside another webpage.
                 </p>
 
                 <button
@@ -872,7 +886,7 @@
 
 
         /* =====================================
-           TAB DATA
+           TABS
            ===================================== */
 
         let tabCounter = 0;
@@ -882,7 +896,7 @@
         const tabData = new Map();
 
 
-        function createTab(url = null) {
+        function createTab() {
 
             tabCounter++;
 
@@ -892,31 +906,25 @@
 
             tabData.set(id, {
                 title: "New Tab",
-                url: url,
+                url: null,
                 history: [],
                 historyIndex: -1
             });
 
 
+            activeTabId = id;
+
             renderTabs();
 
-            switchTab(id);
-
-
-            if (url) {
-                navigate(url);
-            }
+            updateCurrentTab();
         }
 
 
         function renderTabs() {
 
-            /*
-             * Remove all existing tabs.
-             */
-            tabs.querySelectorAll(".tab").forEach(
-                tab => tab.remove()
-            );
+            tabs
+                .querySelectorAll(".tab")
+                .forEach(tab => tab.remove());
 
 
             for (const [id, data] of tabData) {
@@ -924,7 +932,10 @@
                 const tab =
                     document.createElement("button");
 
+                tab.type = "button";
+
                 tab.className = "tab";
+
 
                 if (id === activeTabId) {
                     tab.classList.add("active");
@@ -934,7 +945,8 @@
                 const title =
                     document.createElement("span");
 
-                title.className = "tab-title";
+                title.className =
+                    "tab-title";
 
                 title.textContent =
                     data.title;
@@ -943,9 +955,11 @@
                 const close =
                     document.createElement("span");
 
-                close.className = "tab-close";
+                close.className =
+                    "tab-close";
 
-                close.textContent = "×";
+                close.textContent =
+                    "×";
 
 
                 tab.appendChild(title);
@@ -954,14 +968,17 @@
 
                 tab.addEventListener(
                     "click",
-                    (event) => {
+                    function (event) {
 
                         if (
                             event.target === close
                         ) {
+
                             closeTab(id);
+
                             return;
                         }
+
 
                         switchTab(id);
                     }
@@ -972,41 +989,6 @@
                     tab,
                     newTabButton
                 );
-            }
-        }
-
-
-        function closeTab(id) {
-
-            if (tabData.size === 1) {
-                return;
-            }
-
-
-            const ids =
-                Array.from(tabData.keys());
-
-            const index =
-                ids.indexOf(id);
-
-
-            tabData.delete(id);
-
-
-            if (id === activeTabId) {
-
-                const newIndex =
-                    Math.max(0, index - 1);
-
-                activeTabId =
-                    ids[newIndex];
-
-                renderTabs();
-
-                updateCurrentTab();
-            }
-            else {
-                renderTabs();
             }
         }
 
@@ -1025,6 +1007,43 @@
             updateCurrentTab();
         }
 
+
+        function closeTab(id) {
+
+            if (tabData.size <= 1) {
+                return;
+            }
+
+
+            const ids =
+                Array.from(tabData.keys());
+
+            const index =
+                ids.indexOf(id);
+
+
+            tabData.delete(id);
+
+
+            if (activeTabId === id) {
+
+                const newIndex =
+                    Math.max(0, index - 1);
+
+                activeTabId =
+                    ids[newIndex];
+
+                updateCurrentTab();
+            }
+
+
+            renderTabs();
+        }
+
+
+        /* =====================================
+           CURRENT TAB
+           ===================================== */
 
         function updateCurrentTab() {
 
@@ -1057,14 +1076,10 @@
 
 
         /* =====================================
-           HOME
+           SHOW HOME
            ===================================== */
 
         function showHome() {
-
-            homePage.classList.remove(
-                "hidden"
-            );
 
             homePage.style.display =
                 "block";
@@ -1080,7 +1095,7 @@
 
 
         /* =====================================
-           PAGE
+           SHOW PAGE
            ===================================== */
 
         function showPage(url) {
@@ -1101,17 +1116,124 @@
 
 
         /* =====================================
+           URL DETECTION
+           ===================================== */
+
+        function isWebsiteAddress(value) {
+
+            /*
+             * Complete URL.
+             */
+            if (
+                value.startsWith("https://") ||
+                value.startsWith("http://")
+            ) {
+                return true;
+            }
+
+
+            /*
+             * Domain names such as:
+             *
+             * snokido.com
+             * www.snokido.com
+             * example.org
+             * example.net/games
+             */
+            const domainPattern =
+                /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/.*)?$/;
+
+
+            return domainPattern.test(value);
+        }
+
+
+        function normalizeURL(value) {
+
+            const cleaned =
+                value.trim();
+
+
+            if (
+                cleaned.startsWith("https://") ||
+                cleaned.startsWith("http://")
+            ) {
+
+                return cleaned;
+            }
+
+
+            return "https://" + cleaned;
+        }
+
+
+        /* =====================================
+           ADDRESS BAR
+           ===================================== */
+
+        addressForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const value =
+                    addressInput.value.trim();
+
+
+                if (!value) {
+                    return;
+                }
+
+
+                /*
+                 * WEBSITE
+                 *
+                 * Example:
+                 *
+                 * snokido.com
+                 * www.snokido.com
+                 * example.com/games
+                 */
+                if (
+                    isWebsiteAddress(value)
+                ) {
+
+                    const url =
+                        normalizeURL(value);
+
+
+                    navigate(url);
+
+                    return;
+                }
+
+
+                /*
+                 * OTHERWISE:
+                 *
+                 * Treat the text as a search.
+                 */
+                performSearch(value);
+            }
+        );
+
+
+        /* =====================================
            SEARCH
            ===================================== */
 
         searchForm.addEventListener(
             "submit",
-            event => {
+            function (event) {
 
                 event.preventDefault();
 
+
                 const query =
                     searchInput.value.trim();
+
 
                 if (!query) {
                     return;
@@ -1123,55 +1245,6 @@
         );
 
 
-        addressForm.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-                const value =
-                    addressInput.value.trim();
-
-                if (!value) {
-                    return;
-                }
-
-
-                if (
-                    value.startsWith("http://") ||
-                    value.startsWith("https://")
-                ) {
-
-                    navigate(value);
-
-                }
-                else if (
-                    value.includes(".") &&
-                    !value.includes(" ")
-                ) {
-
-                    navigate(
-                        "https://" + value
-                    );
-
-                }
-                else {
-
-                    performSearch(value);
-                }
-            }
-        );
-
-
-        /*
-         * This uses DuckDuckGo's lightweight
-         * search endpoint to obtain search
-         * information for the page.
-         *
-         * If your host blocks this request,
-         * replace this function with your own
-         * search API/backend.
-         */
         async function performSearch(query) {
 
             const data =
@@ -1183,6 +1256,10 @@
             }
 
 
+            /*
+             * Keep the search page in
+             * the current tab.
+             */
             data.url = null;
 
             data.history = [];
@@ -1202,8 +1279,7 @@
 
 
             /*
-             * DuckDuckGo's public instant-answer
-             * endpoint.
+             * DuckDuckGo Instant Answer API.
              */
             const apiURL =
                 "https://api.duckduckgo.com/?q=" +
@@ -1219,7 +1295,7 @@
 
                 if (!response.ok) {
                     throw new Error(
-                        "Search request failed."
+                        "Search failed"
                     );
                 }
 
@@ -1238,12 +1314,18 @@
 
                 results.innerHTML = `
                     <p>
-                        Search could not be loaded.
+                        The search service could not
+                        be reached.
                     </p>
 
                     <p>
-                        Try entering a full website
-                        address in the bar above.
+                        If you're trying to visit a
+                        website directly, enter its
+                        domain name, for example:
+                    </p>
+
+                    <p>
+                        <strong>snokido.com</strong>
                     </p>
                 `;
             }
@@ -1251,7 +1333,7 @@
 
 
         /* =====================================
-           DISPLAY RESULTS
+           RESULTS
            ===================================== */
 
         function displayResults(
@@ -1265,6 +1347,9 @@
             const items = [];
 
 
+            /*
+             * Main result.
+             */
             if (
                 data.AbstractURL &&
                 data.AbstractText
@@ -1284,6 +1369,9 @@
             }
 
 
+            /*
+             * Related results.
+             */
             function collectTopics(
                 topics
             ) {
@@ -1293,7 +1381,9 @@
                 }
 
 
-                for (const topic of topics) {
+                for (
+                    const topic of topics
+                ) {
 
                     if (
                         topic.FirstURL &&
@@ -1329,12 +1419,19 @@
             );
 
 
+            /*
+             * No results.
+             */
             if (items.length === 0) {
 
                 results.innerHTML = `
                     <p>
-                        No results were returned
-                        by the search service.
+                        No results were returned.
+                    </p>
+
+                    <p>
+                        You can still enter a website
+                        directly in the address bar.
                     </p>
                 `;
 
@@ -1342,26 +1439,38 @@
             }
 
 
-            for (const item of items) {
+            /*
+             * Build result links.
+             */
+            for (
+                const item of items
+            ) {
 
                 const article =
-                    document.createElement("article");
+                    document.createElement(
+                        "article"
+                    );
 
                 article.className =
                     "result";
 
 
                 const heading =
-                    document.createElement("h3");
+                    document.createElement(
+                        "h3"
+                    );
 
                 heading.className =
                     "result-title";
 
 
                 const link =
-                    document.createElement("a");
+                    document.createElement(
+                        "a"
+                    );
 
-                link.href = "#";
+                link.href =
+                    "#";
 
                 link.textContent =
                     item.title;
@@ -1370,17 +1479,15 @@
                 /*
                  * IMPORTANT:
                  *
-                 * This is YOUR link.
+                 * This link is controlled
+                 * by our website.
                  *
-                 * It doesn't use target="_blank".
-                 *
-                 * Clicking it calls navigate()
-                 * and therefore loads the page
-                 * in our iframe.
+                 * It does NOT use
+                 * target="_blank".
                  */
                 link.addEventListener(
                     "click",
-                    event => {
+                    function (event) {
 
                         event.preventDefault();
 
@@ -1395,7 +1502,9 @@
 
 
                 const url =
-                    document.createElement("p");
+                    document.createElement(
+                        "p"
+                    );
 
                 url.className =
                     "result-url";
@@ -1405,7 +1514,9 @@
 
 
                 const description =
-                    document.createElement("p");
+                    document.createElement(
+                        "p"
+                    );
 
                 description.className =
                     "result-description";
@@ -1459,35 +1570,46 @@
                 );
 
 
+            /*
+             * Add new URL.
+             */
             data.history.push(url);
+
 
             data.historyIndex =
                 data.history.length - 1;
 
 
-            data.url = url;
+            data.url =
+                url;
 
 
+            /*
+             * Update address bar.
+             */
             addressInput.value =
                 url;
 
 
             /*
-             * Use the same iframe.
+             * Load inside the existing
+             * iframe.
              */
             showPage(url);
 
 
             /*
-             * Use hostname as tab title.
+             * Update tab title.
              */
             try {
 
-                const hostname =
-                    new URL(url).hostname;
+                const parsed =
+                    new URL(url);
+
 
                 data.title =
-                    hostname;
+                    parsed.hostname ||
+                    "Web Page";
 
             }
             catch {
@@ -1502,6 +1624,10 @@
             updateNavigationButtons();
         }
 
+
+        /* =====================================
+           NAVIGATION BUTTONS
+           ===================================== */
 
         function updateNavigationButtons() {
 
@@ -1530,7 +1656,7 @@
 
         backButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 const data =
                     tabData.get(activeTabId);
@@ -1553,7 +1679,9 @@
                     ];
 
 
-                data.url = url;
+                data.url =
+                    url;
+
 
                 addressInput.value =
                     url;
@@ -1572,7 +1700,7 @@
 
         forwardButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 const data =
                     tabData.get(activeTabId);
@@ -1596,7 +1724,9 @@
                     ];
 
 
-                data.url = url;
+                data.url =
+                    url;
+
 
                 addressInput.value =
                     url;
@@ -1615,17 +1745,19 @@
 
         refreshButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 if (
-                    pageFrame.classList.contains(
+                    !pageFrame.classList.contains(
                         "visible"
                     )
                 ) {
-
-                    pageFrame.src =
-                        pageFrame.src;
+                    return;
                 }
+
+
+                pageFrame.src =
+                    pageFrame.src;
             }
         );
 
@@ -1636,7 +1768,7 @@
 
         homeButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 const data =
                     tabData.get(activeTabId);
@@ -1647,9 +1779,13 @@
                 }
 
 
-                addressInput.value = "";
+                addressInput.value =
+                    "";
+
 
                 showHome();
+
+                updateNavigationButtons();
             }
         );
 
@@ -1660,7 +1796,7 @@
 
         newTabButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 createTab();
 
@@ -1670,39 +1806,24 @@
 
 
         /* =====================================
-           IFRAME LOAD
-           ===================================== */
-
-        pageFrame.addEventListener(
-            "load",
-            () => {
-
-                /*
-                 * We cannot inspect the page
-                 * because it may be cross-origin.
-                 *
-                 * The iframe itself is responsible
-                 * for whether the destination allows
-                 * embedding.
-                 */
-            }
-        );
-
-
-        /* =====================================
-           OPEN / CLOSE
+           OPEN BROWSER
            ===================================== */
 
         openBrowser.addEventListener(
             "click",
-            () => {
+            function () {
 
                 browserWindow.classList.add(
                     "open"
                 );
 
 
-                if (activeTabId === null) {
+                browserWindow.classList.remove(
+                    "minimized"
+                );
+
+
+                if (tabData.size === 0) {
 
                     createTab();
 
@@ -1714,9 +1835,13 @@
         );
 
 
+        /* =====================================
+           CLOSE
+           ===================================== */
+
         closeButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 browserWindow.classList.remove(
                     "open"
@@ -1725,9 +1850,13 @@
         );
 
 
+        /* =====================================
+           MINIMIZE
+           ===================================== */
+
         minimizeButton.addEventListener(
             "click",
-            () => {
+            function () {
 
                 browserWindow.classList.toggle(
                     "minimized"
@@ -1742,7 +1871,7 @@
 
         document.addEventListener(
             "keydown",
-            event => {
+            function (event) {
 
                 if (
                     event.key === "Escape" &&
@@ -1755,6 +1884,23 @@
                         "open"
                     );
                 }
+            }
+        );
+
+
+        /* =====================================
+           RETURN BUTTON
+           ===================================== */
+
+        returnButton.addEventListener(
+            "click",
+            function () {
+
+                message.classList.remove(
+                    "visible"
+                );
+
+                showHome();
             }
         );
 
@@ -1773,7 +1919,7 @@
 
         windowHeader.addEventListener(
             "pointerdown",
-            event => {
+            function (event) {
 
                 if (
                     event.target.closest("button")
@@ -1826,7 +1972,7 @@
 
         windowHeader.addEventListener(
             "pointermove",
-            event => {
+            function (event) {
 
                 if (
                     !dragging ||
@@ -1908,7 +2054,7 @@
 
             }
             catch {
-                // Already released.
+                // Pointer already released.
             }
         }
 
@@ -1926,24 +2072,7 @@
 
 
         /* =====================================
-           RETURN BUTTON
-           ===================================== */
-
-        returnButton.addEventListener(
-            "click",
-            () => {
-
-                message.classList.remove(
-                    "visible"
-                );
-
-                showHome();
-            }
-        );
-
-
-        /* =====================================
-           STARTUP
+           START
            ===================================== */
 
         updateNavigationButtons();
