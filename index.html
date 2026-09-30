@@ -1,583 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>World History Atlas</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Atlas Browser</title>
+
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         html,
         body {
-            margin: 0;
-            min-height: 100%;
-        }
 
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            padding: 20px;
-            background: #ffffff;
-            color: #333333;
-        }
-
-        a {
-            color: #333333;
-        }
-
-        /* =========================
-           MAIN PAGE
-           ========================= */
-
-        h1 {
-            margin-top: 0;
-        }
-
-        .search-launcher {
-            margin-top: 30px;
-            padding: 12px 20px;
-
-            border: none;
-            border-radius: 6px;
-
-            background: #333333;
-            color: #ffffff;
-
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .search-launcher:hover {
-            background: #555555;
-        }
-
-        /* =========================
-           BROWSER WINDOW
-           ========================= */
-
-        .browser-window {
-            position: fixed;
-
-            top: 6%;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            width: min(1100px, 94vw);
-            height: min(800px, 88vh);
-
-            display: none;
-            flex-direction: column;
-
-            background: #ffffff;
-
-            border: 1px solid #777;
-            border-radius: 9px;
-
-            overflow: hidden;
-
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.45);
-
-            z-index: 1000;
-        }
-
-        .browser-window.open {
-            display: flex;
-        }
-
-        /* =========================
-           WINDOW HEADER
-           ========================= */
-
-        .window-header {
-            height: 46px;
-            min-height: 46px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 10px 0 14px;
-
-            background: #222;
-            color: white;
-
-            cursor: grab;
-            user-select: none;
-
-            touch-action: none;
-        }
-
-        .window-header:active {
-            cursor: grabbing;
-        }
-
-        .window-title {
-            font-weight: bold;
-
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 6px;
-        }
-
-        .window-controls button {
-            width: 32px;
-            height: 28px;
-
-            border: none;
-            border-radius: 4px;
-
-            background: #444;
-            color: white;
-
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .window-controls button:hover {
-            background: #666;
-        }
-
-        /* =========================
-           ONE TAB
-           ========================= */
-
-        .tabs {
-            height: 38px;
-            min-height: 38px;
-
-            display: flex;
-            align-items: flex-end;
-
-            padding-left: 6px;
-
-            background: #2b2b2b;
-        }
-
-        .tab {
-            height: 34px;
-
-            display: flex;
-            align-items: center;
-
-            padding: 0 15px;
-
-            background: white;
-            color: #222;
-
-            border-radius: 6px 6px 0 0;
-
-            font-size: 14px;
-        }
-
-        /* =========================
-           TOOLBAR
-           ========================= */
-
-        .toolbar {
-            display: flex;
-            align-items: center;
-
-            gap: 6px;
-
-            padding: 8px;
-
-            background: #eeeeee;
-
-            border-bottom: 1px solid #ccc;
-        }
-
-        .toolbar-button {
-            width: 36px;
-            height: 34px;
-
-            border: 1px solid #bbb;
-            border-radius: 5px;
-
-            background: white;
-            color: #333;
-
-            cursor: pointer;
-        }
-
-        .toolbar-button:hover:not(:disabled) {
-            background: #ddd;
-        }
-
-        .toolbar-button:disabled {
-            opacity: 0.45;
-            cursor: default;
-        }
-
-        .address-form {
-            flex: 1;
-
-            display: flex;
-
-            gap: 6px;
-
-            min-width: 0;
-        }
-
-        .address-input {
-            flex: 1;
-
-            min-width: 0;
-
-            padding: 8px 10px;
-
-            border: 1px solid #aaa;
-            border-radius: 5px;
-
-            font-size: 15px;
-        }
-
-        .go-button {
-            padding: 8px 16px;
-
-            border: none;
-            border-radius: 5px;
-
-            background: #4285f4;
-            color: white;
-
-            cursor: pointer;
-        }
-
-        .go-button:hover {
-            background: #3367d6;
-        }
-
-        /* =========================
-           CONTENT
-           ========================= */
-
-        .content {
-            position: relative;
-
-            flex: 1;
-            min-height: 0;
-
-            background: white;
-        }
-
-        /* =========================
-           HOME
-           ========================= */
-
-        .home-page {
-            height: 100%;
-
-            overflow-y: auto;
-
-            padding: 30px;
-        }
-
-        .home-page h2 {
-            margin-top: 0;
-        }
-
-        .search-form {
-            display: flex;
-
-            gap: 8px;
-
-            max-width: 750px;
-        }
-
-        .search-form input {
-            flex: 1;
-
-            min-width: 0;
-
-            padding: 12px;
-
-            border: 1px solid #aaa;
-            border-radius: 6px;
-
-            font-size: 16px;
-        }
-
-        .search-form button {
-            padding: 12px 20px;
-
-            border: none;
-            border-radius: 6px;
-
-            background: #4285f4;
-            color: white;
-
-            cursor: pointer;
-        }
-
-        .search-form button:hover {
-            background: #3367d6;
-        }
-
-        /* =========================
-           RESULTS
-           ========================= */
-
-        .results {
-            max-width: 850px;
-            margin-top: 25px;
-        }
-
-        .result {
-            padding: 15px 0;
-
-            border-bottom: 1px solid #ddd;
-        }
-
-        .result-title {
-            margin: 0 0 5px;
-        }
-
-        .result-title a {
-            color: #1a0dab;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .result-title a:hover {
-            text-decoration: underline;
-        }
-
-        .result-url {
-            margin: 0 0 5px;
-
-            color: #188038;
-
-            font-size: 13px;
-
-            word-break: break-all;
-        }
-
-        .result-description {
             margin: 0;
 
-            color: #555;
-
-            font-size: 14px;
-        }
-
-        /* =========================
-           IFRAME
-           ========================= */
-
-        .page-frame {
             width: 100%;
             height: 100%;
 
-            border: 0;
+            overflow: hidden;
 
-            display: none;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        body {
+
+            background: #ffffff;
+
+            color: #222;
+        }
+
+
+        /* =================================
+           TOOLBAR
+           ================================= */
+
+        .browser-ui {
+
+            height: 122px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: #242424;
+
+            color: white;
+        }
+
+
+        /* =================================
+           TITLE BAR
+           ================================= */
+
+        .title-bar {
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 12px;
+
+            background: #202020;
+        }
+
+
+        .title {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+        }
+
+
+        /* =================================
+           TAB
+           ================================= */
+
+        .tabs {
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding-left: 8px;
+
+            background: #292929;
+        }
+
+
+        .tab {
+
+            height: 34px;
+
+            min-width: 180px;
+
+            max-width: 300px;
+
+            padding: 0 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            background: #ffffff;
+
+            color: #222;
+
+            border-radius:
+                7px 7px 0 0;
+
+            font-size: 13px;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+        }
+
+
+        /* =================================
+           NAVIGATION BAR
+           ================================= */
+
+        .navigation {
+
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 5px 8px;
+
+            background: #eeeeee;
+        }
+
+
+        .nav-button {
+
+            width: 34px;
+            height: 32px;
+
+            border: 1px solid #bbb;
+
+            border-radius: 5px;
 
             background: white;
+
+            color: #333;
+
+            font-size: 17px;
+
+            cursor: pointer;
         }
 
-        .page-frame.visible {
-            display: block;
+
+        .nav-button:hover:not(:disabled) {
+
+            background: #ddd;
         }
 
-        /* =========================
-           ERROR PANEL
-           ========================= */
 
-        .error-panel {
-            position: absolute;
+        .nav-button:disabled {
 
-            top: 50%;
-            left: 50%;
+            opacity: 0.4;
 
-            transform: translate(-50%, -50%);
-
-            width: min(650px, 90%);
-
-            padding: 30px;
-
-            background: #f5f5f5;
-
-            border: 1px solid #ddd;
-            border-radius: 10px;
-
-            text-align: center;
-
-            display: none;
+            cursor: default;
         }
 
-        .error-panel.visible {
-            display: block;
+
+        /* =================================
+           ADDRESS BAR
+           ================================= */
+
+        .address-form {
+
+            flex: 1;
+
+            display: flex;
+
+            min-width: 0;
+
+            gap: 5px;
         }
 
-        .error-panel h2 {
-            margin-top: 0;
+
+        .address {
+
+            flex: 1;
+
+            min-width: 0;
+
+            height: 32px;
+
+            padding: 0 10px;
+
+            border: 1px solid #aaa;
+
+            border-radius: 5px;
+
+            outline: none;
+
+            font-size: 14px;
         }
 
-        .open-site {
-            display: inline-block;
 
-            margin-top: 10px;
+        .address:focus {
 
-            padding: 11px 20px;
+            border-color: #4285f4;
 
-            border-radius: 6px;
+            box-shadow:
+                0 0 0 2px
+                rgba(66, 133, 244, 0.2);
+        }
+
+
+        .go {
+
+            height: 32px;
+
+            padding: 0 14px;
+
+            border: none;
+
+            border-radius: 5px;
 
             background: #4285f4;
+
             color: white;
 
-            text-decoration: none;
+            cursor: pointer;
         }
 
-        .open-site:hover {
+
+        .go:hover {
+
             background: #3367d6;
         }
 
-        /* =========================
-           MINIMIZED
-           ========================= */
 
-        .browser-window.minimized {
-            height: 46px;
-        }
+        /* =================================
+           ERROR MESSAGE
+           ================================= */
 
-        .browser-window.minimized .tabs,
-        .browser-window.minimized .toolbar,
-        .browser-window.minimized .content {
+        .error {
+
+            position: fixed;
+
+            bottom: 20px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            background: #222;
+
+            color: white;
+
+            font-size: 13px;
+
             display: none;
+
+            z-index: 100;
         }
 
-        /* =========================
+
+        .error.show {
+
+            display: block;
+        }
+
+
+        /* =================================
            MOBILE
-           ========================= */
+           ================================= */
 
         @media (max-width: 600px) {
 
-            body {
-                padding: 15px;
+            .browser-ui {
+
+                height: 122px;
             }
 
-            .browser-window {
-                width: 96vw;
-                height: 88vh;
 
-                left: 2vw;
+            .tab {
 
-                transform: none;
-
-                top: 4%;
+                min-width: 130px;
             }
 
-            .toolbar {
-                flex-wrap: wrap;
+
+            .navigation {
+
+                gap: 4px;
             }
 
-            .address-form {
-                flex-basis: 100%;
-                order: 2;
+
+            .nav-button {
+
+                width: 32px;
             }
 
-            .home-page {
-                padding: 20px;
-            }
 
-            .search-form {
-                flex-direction: column;
-            }
+            .go {
 
-            .search-form button {
-                width: 100%;
+                padding: 0 10px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         MAIN PAGE
-         ========================= -->
 
-    <main>
+    <!-- =================================
+         BROWSER INTERFACE
+         ================================= -->
 
-        <h1>Geological History of Earth</h1>
-
-        <p>
-            Earth's early geological history was shaped by major changes in its
-            crust, including tectonic processes that contributed to the formation
-            and breakup of supercontinents such as
-            <a
-                href="https://bull.ultradec.com/"
-                target="_blank"
-                rel="noopener noreferrer">
-                Pangaea
-            </a>.
-        </p>
-
-        <p>
-            Sedimentary rock layers provide evidence of volcanic activity,
-            environmental changes, and past climates. By analyzing fossil records
-            found within these strata, researchers can reconstruct ancient
-            environments that existed long before human civilization.
-        </p>
-
-        <button
-            class="search-launcher"
-            id="openBrowser"
-            type="button">
-            🔍 Open Search
-        </button>
-
-    </main>
+    <div class="browser-ui">
 
 
-    <!-- =========================
-         BROWSER
-         ========================= -->
+        <!-- TITLE -->
 
-    <section
-        class="browser-window"
-        id="browserWindow"
-        role="dialog"
-        aria-label="Atlas Browser">
+        <div class="title-bar">
 
-        <!-- TITLE BAR -->
+            <div
+                class="title"
+                id="title">
 
-        <div
-            class="window-header"
-            id="windowHeader">
-
-            <span
-                class="window-title"
-                id="windowTitle">
                 Atlas Browser
-            </span>
-
-            <div class="window-controls">
-
-                <button
-                    id="minimizeButton"
-                    type="button"
-                    aria-label="Minimize">
-                    −
-                </button>
-
-                <button
-                    id="closeButton"
-                    type="button"
-                    aria-label="Close">
-                    ×
-                </button>
 
             </div>
 
@@ -590,363 +375,172 @@
 
             <div
                 class="tab"
-                id="tabTitle">
+                id="tab">
+
                 New Tab
+
             </div>
 
         </div>
 
 
-        <!-- TOOLBAR -->
+        <!-- NAVIGATION -->
 
-        <div class="toolbar">
+        <div class="navigation">
+
 
             <button
-                class="toolbar-button"
-                id="backButton"
-                type="button"
+                class="nav-button"
+                id="back"
                 title="Back"
                 disabled>
+
                 ←
+
             </button>
 
+
             <button
-                class="toolbar-button"
-                id="forwardButton"
-                type="button"
+                class="nav-button"
+                id="forward"
                 title="Forward"
                 disabled>
+
                 →
+
             </button>
 
+
             <button
-                class="toolbar-button"
-                id="refreshButton"
-                type="button"
+                class="nav-button"
+                id="refresh"
                 title="Refresh">
+
                 ↻
+
             </button>
 
+
             <button
-                class="toolbar-button"
-                id="homeButton"
-                type="button"
+                class="nav-button"
+                id="home"
                 title="Home">
+
                 ⌂
+
             </button>
+
 
             <form
                 class="address-form"
                 id="addressForm">
 
+
                 <input
-                    class="address-input"
-                    id="addressInput"
+                    class="address"
+                    id="address"
                     type="text"
                     placeholder="Search or enter a website..."
                     autocomplete="off"
                     spellcheck="false">
 
+
                 <button
-                    class="go-button"
+                    class="go"
                     type="submit">
+
                     Go
+
                 </button>
+
 
             </form>
 
         </div>
 
-
-        <!-- CONTENT -->
-
-        <div class="content">
-
-            <!-- HOME PAGE -->
-
-            <div
-                class="home-page"
-                id="homePage">
-
-                <h2>🌎 Atlas Browser</h2>
-
-                <p>
-                    Search the web or enter a website address.
-                </p>
-
-                <p>
-                    Try:
-                    <strong>youtube.com</strong>
-                    or
-                    <strong>snokido.com</strong>
-                </p>
-
-                <form
-                    class="search-form"
-                    id="searchForm">
-
-                    <input
-                        id="searchInput"
-                        type="search"
-                        placeholder="Search the web..."
-                        autocomplete="off">
-
-                    <button type="submit">
-                        Search
-                    </button>
-
-                </form>
-
-                <div
-                    class="results"
-                    id="results">
-                </div>
-
-            </div>
+    </div>
 
 
-            <!-- WEBSITE -->
+    <!-- ERROR -->
 
-            <iframe
-                class="page-frame"
-                id="pageFrame"
-                title="Website"
-                allow="
-                    autoplay;
-                    fullscreen;
-                    picture-in-picture;
-                    encrypted-media;
-                    web-share;
-                    clipboard-read;
-                    clipboard-write
-                "
-                allowfullscreen>
-            </iframe>
+    <div
+        class="error"
+        id="error">
 
+        The website could not be loaded.
 
-            <!-- ERROR -->
-
-            <div
-                class="error-panel"
-                id="errorPanel">
-
-                <h2>⚠️ This site won't load here</h2>
-
-                <p>
-                    The website appears to prevent itself from
-                    being displayed inside an embedded window.
-                </p>
-
-                <p>
-                    Your browser is enforcing the website's
-                    security rules.
-                </p>
-
-                <a
-                    class="open-site"
-                    id="openSite"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Open Website
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
+    </div>
 
 
     <script>
-        "use strict";
 
+        const address =
+            document.getElementById(
+                "address"
+            );
 
-        /* =========================
-           ELEMENTS
-           ========================= */
-
-        const browserWindow =
-            document.getElementById("browserWindow");
-
-        const openBrowser =
-            document.getElementById("openBrowser");
-
-        const closeButton =
-            document.getElementById("closeButton");
-
-        const minimizeButton =
-            document.getElementById("minimizeButton");
-
-        const windowHeader =
-            document.getElementById("windowHeader");
 
         const addressForm =
-            document.getElementById("addressForm");
-
-        const addressInput =
-            document.getElementById("addressInput");
-
-        const searchForm =
-            document.getElementById("searchForm");
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-        const homePage =
-            document.getElementById("homePage");
-
-        const results =
-            document.getElementById("results");
-
-        const pageFrame =
-            document.getElementById("pageFrame");
-
-        const errorPanel =
-            document.getElementById("errorPanel");
-
-        const openSite =
-            document.getElementById("openSite");
-
-        const backButton =
-            document.getElementById("backButton");
-
-        const forwardButton =
-            document.getElementById("forwardButton");
-
-        const refreshButton =
-            document.getElementById("refreshButton");
-
-        const homeButton =
-            document.getElementById("homeButton");
-
-        const tabTitle =
-            document.getElementById("tabTitle");
+            document.getElementById(
+                "addressForm"
+            );
 
 
-        /* =========================
-           HISTORY
-           ========================= */
-
-        let history = [];
-
-        let historyIndex = -1;
-
-        let currentURL = "";
+        const back =
+            document.getElementById(
+                "back"
+            );
 
 
-        /* =========================
-           OPEN BROWSER
-           ========================= */
-
-        openBrowser.addEventListener(
-            "click",
-            () => {
-
-                browserWindow.classList.add("open");
-
-                browserWindow.classList.remove("minimized");
-
-                searchInput.focus();
-            }
-        );
+        const forward =
+            document.getElementById(
+                "forward"
+            );
 
 
-        /* =========================
-           CLOSE
-           ========================= */
-
-        closeButton.addEventListener(
-            "click",
-            () => {
-
-                browserWindow.classList.remove("open");
-            }
-        );
+        const refresh =
+            document.getElementById(
+                "refresh"
+            );
 
 
-        /* =========================
-           MINIMIZE
-           ========================= */
-
-        minimizeButton.addEventListener(
-            "click",
-            () => {
-
-                browserWindow.classList.toggle(
-                    "minimized"
-                );
-            }
-        );
+        const home =
+            document.getElementById(
+                "home"
+            );
 
 
-        /* =========================
-           DETECT WEBSITE
-           ========================= */
-
-        function looksLikeURL(value) {
-
-            const text =
-                value.trim();
+        const tab =
+            document.getElementById(
+                "tab"
+            );
 
 
-            if (
-                text.startsWith("http://") ||
-                text.startsWith("https://")
-            ) {
-                return true;
-            }
+        const title =
+            document.getElementById(
+                "title"
+            );
 
 
-            /*
-             * Recognizes:
-             *
-             * youtube.com
-             * www.youtube.com
-             * snokido.com
-             * example.org/page
-             */
-
-            return /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/.*)?$/
-                .test(text);
-        }
+        const error =
+            document.getElementById(
+                "error"
+            );
 
 
-        /* =========================
-           MAKE URL
-           ========================= */
-
-        function makeURL(value) {
-
-            const text =
-                value.trim();
-
-
-            if (
-                text.startsWith("http://") ||
-                text.startsWith("https://")
-            ) {
-                return text;
-            }
-
-
-            return "https://" + text;
-        }
-
-
-        /* =========================
-           ADDRESS BAR
-           ========================= */
+        /* =================================
+           NAVIGATE
+           ================================= */
 
         addressForm.addEventListener(
             "submit",
-            event => {
+            async (event) => {
 
                 event.preventDefault();
 
 
                 const value =
-                    addressInput.value.trim();
+                    address.value.trim();
 
 
                 if (!value) {
@@ -954,565 +548,182 @@
                 }
 
 
-                if (looksLikeURL(value)) {
-
-                    navigate(
-                        makeURL(value),
-                        true
-                    );
-
-                } else {
-
-                    searchWeb(value);
-                }
-            }
-        );
-
-
-        /* =========================
-           SEARCH
-           ========================= */
-
-        searchForm.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-
-                const query =
-                    searchInput.value.trim();
-
-
-                if (!query) {
-                    return;
-                }
-
-
-                searchWeb(query);
-            }
-        );
-
-
-        /* =========================
-           SEARCH ENGINE
-           ========================= */
-
-        function searchWeb(query) {
-
-            homePage.style.display =
-                "block";
-
-            pageFrame.classList.remove(
-                "visible"
-            );
-
-            errorPanel.classList.remove(
-                "visible"
-            );
-
-
-            addressInput.value =
-                query;
-
-
-            tabTitle.textContent =
-                "Search";
-
-
-            /*
-             * Use Bing search.
-             *
-             * Search results themselves are
-             * displayed in our one tab.
-             */
-
-            const url =
-                "https://www.bing.com/search?q=" +
-                encodeURIComponent(query);
-
-
-            /*
-             * Bing may prevent itself from being
-             * embedded, so instead of putting Bing
-             * itself into the iframe, create a
-             * simple search link.
-             */
-
-            results.innerHTML = `
-                <div class="result">
-                    <h3 class="result-title">
-                        <a href="#" id="bingSearch">
-                            Search Bing for "${escapeHTML(query)}"
-                        </a>
-                    </h3>
-
-                    <p class="result-url">
-                        ${escapeHTML(url)}
-                    </p>
-
-                    <p class="result-description">
-                        Open the search results.
-                    </p>
-                </div>
-            `;
-
-
-            document
-                .getElementById("bingSearch")
-                .addEventListener(
-                    "click",
-                    event => {
-
-                        event.preventDefault();
-
-                        /*
-                         * This navigates the current
-                         * iframe, not a new tab.
-                         */
-
-                        navigate(
-                            url,
-                            true
-                        );
-                    }
-                );
-        }
-
-
-        /* =========================
-           ESCAPE HTML
-           ========================= */
-
-        function escapeHTML(value) {
-
-            return value
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll('"', "&quot;")
-                .replaceAll("'", "&#039;");
-        }
-
-
-        /* =========================
-           NAVIGATE
-           ========================= */
-
-        function navigate(
-            url,
-            addHistory
-        ) {
-
-            if (!url) {
-                return;
-            }
-
-
-            if (addHistory) {
-
-                history =
-                    history.slice(
-                        0,
-                        historyIndex + 1
-                    );
-
-
-                history.push(url);
-
-
-                historyIndex =
-                    history.length - 1;
-            }
-
-
-            currentURL =
-                url;
-
-
-            addressInput.value =
-                url;
-
-
-            try {
-
-                const parsed =
-                    new URL(url);
-
-
-                tabTitle.textContent =
-                    parsed.hostname;
-
-                browserWindow
-                    .querySelector(".window-title")
-                    .textContent =
-                    parsed.hostname;
-
-            }
-            catch {
-
-                tabTitle.textContent =
-                    "Web Page";
-            }
-
-
-            homePage.style.display =
-                "none";
-
-
-            errorPanel.classList.remove(
-                "visible"
-            );
-
-
-            pageFrame.classList.add(
-                "visible"
-            );
-
-
-            /*
-             * IMPORTANT:
-             *
-             * We don't add target="_blank".
-             * We don't call window.open().
-             *
-             * The current single iframe/tab is
-             * reused for every navigation.
-             */
-
-            pageFrame.src =
-                url;
-
-
-            updateNavigation();
-        }
-
-
-        /* =========================
-           BACK
-           ========================= */
-
-        backButton.addEventListener(
-            "click",
-            () => {
-
-                if (historyIndex <= 0) {
-                    return;
-                }
-
-
-                historyIndex--;
-
-
-                navigate(
-                    history[historyIndex],
-                    false
-                );
-            }
-        );
-
-
-        /* =========================
-           FORWARD
-           ========================= */
-
-        forwardButton.addEventListener(
-            "click",
-            () => {
-
-                if (
-                    historyIndex >=
-                    history.length - 1
-                ) {
-                    return;
-                }
-
-
-                historyIndex++;
-
-
-                navigate(
-                    history[historyIndex],
-                    false
-                );
-            }
-        );
-
-
-        /* =========================
-           NAVIGATION BUTTONS
-           ========================= */
-
-        function updateNavigation() {
-
-            backButton.disabled =
-                historyIndex <= 0;
-
-
-            forwardButton.disabled =
-                historyIndex >=
-                history.length - 1;
-        }
-
-
-        /* =========================
-           REFRESH
-           ========================= */
-
-        refreshButton.addEventListener(
-            "click",
-            () => {
-
-                if (!currentURL) {
-                    return;
-                }
-
-
-                pageFrame.src =
-                    currentURL;
-            }
-        );
-
-
-        /* =========================
-           HOME
-           ========================= */
-
-        homeButton.addEventListener(
-            "click",
-            () => {
-
-                currentURL =
-                    "";
-
-
-                addressInput.value =
-                    "";
-
-
-                tabTitle.textContent =
-                    "New Tab";
-
-
-                browserWindow
-                    .querySelector(".window-title")
-                    .textContent =
-                    "Atlas Browser";
-
-
-                pageFrame.classList.remove(
-                    "visible"
-                );
-
-
-                errorPanel.classList.remove(
-                    "visible"
-                );
-
-
-                homePage.style.display =
-                    "block";
-
-
-                searchInput.focus();
-            }
-        );
-
-
-        /* =========================
-           IFRAME LOAD
-           ========================= */
-
-        pageFrame.addEventListener(
-            "load",
-            () => {
-
                 /*
-                 * A load event doesn't guarantee
-                 * that the website allowed iframe
-                 * embedding.
-                 *
-                 * We intentionally don't try to
-                 * bypass the site's security policy.
+                 * If it looks like a URL,
+                 * navigate directly.
                  */
+
+                const looksLikeURL =
+                    /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+/
+                        .test(value) ||
+                    value.startsWith(
+                        "http://"
+                    ) ||
+                    value.startsWith(
+                        "https://"
+                    );
+
+
+                if (looksLikeURL) {
+
+                    await window.atlasBrowser
+                        .navigate(
+                            value
+                        );
+
+                }
+                else {
+
+                    await window.atlasBrowser
+                        .search(
+                            value
+                        );
+                }
             }
         );
 
 
-        /* =========================
-           DRAGGING
-           ========================= */
+        /* =================================
+           BACK
+           ================================= */
 
-        let dragging = false;
+        back.addEventListener(
+            "click",
+            () => {
 
-        let offsetX = 0;
-
-        let offsetY = 0;
-
-        let pointerId = null;
+                window.atlasBrowser.back();
+            }
+        );
 
 
-        windowHeader.addEventListener(
-            "pointerdown",
-            event => {
+        /* =================================
+           FORWARD
+           ================================= */
 
-                if (
-                    event.target.closest("button")
-                ) {
+        forward.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.forward();
+            }
+        );
+
+
+        /* =================================
+           REFRESH
+           ================================= */
+
+        refresh.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.refresh();
+            }
+        );
+
+
+        /* =================================
+           HOME
+           ================================= */
+
+        home.addEventListener(
+            "click",
+            () => {
+
+                window.atlasBrowser.home();
+            }
+        );
+
+
+        /* =================================
+           URL CHANGED
+           ================================= */
+
+        window.atlasBrowser.onURLChange(
+            (url) => {
+
+                address.value =
+                    url;
+            }
+        );
+
+
+        /* =================================
+           TITLE CHANGED
+           ================================= */
+
+        window.atlasBrowser.onTitleChange(
+            (pageTitle) => {
+
+                if (!pageTitle) {
                     return;
                 }
 
 
-                dragging = true;
-
-                pointerId =
-                    event.pointerId;
+                tab.textContent =
+                    pageTitle;
 
 
-                windowHeader.setPointerCapture(
-                    pointerId
+                title.textContent =
+                    pageTitle;
+            }
+        );
+
+
+        /* =================================
+           NAVIGATION STATE
+           ================================= */
+
+        window.atlasBrowser.onNavigationState(
+            (state) => {
+
+                back.disabled =
+                    !state.canGoBack;
+
+
+                forward.disabled =
+                    !state.canGoForward;
+            }
+        );
+
+
+        /* =================================
+           ERROR
+           ================================= */
+
+        window.atlasBrowser.onError(
+            (info) => {
+
+                console.error(
+                    info
                 );
 
 
-                const rect =
-                    browserWindow.getBoundingClientRect();
+                error.textContent =
+                    "Could not load: " +
+                    info.errorDescription;
 
 
-                offsetX =
-                    event.clientX -
-                    rect.left;
+                error.classList.add(
+                    "show"
+                );
 
 
-                offsetY =
-                    event.clientY -
-                    rect.top;
+                setTimeout(
+                    () => {
 
+                        error.classList.remove(
+                            "show"
+                        );
 
-                browserWindow.style.transform =
-                    "none";
-
-
-                browserWindow.style.left =
-                    rect.left + "px";
-
-
-                browserWindow.style.top =
-                    rect.top + "px";
+                    },
+                    5000
+                );
             }
         );
-
-
-        windowHeader.addEventListener(
-            "pointermove",
-            event => {
-
-                if (
-                    !dragging ||
-                    event.pointerId !== pointerId
-                ) {
-                    return;
-                }
-
-
-                let left =
-                    event.clientX -
-                    offsetX;
-
-
-                let top =
-                    event.clientY -
-                    offsetY;
-
-
-                left =
-                    Math.max(
-                        0,
-                        Math.min(
-                            window.innerWidth -
-                            browserWindow.offsetWidth,
-                            left
-                        )
-                    );
-
-
-                top =
-                    Math.max(
-                        0,
-                        Math.min(
-                            window.innerHeight -
-                            46,
-                            top
-                        )
-                    );
-
-
-                browserWindow.style.left =
-                    left + "px";
-
-
-                browserWindow.style.top =
-                    top + "px";
-            }
-        );
-
-
-        function stopDragging(event) {
-
-            if (
-                event.pointerId !== pointerId
-            ) {
-                return;
-            }
-
-
-            dragging = false;
-
-            pointerId = null;
-        }
-
-
-        windowHeader.addEventListener(
-            "pointerup",
-            stopDragging
-        );
-
-
-        windowHeader.addEventListener(
-            "pointercancel",
-            stopDragging
-        );
-
-
-        /* =========================
-           ESCAPE
-           ========================= */
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Escape" &&
-                    browserWindow.classList.contains(
-                        "open"
-                    )
-                ) {
-
-                    browserWindow.classList.remove(
-                        "open"
-                    );
-                }
-            }
-        );
-
-
-        /* =========================
-           INITIALIZE
-           ========================= */
-
-        updateNavigation();
 
     </script>
 
 </body>
+
 </html>
