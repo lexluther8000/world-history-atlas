@@ -7,6 +7,10 @@
     <title>World History Atlas - Earth Geological Eras</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -20,19 +24,139 @@
             color: #333333;
         }
 
-        .search-window {
+        /* Search launcher */
+        .search-launcher {
             margin-top: 30px;
-            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #333333;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .search-launcher:hover {
+            background-color: #555555;
+        }
+
+        /* Search window */
+        .search-window {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(700px, 90%);
             height: 600px;
-            border: 1px solid #ccc;
+            background: #ffffff;
+            border: 1px solid #999999;
             border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
             overflow: hidden;
         }
 
-        .search-window iframe {
-            width: 100%;
-            height: 100%;
+        .window-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: #222222;
+            color: #ffffff;
+            cursor: move;
+        }
+
+        .window-title {
+            font-weight: bold;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .window-controls button {
+            width: 32px;
+            height: 28px;
             border: none;
+            border-radius: 4px;
+            background: #444444;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .window-controls button:hover {
+            background: #666666;
+        }
+
+        .search-content {
+            padding: 15px;
+            overflow: auto;
+            flex: 1;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 11px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-form button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 5px;
+            background: #333333;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background: #555555;
+        }
+
+        .search-info {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .search-info a {
+            color: #333333;
+        }
+
+        /* Minimized window */
+        .search-window.minimized {
+            height: auto;
+        }
+
+        .search-window.minimized .search-content {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .search-window {
+                width: 95%;
+                height: 80%;
+                top: 5%;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-form button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -59,12 +183,108 @@
         environments that existed long before human civilization.
     </p>
 
-    <div class="search-window">
-        <iframe
-            src="https://duckduckgo.com/"
-            title="DuckDuckGo">
-        </iframe>
+    <button class="search-launcher" id="openSearch" type="button">
+        Open DuckDuckGo Search
+    </button>
+
+    <div class="search-window" id="searchWindow">
+        <div class="window-header" id="windowHeader">
+            <span class="window-title">DuckDuckGo Search</span>
+
+            <div class="window-controls">
+                <button id="minimizeSearch" type="button" aria-label="Minimize">
+                    −
+                </button>
+
+                <button id="closeSearch" type="button" aria-label="Close">
+                    ×
+                </button>
+            </div>
+        </div>
+
+        <div class="search-content">
+            <form
+                class="search-form"
+                action="https://duckduckgo.com/"
+                method="get"
+                target="_blank">
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Search DuckDuckGo..."
+                    aria-label="Search DuckDuckGo"
+                    required>
+
+                <button type="submit">
+                    Search
+                </button>
+            </form>
+
+            <p class="search-info">
+                Search results will open in a new browser tab.
+            </p>
+        </div>
     </div>
+
+    <script>
+        const openSearch = document.getElementById("openSearch");
+        const closeSearch = document.getElementById("closeSearch");
+        const minimizeSearch = document.getElementById("minimizeSearch");
+        const searchWindow = document.getElementById("searchWindow");
+        const windowHeader = document.getElementById("windowHeader");
+
+        openSearch.addEventListener("click", function () {
+            searchWindow.style.display = "flex";
+            searchWindow.classList.remove("minimized");
+        });
+
+        closeSearch.addEventListener("click", function () {
+            searchWindow.style.display = "none";
+        });
+
+        minimizeSearch.addEventListener("click", function () {
+            searchWindow.classList.toggle("minimized");
+        });
+
+        /* Drag the window */
+        let dragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        windowHeader.addEventListener("mousedown", function (event) {
+            if (event.target.closest("button")) {
+                return;
+            }
+
+            dragging = true;
+
+            const rect = searchWindow.getBoundingClientRect();
+
+            offsetX = event.clientX - rect.left;
+            offsetY = event.clientY - rect.top;
+
+            searchWindow.style.transform = "none";
+            searchWindow.style.left = rect.left + "px";
+            searchWindow.style.top = rect.top + "px";
+        });
+
+        document.addEventListener("mousemove", function (event) {
+            if (!dragging) {
+                return;
+            }
+
+            searchWindow.style.left =
+                Math.max(0, event.clientX - offsetX) + "px";
+
+            searchWindow.style.top =
+                Math.max(0, event.clientY - offsetY) + "px";
+        });
+
+        document.addEventListener("mouseup", function () {
+            dragging = false;
+        });
+    </script>
 
 </body>
 </html>
