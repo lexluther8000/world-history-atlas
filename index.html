@@ -20,37 +20,19 @@
             color: #333333;
         }
 
-        .search-box {
-            margin-top: 25px;
-            margin-bottom: 25px;
-        }
-
-        .search-box form {
-            display: flex;
-            max-width: 600px;
-            gap: 8px;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 12px;
-            font-size: 16px;
+        .search-window {
+            margin-top: 30px;
+            width: 100%;
+            height: 600px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .search-box button {
-            padding: 12px 20px;
-            font-size: 16px;
+        .search-window iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            border-radius: 6px;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-        }
-
-        .search-box button:hover {
-            background-color: #555;
         }
     </style>
 </head>
@@ -77,16 +59,11 @@
         environments that existed long before human civilization.
     </p>
 
-    <div class="search-box">
-        <form action="https://duckduckgo.com/" method="get" target="_blank">
-            <input
-                type="search"
-                name="q"
-                placeholder="Search the web..."
-                aria-label="Search DuckDuckGo"
-                required>
-            <button type="submit">Search</button>
-        </form>
+    <div class="search-window">
+        <iframe
+            src="https://duckduckgo.com/"
+            title="DuckDuckGo">
+        </iframe>
     </div>
 
 </body>
