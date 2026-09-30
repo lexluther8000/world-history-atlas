@@ -1,1139 +1,697 @@
-<!DOCTYPE html>
-<html lang="en">
+const {
+    app,
+    BrowserWindow,
+    WebContentsView,
+    ipcMain
+} = require("electron");
 
-<head>
+const path = require("path");
 
-    <meta charset="UTF-8">
+let mainWindow;
+let browserView;
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>
-        World History Atlas - Gaming
-    </title>
+let browserVisible = false;
+let browserMinimized = false;
 
 
-    <style>
+/* ==========================================
+   BROWSER SIZE
+   ========================================== */
 
-        * {
-            box-sizing: border-box;
+const DEFAULT_WIDTH = 900;
+const DEFAULT_HEIGHT = 650;
+
+
+/* ==========================================
+   CREATE MAIN WINDOW
+   ========================================== */
+
+function createMainWindow() {
+
+    mainWindow = new BrowserWindow({
+
+        width: 1200,
+        height: 800,
+
+        minWidth: 800,
+        minHeight: 600,
+
+        backgroundColor: "#ffffff",
+
+        webPreferences: {
+
+            preload: path.join(
+                __dirname,
+                "preload.js"
+            ),
+
+            contextIsolation: true,
+
+            nodeIntegration: false
         }
+    });
 
 
-        html,
-        body {
+    mainWindow.loadFile(
+        path.join(
+            __dirname,
+            "index.html"
+        )
+    );
 
-            margin: 0;
 
-            min-height: 100%;
+    /*
+     * Create the actual browser.
+     */
 
-            font-family:
-                Arial,
-                sans-serif;
+    browserView =
+        new WebContentsView({
+
+            webPreferences: {
+
+                contextIsolation: true,
+
+                nodeIntegration: false,
+
+                sandbox: true,
+
+                javascript: true,
+
+                webSecurity: true
+            }
+        });
+
+
+    /*
+     * Add the browser to the main
+     * application window.
+     */
+
+    mainWindow.contentView.addChildView(
+        browserView
+    );
+
+
+    /*
+     * Don't show it until the user
+     * presses Open Search.
+     */
+
+    browserView.setVisible(false);
+
+
+    /*
+     * Navigation events.
+     */
+
+    browserView.webContents.on(
+        "did-navigate",
+        (event, url) => {
+
+            send(
+                "browser-url",
+                url
+            );
+
+            updateNavigation();
         }
+    );
 
 
-        body {
+    browserView.webContents.on(
+        "did-navigate-in-page",
+        (event, url) => {
 
-            padding: 20px;
+            send(
+                "browser-url",
+                url
+            );
 
-            background: #ffffff;
-
-            color: #333333;
+            updateNavigation();
         }
+    );
 
 
-        a {
+    /*
+     * Page title.
+     */
 
-            color: #333333;
+    browserView.webContents.on(
+        "page-title-updated",
+        (event, pageTitle) => {
+
+            send(
+                "browser-title",
+                pageTitle
+            );
         }
-
-
-        /* =========================
-           HEADER
-           ========================= */
-
-        h1 {
-
-            margin-top: 0;
-        }
-
-
-        /* =========================
-           SEARCH BUTTON
-           ========================= */
-
-        .search-launcher {
-
-            margin-top: 30px;
-
-            padding: 12px 20px;
-
-            border: none;
-
-            border-radius: 6px;
-
-            background: #333333;
-
-            color: white;
-
-            font-size: 16px;
-
-            cursor: pointer;
-        }
-
-
-        .search-launcher:hover {
-
-            background: #555555;
-        }
-
-
-        /* =========================
-           GAME BUTTON
-           ========================= */
-
-        .game-button {
-
-            display: inline-block;
-
-            margin-top: 20px;
-
-            padding: 12px 20px;
-
-            border-radius: 6px;
-
-            background: #4285f4;
-
-            color: white;
-
-            text-decoration: none;
-        }
-
-
-        .game-button:hover {
-
-            background: #3367d6;
-        }
-
-
-        /* =========================
-           BROWSER WINDOW
-           ========================= */
-
-        .browser-controls {
-
-            position: fixed;
-
-            z-index: 2000;
-
-            display: none;
-
-            flex-direction: column;
-
-            background: #222222;
-
-            color: white;
-
-            border-radius:
-                8px 8px 0 0;
-
-            box-shadow:
-                0 5px 20px
-                rgba(0, 0, 0, 0.4);
-
-            user-select: none;
-        }
-
-
-        .browser-controls.open {
-
-            display: flex;
-        }
-
-
-        /* =========================
-           TITLE BAR
-           ========================= */
-
-        .title-bar {
-
-            height: 40px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 0 8px 0 12px;
-
-            background: #222222;
-
-            border-radius:
-                8px 8px 0 0;
-
-            cursor: move;
-        }
-
-
-        .title-text {
-
-            font-weight: bold;
-
-            font-size: 14px;
-
-            overflow: hidden;
-
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
-        }
-
-
-        .window-buttons {
-
-            display: flex;
-
-            gap: 5px;
-        }
-
-
-        .window-buttons button {
-
-            width: 30px;
-
-            height: 26px;
-
-            border: none;
-
-            border-radius: 4px;
-
-            background: #444444;
-
-            color: white;
-
-            cursor: pointer;
-
-            font-size: 16px;
-        }
-
-
-        .window-buttons button:hover {
-
-            background: #666666;
-        }
-
-
-        /* =========================
-           TAB
-           ========================= */
-
-        .tab-bar {
-
-            height: 36px;
-
-            display: flex;
-
-            align-items: flex-end;
-
-            background: #2c2c2c;
-
-            padding-left: 7px;
-        }
-
-
-        .tab {
-
-            height: 32px;
-
-            min-width: 180px;
-
-            max-width: 300px;
-
-            padding: 0 14px;
-
-            display: flex;
-
-            align-items: center;
-
-            background: white;
-
-            color: #222222;
-
-            border-radius:
-                6px 6px 0 0;
-
-            font-size: 13px;
-
-            overflow: hidden;
-
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
-        }
-
-
-        /* =========================
-           NAVIGATION BAR
-           ========================= */
-
-        .navigation {
-
-            height: 46px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 5px;
-
-            padding: 6px;
-
-            background: #eeeeee;
-        }
-
-
-        .nav-button {
-
-            width: 34px;
-
-            height: 32px;
-
-            border: 1px solid #bbb;
-
-            border-radius: 5px;
-
-            background: white;
-
-            cursor: pointer;
-        }
-
-
-        .nav-button:hover {
-
-            background: #ddd;
-        }
-
-
-        .address-form {
-
-            flex: 1;
-
-            display: flex;
-
-            gap: 5px;
-
-            min-width: 0;
-        }
-
-
-        .address {
-
-            flex: 1;
-
-            min-width: 0;
-
-            height: 32px;
-
-            padding: 0 10px;
-
-            border: 1px solid #aaa;
-
-            border-radius: 5px;
-
-            font-size: 14px;
-        }
-
-
-        .go-button {
-
-            height: 32px;
-
-            padding: 0 14px;
-
-            border: none;
-
-            border-radius: 5px;
-
-            background: #4285f4;
-
-            color: white;
-
-            cursor: pointer;
-        }
-
-
-        .go-button:hover {
-
-            background: #3367d6;
-        }
-
-
-        /* =========================
-           GAME AREA
-           ========================= */
-
-        .game-area {
-
-            margin-top: 30px;
-
-            width: 100%;
-
-            height: 600px;
-
-            background: #000000;
-
-            border-radius: 8px;
-
-            overflow: hidden;
-        }
-
-
-        .game-area iframe {
-
-            width: 100%;
-
-            height: 100%;
-
-            border: none;
-        }
-
-
-        /* =========================
-           MOBILE
-           ========================= */
-
-        @media (max-width: 600px) {
-
-            body {
-
-                padding: 15px;
+    );
+
+
+    /*
+     * Loading failed.
+     */
+
+    browserView.webContents.on(
+        "did-fail-load",
+        (
+            event,
+            errorCode,
+            errorDescription,
+            validatedURL
+        ) => {
+
+            /*
+             * -3 = navigation was cancelled.
+             * This isn't a real error.
+             */
+
+            if (errorCode === -3) {
+                return;
             }
 
 
-            .game-area {
-
-                height: 500px;
-            }
-
-
-            .tab {
-
-                min-width: 130px;
-            }
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-    <!-- ==================================
-         GAMING WEBSITE
-         ================================== -->
-
-    <main>
-
-        <h1>
-            Geological History of Earth
-        </h1>
-
-
-        <p>
-
-            Earth's early geological history was
-            shaped by major changes in its crust,
-            including tectonic processes that
-            contributed to the formation and breakup
-            of supercontinents such as
-
-            <a
-                href="https://bull.ultradec.com/"
-                target="_blank"
-                rel="noopener noreferrer">
-
-                Pangaea
-
-            </a>.
-
-        </p>
-
-
-        <p>
-
-            Sedimentary rock layers provide evidence
-            of volcanic activity, environmental
-            changes, and past climates.
-
-        </p>
-
-
-        <!-- SEARCH BUTTON -->
-
-        <button
-            class="search-launcher"
-            id="openBrowser"
-            type="button">
-
-            🔍 Open Search
-
-        </button>
-
-
-        <!-- GAME -->
-
-        <div class="game-area">
-
-            <iframe
-                src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
-                title="Game"
-                scrolling="no"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-    </main>
-
-
-    <!-- ==================================
-         BROWSER CONTROLS
-         ================================== -->
-
-    <div
-        class="browser-controls"
-        id="browserControls">
-
-
-        <!-- TITLE -->
-
-        <div
-            class="title-bar"
-            id="titleBar">
-
-
-            <span
-                class="title-text"
-                id="browserTitle">
-
-                Atlas Browser
-
-            </span>
-
-
-            <div
-                class="window-buttons">
-
-
-                <button
-                    id="minimizeBrowser"
-                    type="button"
-                    title="Minimize">
-
-                    −
-
-                </button>
-
-
-                <button
-                    id="closeBrowser"
-                    type="button"
-                    title="Close">
-
-                    ×
-
-                </button>
-
-
-            </div>
-
-        </div>
-
-
-        <!-- TAB -->
-
-        <div class="tab-bar">
-
-            <div
-                class="tab"
-                id="browserTab">
-
-                New Tab
-
-            </div>
-
-        </div>
-
-
-        <!-- NAVIGATION -->
-
-        <div class="navigation">
-
-
-            <button
-                class="nav-button"
-                id="back"
-                type="button"
-                title="Back">
-
-                ←
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                id="forward"
-                type="button"
-                title="Forward">
-
-                →
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                id="refresh"
-                type="button"
-                title="Refresh">
-
-                ↻
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                id="home"
-                type="button"
-                title="Home">
-
-                ⌂
-
-            </button>
-
-
-            <form
-                class="address-form"
-                id="addressForm">
-
-
-                <input
-                    class="address"
-                    id="address"
-                    type="text"
-                    placeholder="Search or enter a website..."
-                    autocomplete="off"
-                    spellcheck="false">
-
-
-                <button
-                    class="go-button"
-                    type="submit">
-
-                    Go
-
-                </button>
-
-
-            </form>
-
-        </div>
-
-    </div>
-
-
-    <script>
-
-        /* ==================================
-           ELEMENTS
-           ================================== */
-
-        const openBrowser =
-            document.getElementById(
-                "openBrowser"
-            );
-
-
-        const browserControls =
-            document.getElementById(
-                "browserControls"
-            );
-
-
-        const closeBrowser =
-            document.getElementById(
-                "closeBrowser"
-            );
-
-
-        const minimizeBrowser =
-            document.getElementById(
-                "minimizeBrowser"
-            );
-
-
-        const address =
-            document.getElementById(
-                "address"
-            );
-
-
-        const addressForm =
-            document.getElementById(
-                "addressForm"
-            );
-
-
-        const back =
-            document.getElementById(
-                "back"
-            );
-
-
-        const forward =
-            document.getElementById(
-                "forward"
-            );
-
-
-        const refresh =
-            document.getElementById(
-                "refresh"
-            );
-
-
-        const home =
-            document.getElementById(
-                "home"
-            );
-
-
-        const browserTitle =
-            document.getElementById(
-                "browserTitle"
-            );
-
-
-        const browserTab =
-            document.getElementById(
-                "browserTab"
-            );
-
-
-        const titleBar =
-            document.getElementById(
-                "titleBar"
-            );
-
-
-        /* ==================================
-           OPEN
-           ================================== */
-
-        openBrowser.addEventListener(
-            "click",
-            () => {
-
-                browserControls.classList.add(
-                    "open"
-                );
-
-
-                window.atlas.openBrowser();
-            }
-        );
-
-
-        /* ==================================
-           CLOSE
-           ================================== */
-
-        closeBrowser.addEventListener(
-            "click",
-            () => {
-
-                browserControls.classList.remove(
-                    "open"
-                );
-
-
-                window.atlas.closeBrowser();
-            }
-        );
-
-
-        /* ==================================
-           MINIMIZE
-           ================================== */
-
-        minimizeBrowser.addEventListener(
-            "click",
-            () => {
-
-                window.atlas.minimizeBrowser();
-            }
-        );
-
-
-        /* ==================================
-           ADDRESS BAR
-           ================================== */
-
-        addressForm.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-
-                const value =
-                    address.value.trim();
-
-
-                if (!value) {
-                    return;
+            send(
+                "browser-error",
+                {
+                    errorCode,
+                    errorDescription,
+                    url: validatedURL
                 }
+            );
+        }
+    );
 
 
-                /*
-                 * Detect websites.
-                 */
+    /*
+     * If a website asks to open a new
+     * window, keep it in our ONE tab.
+     */
 
-                const isURL =
-                    value.startsWith(
-                        "http://"
-                    ) ||
-                    value.startsWith(
-                        "https://"
-                    ) ||
-                    /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+/
-                        .test(value);
+    browserView.webContents.setWindowOpenHandler(
+        ({ url }) => {
 
+            if (url) {
 
-                if (isURL) {
-
-                    window.atlas.navigate(
-                        value
-                    );
-
-                } else {
-
-                    window.atlas.search(
-                        value
-                    );
-                }
-            }
-        );
-
-
-        /* ==================================
-           BACK
-           ================================== */
-
-        back.addEventListener(
-            "click",
-            () => {
-
-                window.atlas.back();
-            }
-        );
-
-
-        /* ==================================
-           FORWARD
-           ================================== */
-
-        forward.addEventListener(
-            "click",
-            () => {
-
-                window.atlas.forward();
-            }
-        );
-
-
-        /* ==================================
-           REFRESH
-           ================================== */
-
-        refresh.addEventListener(
-            "click",
-            () => {
-
-                window.atlas.refresh();
-            }
-        );
-
-
-        /* ==================================
-           HOME
-           ================================== */
-
-        home.addEventListener(
-            "click",
-            () => {
-
-                window.atlas.home();
-            }
-        );
-
-
-        /* ==================================
-           URL UPDATE
-           ================================== */
-
-        window.atlas.onBrowserURL(
-            url => {
-
-                address.value =
-                    url;
-            }
-        );
-
-
-        /* ==================================
-           TITLE UPDATE
-           ================================== */
-
-        window.atlas.onBrowserTitle(
-            pageTitle => {
-
-                if (!pageTitle) {
-                    return;
-                }
-
-
-                browserTitle.textContent =
-                    pageTitle;
-
-
-                browserTab.textContent =
-                    pageTitle;
-            }
-        );
-
-
-        /* ==================================
-           BROWSER ERROR
-           ================================== */
-
-        window.atlas.onBrowserError(
-            info => {
-
-                console.log(
-                    "Browser error:",
-                    info
+                browserView.webContents.loadURL(
+                    url
                 );
             }
+
+
+            return {
+                action: "deny"
+            };
+        }
+    );
+
+
+    /*
+     * Also catch target="_blank" style
+     * navigation where possible.
+     */
+
+    browserView.webContents.on(
+        "will-navigate",
+        (event, url) => {
+
+            /*
+             * Electron normally handles this
+             * automatically. We intentionally
+             * leave the navigation alone.
+             */
+        }
+    );
+
+
+    /*
+     * Clean up.
+     */
+
+    mainWindow.on(
+        "closed",
+        () => {
+
+            browserView = null;
+
+            mainWindow = null;
+        }
+    );
+}
+
+
+/* ==========================================
+   SEND MESSAGE TO INDEX
+   ========================================== */
+
+function send(
+    channel,
+    data
+) {
+
+    if (!mainWindow) {
+        return;
+    }
+
+
+    mainWindow.webContents.send(
+        channel,
+        data
+    );
+}
+
+
+/* ==========================================
+   UPDATE NAVIGATION BUTTONS
+   ========================================== */
+
+function updateNavigation() {
+
+    if (
+        !browserView ||
+        !mainWindow
+    ) {
+        return;
+    }
+
+
+    send(
+        "navigation-state",
+        {
+            back:
+                browserView.webContents.canGoBack(),
+
+            forward:
+                browserView.webContents.canGoForward()
+        }
+    );
+}
+
+
+/* ==========================================
+   POSITION BROWSER
+   ========================================== */
+
+function positionBrowser(bounds) {
+
+    if (
+        !browserView ||
+        !browserVisible ||
+        browserMinimized
+    ) {
+        return;
+    }
+
+
+    /*
+     * bounds describes the complete
+     * browser popup in the renderer.
+     *
+     * The first 122px are the browser
+     * toolbar.
+     */
+
+    const toolbarHeight = 122;
+
+
+    const x =
+        Math.round(
+            Number(bounds.x) || 0
         );
 
 
-        /* ==================================
-           MINIMIZED
-           ================================== */
+    const y =
+        Math.round(
+            Number(bounds.y) || 0
+        );
 
-        window.atlas.onBrowserMinimized(
-            minimized => {
 
-                if (minimized) {
+    const width =
+        Math.max(
+            350,
+            Math.round(
+                Number(bounds.width) ||
+                DEFAULT_WIDTH
+            )
+        );
 
-                    browserControls.style.display =
-                        "flex";
 
-                    browserControls.style.height =
-                        "40px";
+    const height =
+        Math.max(
+            250,
+            Math.round(
+                Number(bounds.height) ||
+                DEFAULT_HEIGHT
+            )
+        );
 
-                } else {
 
-                    browserControls.style.height =
-                        "";
-                }
+    browserView.setBounds({
+
+        x: x,
+
+        y:
+            y +
+            toolbarHeight,
+
+        width: width,
+
+        height:
+            Math.max(
+                100,
+                height -
+                toolbarHeight
+            )
+    });
+}
+
+
+/* ==========================================
+   OPEN BROWSER
+   ========================================== */
+
+ipcMain.handle(
+    "open-browser",
+    () => {
+
+        if (
+            !browserView ||
+            !mainWindow
+        ) {
+            return;
+        }
+
+
+        browserVisible = true;
+
+        browserMinimized = false;
+
+
+        browserView.setVisible(
+            true
+        );
+
+
+        /*
+         * Tell index.html that it can
+         * position the browser.
+         */
+
+        send(
+            "browser-open",
+            true
+        );
+
+
+        /*
+         * Load Bing the first time.
+         */
+
+        if (
+            !browserView.webContents
+                .getURL()
+        ) {
+
+            browserView.webContents.loadURL(
+                "https://www.bing.com/"
+            );
+        }
+    }
+);
+
+
+/* ==========================================
+   CLOSE BROWSER
+   ========================================== */
+
+ipcMain.handle(
+    "close-browser",
+    () => {
+
+        browserVisible = false;
+
+        browserMinimized = false;
+
+
+        if (browserView) {
+
+            browserView.setVisible(
+                false
+            );
+        }
+
+
+        send(
+            "browser-close",
+            true
+        );
+    }
+);
+
+
+/* ==========================================
+   MINIMIZE
+   ========================================== */
+
+ipcMain.handle(
+    "minimize-browser",
+    () => {
+
+        if (!browserView) {
+            return;
+        }
+
+
+        browserMinimized =
+            !browserMinimized;
+
+
+        browserView.setVisible(
+            !browserMinimized
+        );
+
+
+        send(
+            "browser-minimized",
+            browserMinimized
+        );
+    }
+);
+
+
+/* ==========================================
+   SET BROWSER POSITION
+   ========================================== */
+
+ipcMain.handle(
+    "set-browser-bounds",
+    (event, bounds) => {
+
+        positionBrowser(
+            bounds
+        );
+    }
+);
+
+
+/* ==========================================
+   SEARCH BING
+   ========================================== */
+
+ipcMain.handle(
+    "search",
+    (event, query) => {
+
+        if (
+            !browserView ||
+            !query
+        ) {
+            return;
+        }
+
+
+        const searchURL =
+            "https://www.bing.com/search?q=" +
+            encodeURIComponent(
+                query
+            );
+
+
+        browserView.webContents.loadURL(
+            searchURL
+        );
+    }
+);
+
+
+/* ==========================================
+   NAVIGATE TO WEBSITE
+   ========================================== */
+
+ipcMain.handle(
+    "navigate",
+    (event, input) => {
+
+        if (
+            !browserView ||
+            !input
+        ) {
+            return;
+        }
+
+
+        let value =
+            String(input).trim();
+
+
+        if (!value) {
+            return;
+        }
+
+
+        /*
+         * If the user typed something like:
+         *
+         * snokido.com
+         *
+         * turn it into:
+         *
+         * https://snokido.com
+         */
+
+        if (
+            !value.startsWith(
+                "http://"
+            ) &&
+            !value.startsWith(
+                "https://"
+            )
+        ) {
+
+            value =
+                "https://" +
+                value;
+        }
+
+
+        browserView.webContents.loadURL(
+            value
+        );
+    }
+);
+
+
+/* ==========================================
+   BACK
+   ========================================== */
+
+ipcMain.handle(
+    "back",
+    () => {
+
+        if (
+            browserView &&
+            browserView.webContents.canGoBack()
+        ) {
+
+            browserView.webContents.goBack();
+        }
+    }
+);
+
+
+/* ==========================================
+   FORWARD
+   ========================================== */
+
+ipcMain.handle(
+    "forward",
+    () => {
+
+        if (
+            browserView &&
+            browserView.webContents.canGoForward()
+        ) {
+
+            browserView.webContents.goForward();
+        }
+    }
+);
+
+
+/* ==========================================
+   REFRESH
+   ========================================== */
+
+ipcMain.handle(
+    "refresh",
+    () => {
+
+        if (browserView) {
+
+            browserView.webContents.reload();
+        }
+    }
+);
+
+
+/* ==========================================
+   HOME
+   ========================================== */
+
+ipcMain.handle(
+    "home",
+    () => {
+
+        if (browserView) {
+
+            browserView.webContents.loadURL(
+                "https://www.bing.com/"
+            );
+        }
+    }
+);
+
+
+/* ==========================================
+   APP READY
+   ========================================== */
+
+app.whenReady().then(() => {
+
+    createMainWindow();
+
+
+    app.on(
+        "activate",
+        () => {
+
+            if (
+                BrowserWindow
+                    .getAllWindows()
+                    .length === 0
+            ) {
+
+                createMainWindow();
             }
-        );
-
-
-        /* ==================================
-           DRAGGING
-           ================================== */
-
-        let dragging = false;
-
-        let dragStartX = 0;
-
-        let dragStartY = 0;
-
-
-        titleBar.addEventListener(
-            "pointerdown",
-            event => {
-
-                if (
-                    event.target.closest(
-                        "button"
-                    )
-                ) {
-                    return;
-                }
-
-
-                dragging = true;
-
-
-                dragStartX =
-                    event.clientX;
-
-
-                dragStartY =
-                    event.clientY;
-
-
-                titleBar.setPointerCapture(
-                    event.pointerId
-                );
-            }
-        );
-
-
-        titleBar.addEventListener(
-            "pointermove",
-            event => {
-
-                if (!dragging) {
-                    return;
-                }
-
-
-                const dx =
-                    event.clientX -
-                    dragStartX;
-
-
-                const dy =
-                    event.clientY -
-                    dragStartY;
-
-
-                /*
-                 * We don't directly move the
-                 * WebContentsView from here.
-                 *
-                 * Instead we move the visual
-                 * control position and tell
-                 * Electron about it.
-                 */
-
-                const rect =
-                    browserControls
-                        .getBoundingClientRect();
-
-
-                const newX =
-                    rect.left + dx;
-
-
-                const newY =
-                    rect.top + dy;
-
-
-                browserControls.style.left =
-                    newX + "px";
-
-
-                browserControls.style.top =
-                    newY + "px";
-
-
-                browserControls.style.transform =
-                    "none";
-
-
-                dragStartX =
-                    event.clientX;
-
-
-                dragStartY =
-                    event.clientY;
-
-
-                /*
-                 * Tell Electron where the
-                 * actual browser view should be.
-                 */
-
-                window.atlas.moveBrowser({
-
-                    x: newX,
-
-                    y: newY,
-
-                    width:
-                        browserControls
-                            .offsetWidth,
-
-                    height:
-                        browserControls
-                            .offsetHeight
-                });
-            }
-        );
-
-
-        titleBar.addEventListener(
-            "pointerup",
-            event => {
-
-                dragging = false;
-
-
-                titleBar.releasePointerCapture(
-                    event.pointerId
-                );
-            }
-        );
-
-
-        titleBar.addEventListener(
-            "pointercancel",
-            () => {
-
-                dragging = false;
-            }
-        );
-
-
-        /* ==================================
-           ESCAPE CLOSES BROWSER
-           ================================== */
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Escape" &&
-                    browserControls.classList
-                        .contains("open")
-                ) {
-
-                    browserControls.classList.remove(
-                        "open"
-                    );
-
-
-                    window.atlas.closeBrowser();
-                }
-            }
-        );
-
-    </script>
-
-</body>
-
-</html>
+        }
+    );
+});
+
+
+/* ==========================================
+   CLOSE APP
+   ========================================== */
+
+app.on(
+    "window-all-closed",
+    () => {
+
+        if (
+            process.platform !== "darwin"
+        ) {
+
+            app.quit();
+        }
+    }
+);
