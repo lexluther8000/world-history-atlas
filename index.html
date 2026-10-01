@@ -44,7 +44,9 @@
             font-size: 17px;
         }
 
-        /* HISTORY LINKS */
+        /* ==============================
+           HISTORY LINKS
+           ============================== */
 
         .history-link {
             color: #66aaff;
@@ -57,15 +59,20 @@
             color: #99c7ff;
         }
 
-        /* SEARCH BUTTON */
+        /* ==============================
+           SEARCH BUTTON
+           ============================== */
 
         .open-search {
             margin: 15px 0 20px;
             padding: 12px 20px;
+
             border: none;
             border-radius: 7px;
+
             background: #4285f4;
             color: white;
+
             font-size: 16px;
             cursor: pointer;
         }
@@ -74,12 +81,15 @@
             background: #3367d6;
         }
 
-        /* ARTICLE */
+        /* ==============================
+           ARTICLE
+           ============================== */
 
         .article {
             background: #181818;
             border: 1px solid #333;
             border-radius: 10px;
+
             padding: 25px;
             margin-bottom: 30px;
         }
@@ -91,13 +101,35 @@
         .article-note {
             padding: 15px;
             margin-top: 20px;
+
             background: #222;
             border-left: 4px solid #4285f4;
+
             border-radius: 5px;
             color: #ccc;
         }
 
-        /* MINECRAFT */
+        /* ==============================
+           MINECRAFT
+           ============================== */
+
+        /*
+         * Minecraft is completely hidden when
+         * the page first loads.
+         */
+
+        .minecraft-hidden {
+            display: none;
+        }
+
+        /*
+         * JavaScript adds this class when
+         * Pangaea is clicked.
+         */
+
+        .minecraft-hidden.show {
+            display: block;
+        }
 
         .game-title {
             margin-top: 35px;
@@ -111,40 +143,52 @@
         .game-container {
             width: 100%;
             height: 650px;
+
             background: #000;
+
             border: 2px solid #333;
             border-radius: 10px;
+
             overflow: hidden;
         }
 
         .game-container iframe {
             width: 100%;
             height: 100%;
+
             border: none;
             display: block;
         }
 
-        /* SEARCH WINDOW */
+        /* ==============================
+           SEARCH WINDOW
+           ============================== */
 
         .search-window {
             position: fixed;
+
             left: 50%;
             top: 5%;
+
             transform: translateX(-50%);
 
             width: min(950px, 94vw);
             height: min(700px, 88vh);
 
             background: #202020;
+
             border: 1px solid #555;
             border-radius: 10px;
 
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.7);
 
             display: none;
             flex-direction: column;
 
             z-index: 1000;
+
             overflow: hidden;
         }
 
@@ -152,16 +196,21 @@
             display: flex;
         }
 
-        /* WINDOW HEADER */
+        /* ==============================
+           WINDOW HEADER
+           ============================== */
 
         .window-header {
             height: 42px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
 
             padding: 0 10px;
+
             background: #181818;
+
             user-select: none;
         }
 
@@ -185,6 +234,7 @@
             color: white;
 
             font-size: 18px;
+
             cursor: pointer;
         }
 
@@ -192,7 +242,9 @@
             background: #666;
         }
 
-        /* TAB */
+        /* ==============================
+           TAB
+           ============================== */
 
         .tab-bar {
             height: 38px;
@@ -201,6 +253,7 @@
             align-items: flex-end;
 
             background: #252525;
+
             padding-left: 8px;
         }
 
@@ -221,13 +274,17 @@
             font-size: 14px;
         }
 
-        /* SEARCH BAR */
+        /* ==============================
+           SEARCH TOOLBAR
+           ============================== */
 
         .toolbar {
             display: flex;
+
             gap: 6px;
 
             padding: 8px;
+
             background: #e9e9e9;
         }
 
@@ -241,6 +298,7 @@
             background: white;
 
             font-size: 17px;
+
             cursor: pointer;
         }
 
@@ -250,21 +308,26 @@
 
         .search-form {
             flex: 1;
+
             display: flex;
+
             gap: 6px;
         }
 
         .search-input {
             flex: 1;
+
             min-width: 0;
 
             height: 34px;
+
             padding: 0 10px;
 
             border: 1px solid #aaa;
             border-radius: 5px;
 
             font-size: 15px;
+
             outline: none;
         }
 
@@ -274,9 +337,11 @@
 
         .go-button {
             width: auto !important;
+
             padding: 0 15px;
 
             background: #4285f4 !important;
+
             color: white;
 
             border: none !important;
@@ -286,7 +351,9 @@
             background: #3367d6 !important;
         }
 
-        /* SEARCH RESULTS */
+        /* ==============================
+           SEARCH RESULTS AREA
+           ============================== */
 
         .search-results {
             flex: 1;
@@ -295,6 +362,7 @@
             color: #222;
 
             padding: 30px;
+
             overflow: auto;
 
             text-align: center;
@@ -312,12 +380,15 @@
             display: inline-block;
 
             margin-top: 15px;
+
             padding: 12px 20px;
 
             background: #4285f4;
+
             color: white;
 
             text-decoration: none;
+
             border-radius: 6px;
         }
 
@@ -325,7 +396,9 @@
             background: #3367d6;
         }
 
-        /* MOBILE */
+        /* ==============================
+           MOBILE
+           ============================== */
 
         @media (max-width: 600px) {
 
@@ -348,6 +421,7 @@
             .search-window {
                 width: 97vw;
                 height: 90vh;
+
                 top: 3%;
             }
 
@@ -370,7 +444,9 @@
 
 <div class="page">
 
-    <!-- HISTORY ARTICLE -->
+    <!-- ==============================
+         HISTORY ARTICLE
+         ============================== -->
 
     <article class="article">
 
@@ -386,7 +462,13 @@
         <p class="description">
             One of the most famous chapters in Earth's geological history
             concerns
-            <a href="#minecraft" class="history-link">Pangaea</a>.
+            <a
+                href="#"
+                id="pangaeaLink"
+                class="history-link"
+            >
+                Pangaea
+            </a>.
             This enormous supercontinent brought together much of the
             world's landmass before eventually breaking apart.
         </p>
@@ -421,14 +503,16 @@
         <div class="article-note">
             <strong>Atlas Note:</strong>
             Explore the article, use the search engine to research
-            historical topics, or scroll down to the interactive
-            Minecraft section.
+            historical topics, or discover the hidden Minecraft Easter egg
+            by clicking Pangaea.
         </div>
 
     </article>
 
 
-    <!-- SEARCH BUTTON -->
+    <!-- ==============================
+         SEARCH BUTTON
+         ============================== -->
 
     <button
         class="open-search"
@@ -439,32 +523,43 @@
     </button>
 
 
-    <!-- MINECRAFT -->
+    <!-- ==============================
+         HIDDEN MINECRAFT
+         ============================== -->
 
-    <h2 class="game-title" id="minecraft">
-        ⛏️ Minecraft
-    </h2>
+    <div
+        id="minecraft"
+        class="minecraft-hidden"
+    >
 
-    <p class="game-description">
-        You found the Pangaea Easter egg!
-        The historical article brought you here.
-    </p>
+        <h2 class="game-title">
+            ⛏️ Minecraft
+        </h2>
 
-    <div class="game-container">
+        <p class="game-description">
+            You found the Pangaea Easter egg!
+            The historical article brought you here.
+        </p>
 
-        <iframe
-            src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
-            title="Minecraft"
-            allowfullscreen
-            scrolling="no">
-        </iframe>
+        <div class="game-container">
+
+            <iframe
+                src="https://www.gameflare.com/embed/eaglercraft-minecraft-online/"
+                title="Minecraft"
+                allowfullscreen
+                scrolling="no">
+            </iframe>
+
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- SEARCH WINDOW -->
+<!-- ==============================
+     SEARCH WINDOW
+     ============================== -->
 
 <div
     class="search-window"
@@ -516,7 +611,7 @@
     </div>
 
 
-    <!-- TOOLBAR -->
+    <!-- SEARCH TOOLBAR -->
 
     <div class="toolbar">
 
@@ -643,6 +738,41 @@
     const tabTitle =
         document.getElementById("tabTitle");
 
+    const pangaeaLink =
+        document.getElementById("pangaeaLink");
+
+    const minecraftSection =
+        document.getElementById("minecraft");
+
+
+    /* ==============================
+       PANGAEA EASTER EGG
+       ============================== */
+
+    pangaeaLink.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            /*
+             * Reveal Minecraft.
+             */
+
+            minecraftSection.classList.add("show");
+
+            /*
+             * Smoothly scroll to Minecraft.
+             */
+
+            minecraftSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+    );
+
 
     /* ==============================
        OPEN SEARCH
@@ -706,16 +836,17 @@
             }
 
             /*
-             * Search engines can prevent their pages
-             * from being displayed inside iframes.
-             *
-             * Therefore the actual results open in
-             * a normal browser tab.
+             * Build the Bing search URL.
              */
 
             const searchURL =
                 "https://www.bing.com/search?q=" +
                 encodeURIComponent(query);
+
+            /*
+             * Open the actual search results
+             * in a normal browser tab.
+             */
 
             window.open(
                 searchURL,
@@ -723,8 +854,17 @@
                 "noopener,noreferrer"
             );
 
+            /*
+             * Update the fake browser tab.
+             */
+
             tabTitle.textContent =
                 "🔍 " + query;
+
+            /*
+             * Update the message inside the
+             * fake browser window.
+             */
 
             searchResults.innerHTML = `
 
