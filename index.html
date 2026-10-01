@@ -4,60 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Atlas Gaming</title>
+    <title>World History Atlas</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
-        html,
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            padding: 0;
-            min-height: 100%;
+            padding: 20px;
+            min-height: 100vh;
             font-family: Arial, sans-serif;
             background: #111;
             color: white;
         }
-
-        body {
-            padding: 20px;
-        }
-
-        h1 {
-            margin-top: 0;
-        }
-
-        /* ==============================
-           MAIN PAGE
-           ============================== */
 
         .page {
             max-width: 1200px;
             margin: auto;
         }
 
-        .description {
-            color: #cccccc;
-            line-height: 1.6;
+        h1 {
+            margin-top: 0;
+            font-size: 38px;
         }
 
-        /* ==============================
-           SEARCH BUTTON
-           ============================== */
+        h2 {
+            margin-top: 35px;
+        }
+
+        .description {
+            color: #cccccc;
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* HISTORY LINKS */
+
+        .history-link {
+            color: #66aaff;
+            text-decoration: underline;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .history-link:hover {
+            color: #99c7ff;
+        }
+
+        /* SEARCH BUTTON */
 
         .open-search {
             margin: 15px 0 20px;
-
             padding: 12px 20px;
-
             border: none;
             border-radius: 7px;
-
             background: #4285f4;
             color: white;
-
             font-size: 16px;
             cursor: pointer;
         }
@@ -66,64 +74,77 @@
             background: #3367d6;
         }
 
-        /* ==============================
-           MINECRAFT
-           ============================== */
+        /* ARTICLE */
+
+        .article {
+            background: #181818;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .article p {
+            max-width: 900px;
+        }
+
+        .article-note {
+            padding: 15px;
+            margin-top: 20px;
+            background: #222;
+            border-left: 4px solid #4285f4;
+            border-radius: 5px;
+            color: #ccc;
+        }
+
+        /* MINECRAFT */
 
         .game-title {
-            margin-top: 10px;
+            margin-top: 35px;
+        }
+
+        .game-description {
+            color: #bbb;
+            line-height: 1.6;
         }
 
         .game-container {
             width: 100%;
             height: 650px;
-
             background: #000;
-
             border: 2px solid #333;
             border-radius: 10px;
-
             overflow: hidden;
         }
 
         .game-container iframe {
             width: 100%;
             height: 100%;
-
             border: none;
             display: block;
         }
 
-        /* ==============================
-           SEARCH WINDOW
-           ============================== */
+        /* SEARCH WINDOW */
 
         .search-window {
             position: fixed;
-
             left: 50%;
             top: 5%;
-
             transform: translateX(-50%);
 
             width: min(950px, 94vw);
             height: min(700px, 88vh);
 
             background: #202020;
-
             border: 1px solid #555;
             border-radius: 10px;
 
-            box-shadow:
-                0 20px 60px
-                rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 
             display: none;
-
             flex-direction: column;
 
             z-index: 1000;
-
             overflow: hidden;
         }
 
@@ -131,21 +152,16 @@
             display: flex;
         }
 
-        /* ==============================
-           WINDOW HEADER
-           ============================== */
+        /* WINDOW HEADER */
 
         .window-header {
             height: 42px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
 
             padding: 0 10px;
-
             background: #181818;
-
             user-select: none;
         }
 
@@ -169,7 +185,6 @@
             color: white;
 
             font-size: 18px;
-
             cursor: pointer;
         }
 
@@ -177,9 +192,7 @@
             background: #666;
         }
 
-        /* ==============================
-           TAB
-           ============================== */
+        /* TAB */
 
         .tab-bar {
             height: 38px;
@@ -188,7 +201,6 @@
             align-items: flex-end;
 
             background: #252525;
-
             padding-left: 8px;
         }
 
@@ -209,17 +221,13 @@
             font-size: 14px;
         }
 
-        /* ==============================
-           SEARCH BAR
-           ============================== */
+        /* SEARCH BAR */
 
         .toolbar {
             display: flex;
-
             gap: 6px;
 
             padding: 8px;
-
             background: #e9e9e9;
         }
 
@@ -233,7 +241,6 @@
             background: white;
 
             font-size: 17px;
-
             cursor: pointer;
         }
 
@@ -243,26 +250,21 @@
 
         .search-form {
             flex: 1;
-
             display: flex;
-
             gap: 6px;
         }
 
         .search-input {
             flex: 1;
-
             min-width: 0;
 
             height: 34px;
-
             padding: 0 10px;
 
             border: 1px solid #aaa;
             border-radius: 5px;
 
             font-size: 15px;
-
             outline: none;
         }
 
@@ -272,7 +274,6 @@
 
         .go-button {
             width: auto !important;
-
             padding: 0 15px;
 
             background: #4285f4 !important;
@@ -285,33 +286,59 @@
             background: #3367d6 !important;
         }
 
-        /* ==============================
-           SEARCH RESULTS
-           ============================== */
+        /* SEARCH RESULTS */
 
-        .results {
+        .search-results {
             flex: 1;
 
             background: white;
+            color: #222;
 
-            overflow: hidden;
+            padding: 30px;
+            overflow: auto;
+
+            text-align: center;
         }
 
-        .results iframe {
-            width: 100%;
-            height: 100%;
-
-            border: none;
+        .search-results h2 {
+            margin-top: 20px;
         }
 
-        /* ==============================
-           MOBILE
-           ============================== */
+        .search-results p {
+            line-height: 1.6;
+        }
+
+        .search-link {
+            display: inline-block;
+
+            margin-top: 15px;
+            padding: 12px 20px;
+
+            background: #4285f4;
+            color: white;
+
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .search-link:hover {
+            background: #3367d6;
+        }
+
+        /* MOBILE */
 
         @media (max-width: 600px) {
 
             body {
                 padding: 10px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .article {
+                padding: 18px;
             }
 
             .game-container {
@@ -343,12 +370,62 @@
 
 <div class="page">
 
-    <h1>🎮 Atlas Gaming</h1>
+    <!-- HISTORY ARTICLE -->
 
-    <p class="description">
-        Welcome to Atlas Gaming! Play Minecraft below or
-        open the search engine to search the web.
-    </p>
+    <article class="article">
+
+        <h1>🌎 World History Atlas</h1>
+
+        <p class="description">
+            Earth has changed dramatically throughout its history.
+            Continents have moved, civilizations have risen and fallen,
+            and millions of years of geological and human history have
+            shaped the world we know today.
+        </p>
+
+        <p class="description">
+            One of the most famous chapters in Earth's geological history
+            concerns
+            <a href="#minecraft" class="history-link">Pangaea</a>.
+            This enormous supercontinent brought together much of the
+            world's landmass before eventually breaking apart.
+        </p>
+
+        <p class="description">
+            The breakup of Pangaea happened over millions of years.
+            As tectonic plates moved, the supercontinent separated into
+            smaller landmasses. These movements eventually helped produce
+            the continents and oceans familiar to people today.
+        </p>
+
+        <p class="description">
+            Human history is equally complex. Historians examine written
+            records, archaeological evidence, oral traditions, artifacts,
+            maps, and many other sources in an attempt to understand
+            the past.
+        </p>
+
+        <p class="description">
+            The study of how historians interpret and reconstruct the past
+            is called
+            <a
+                href="https://bull.ultradec.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="history-link"
+            >
+                historiography
+            </a>.
+        </p>
+
+        <div class="article-note">
+            <strong>Atlas Note:</strong>
+            Explore the article, use the search engine to research
+            historical topics, or scroll down to the interactive
+            Minecraft section.
+        </div>
+
+    </article>
 
 
     <!-- SEARCH BUTTON -->
@@ -356,20 +433,22 @@
     <button
         class="open-search"
         id="openSearch"
-        type="button">
-
-        🔍 Open Search Engine
-
+        type="button"
+    >
+        🔍 Open History Search
     </button>
 
 
-    <!-- ==============================
-         MINECRAFT
-         ============================== -->
+    <!-- MINECRAFT -->
 
-    <h2 class="game-title">
-        Minecraft
+    <h2 class="game-title" id="minecraft">
+        ⛏️ Minecraft
     </h2>
+
+    <p class="game-description">
+        You found the Pangaea Easter egg!
+        The historical article brought you here.
+    </p>
 
     <div class="game-container">
 
@@ -385,14 +464,12 @@
 </div>
 
 
-<!-- ==============================
-     SEARCH WINDOW
-     ============================== -->
+<!-- SEARCH WINDOW -->
 
 <div
     class="search-window"
-    id="searchWindow">
-
+    id="searchWindow"
+>
 
     <!-- WINDOW HEADER -->
 
@@ -407,19 +484,17 @@
             <button
                 id="minimizeSearch"
                 type="button"
-                title="Minimize">
-
+                title="Minimize"
+            >
                 −
-
             </button>
 
             <button
                 id="closeSearch"
                 type="button"
-                title="Close">
-
+                title="Close"
+            >
                 ×
-
             </button>
 
         </div>
@@ -427,16 +502,15 @@
     </div>
 
 
-    <!-- ONE TAB -->
+    <!-- TAB -->
 
     <div class="tab-bar">
 
         <div
             class="tab"
-            id="tabTitle">
-
-            🔍 Bing Search
-
+            id="tabTitle"
+        >
+            🔍 History Search
         </div>
 
     </div>
@@ -446,65 +520,57 @@
 
     <div class="toolbar">
 
-
         <button
             id="backButton"
             type="button"
-            title="Back">
-
+            title="Back"
+        >
             ←
-
         </button>
-
 
         <button
             id="forwardButton"
             type="button"
-            title="Forward">
-
+            title="Forward"
+        >
             →
-
         </button>
-
 
         <button
             id="refreshButton"
             type="button"
-            title="Refresh">
-
+            title="Refresh"
+        >
             ↻
-
         </button>
-
 
         <button
             id="homeButton"
             type="button"
-            title="Home">
-
+            title="Home"
+        >
             🏠
-
         </button>
-
 
         <form
             class="search-form"
-            id="searchForm">
+            id="searchForm"
+        >
 
             <input
                 class="search-input"
                 id="searchInput"
                 type="text"
-                placeholder="Search Bing..."
+                placeholder="Search the web..."
                 autocomplete="off"
-                required>
+                required
+            >
 
             <button
                 class="go-button"
-                type="submit">
-
+                type="submit"
+            >
                 Search
-
             </button>
 
         </form>
@@ -512,15 +578,23 @@
     </div>
 
 
-    <!-- RESULTS -->
+    <!-- SEARCH RESULTS -->
 
-    <div class="results">
+    <div
+        class="search-results"
+        id="searchResults"
+    >
 
-        <iframe
-            id="resultsFrame"
-            title="Search results"
-            src="https://www.bing.com/">
-        </iframe>
+        <h2>🔎 Atlas Search</h2>
+
+        <p>
+            Enter a topic above to search the web.
+        </p>
+
+        <p>
+            Your search will open in a new browser tab so that
+            search results work normally.
+        </p>
 
     </div>
 
@@ -528,6 +602,10 @@
 
 
 <script>
+
+    /* ==============================
+       ELEMENTS
+       ============================== */
 
     const openSearch =
         document.getElementById("openSearch");
@@ -547,8 +625,8 @@
     const searchInput =
         document.getElementById("searchInput");
 
-    const resultsFrame =
-        document.getElementById("resultsFrame");
+    const searchResults =
+        document.getElementById("searchResults");
 
     const backButton =
         document.getElementById("backButton");
@@ -567,16 +645,14 @@
 
 
     /* ==============================
-       OPEN
+       OPEN SEARCH
        ============================== */
 
     openSearch.addEventListener(
         "click",
         function () {
 
-            searchWindow.classList.add(
-                "open"
-            );
+            searchWindow.classList.add("open");
 
             searchInput.focus();
 
@@ -585,32 +661,28 @@
 
 
     /* ==============================
-       CLOSE
+       CLOSE SEARCH
        ============================== */
 
     closeSearch.addEventListener(
         "click",
         function () {
 
-            searchWindow.classList.remove(
-                "open"
-            );
+            searchWindow.classList.remove("open");
 
         }
     );
 
 
     /* ==============================
-       MINIMIZE
+       MINIMIZE SEARCH
        ============================== */
 
     minimizeSearch.addEventListener(
         "click",
         function () {
 
-            searchWindow.classList.toggle(
-                "open"
-            );
+            searchWindow.classList.remove("open");
 
         }
     );
@@ -626,27 +698,54 @@
 
             event.preventDefault();
 
-
             const query =
                 searchInput.value.trim();
-
 
             if (!query) {
                 return;
             }
 
+            /*
+             * Search engines can prevent their pages
+             * from being displayed inside iframes.
+             *
+             * Therefore the actual results open in
+             * a normal browser tab.
+             */
 
             const searchURL =
                 "https://www.bing.com/search?q=" +
                 encodeURIComponent(query);
 
-
-            resultsFrame.src =
-                searchURL;
-
+            window.open(
+                searchURL,
+                "_blank",
+                "noopener,noreferrer"
+            );
 
             tabTitle.textContent =
                 "🔍 " + query;
+
+            searchResults.innerHTML = `
+
+                <h2>🔎 Search opened</h2>
+
+                <p>
+                    Your search for
+                    <strong>${escapeHTML(query)}</strong>
+                    has been opened in a new browser tab.
+                </p>
+
+                <a
+                    class="search-link"
+                    href="${searchURL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Open Search Again
+                </a>
+
+            `;
 
         }
     );
@@ -660,17 +759,7 @@
         "click",
         function () {
 
-            try {
-
-                resultsFrame.contentWindow.history.back();
-
-            } catch (error) {
-
-                console.log(
-                    "Back navigation unavailable."
-                );
-
-            }
+            window.history.back();
 
         }
     );
@@ -684,17 +773,7 @@
         "click",
         function () {
 
-            try {
-
-                resultsFrame.contentWindow.history.forward();
-
-            } catch (error) {
-
-                console.log(
-                    "Forward navigation unavailable."
-                );
-
-            }
+            window.history.forward();
 
         }
     );
@@ -708,16 +787,7 @@
         "click",
         function () {
 
-            try {
-
-                resultsFrame.contentWindow.location.reload();
-
-            } catch (error) {
-
-                resultsFrame.src =
-                    resultsFrame.src;
-
-            }
+            location.reload();
 
         }
     );
@@ -731,20 +801,32 @@
         "click",
         function () {
 
-            resultsFrame.src =
-                "https://www.bing.com/";
-
             searchInput.value = "";
 
             tabTitle.textContent =
-                "🔍 Bing Search";
+                "🔍 History Search";
+
+            searchResults.innerHTML = `
+
+                <h2>🔎 Atlas Search</h2>
+
+                <p>
+                    Enter a topic above to search the web.
+                </p>
+
+                <p>
+                    Your search will open in a new browser tab
+                    so that search results work normally.
+                </p>
+
+            `;
 
         }
     );
 
 
     /* ==============================
-       ESCAPE CLOSES WINDOW
+       ESCAPE CLOSES SEARCH
        ============================== */
 
     document.addEventListener(
@@ -756,14 +838,28 @@
                 searchWindow.classList.contains("open")
             ) {
 
-                searchWindow.classList.remove(
-                    "open"
-                );
+                searchWindow.classList.remove("open");
 
             }
 
         }
     );
+
+
+    /* ==============================
+       HTML ESCAPING
+       ============================== */
+
+    function escapeHTML(text) {
+
+        const element =
+            document.createElement("div");
+
+        element.textContent = text;
+
+        return element.innerHTML;
+
+    }
 
 </script>
 
